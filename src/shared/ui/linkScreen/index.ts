@@ -1,1 +1,1 @@
-export {LinkScreen} from './ui/LinkScreen';
+export {LinkScreenNavigate } from './ui/LinkScreen';

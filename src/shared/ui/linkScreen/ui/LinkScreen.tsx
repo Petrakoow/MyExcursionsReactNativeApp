@@ -14,15 +14,27 @@ type LinkScreenType = TouchableOpacityProps & {
     title: string;
     screenName: AppNavigation;
     params?: RootStackParamList[AppNavigation];
+    mustReplace?: boolean;
+    callBack?: () => void;
 };
 
-export const LinkScreen = (props: LinkScreenType) => {
-    const {title = 'Default Link', screenName, params, style, ...res} = props;
+export const LinkScreenNavigate = (props: LinkScreenType) => {
+    const {
+        title = 'Default Link',
+        screenName,
+        params,
+        style,
+        callBack,
+        mustReplace = false,
+        ...res
+    } = props;
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const onPressNavigation = () => {
-        navigation.navigate(screenName, params);
+        if (mustReplace) navigation.replace(screenName, params);
+        else navigation.navigate(screenName, params);
+        if (callBack) callBack();
     };
 
     return (

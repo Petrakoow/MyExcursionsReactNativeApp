@@ -5,4 +5,6 @@ export const Colors = {
     black: '#000000',
     button: '#3D4BDB',
     link: '#4F5BE8',
+    error: '#F44336',
+    descriptionError: '#E57373'
 };

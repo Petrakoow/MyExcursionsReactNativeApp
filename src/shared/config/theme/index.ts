@@ -19,5 +19,11 @@ export const Theme = {
         link: {
             color: Colors.link,
         },
+        error: {
+            color: Colors.error,
+        },
+        errorDescription: {
+            color: Colors.descriptionError,
+        },
     }),
 };

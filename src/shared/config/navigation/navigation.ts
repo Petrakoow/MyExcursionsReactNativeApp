@@ -8,7 +8,7 @@ export enum AppNavigation {
 export type NavigationStackList<F = any> = {
     [AppNavigation.SIGN_IN]: undefined;
     [AppNavigation.SIGN_UP]: undefined;
-    [AppNavigation.FORGOT_PASSWORD] : undefined;
+    [AppNavigation.FORGOT_PASSWORD]: undefined;
     [AppNavigation.MAIN]: undefined;
 };
 

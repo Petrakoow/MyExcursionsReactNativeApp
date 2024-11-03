@@ -75,3 +75,6 @@ yarn-error.log
 
 #.vscode
 .vscode
+
+#firebase
+src/shared/api/firebase.ts

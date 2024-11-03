@@ -12,11 +12,14 @@ export const styles = StyleSheet.create({
         paddingHorizontal: moderateScale(20),
         paddingVertical: moderateScale(15),
         borderRadius: CONTENT_RADIUS,
-        maxHeight: 55
+        maxHeight: 55,
+    },
+    disabled: {
+        opacity: 0.7,
     },
 });
 
 export const styleButton = StyleSheet.create({
     firstTypeButton: Theme.light.buttonFirstType,
-    secondTypeButton: {...Theme.light.buttonSecondType, borderWidth: 1, },
+    secondTypeButton: {...Theme.light.buttonSecondType, borderWidth: 1},
 });
