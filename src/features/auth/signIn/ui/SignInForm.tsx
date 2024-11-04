@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {Formik} from 'formik';
 import {validationSignInSchema} from '../model/validation';
@@ -14,15 +14,12 @@ import {
     AppNavigation,
     RootStackParamList,
 } from '@/shared/config/navigation/navigation';
-import {RouteProp} from '@react-navigation/native';
 
-type SignInFormType = {
-    navigation: NativeStackNavigationProp<RootStackParamList>;
-    route: RouteProp<RootStackParamList, AppNavigation.SIGN_IN>;
+type SignProps = {
+    navigation: NativeStackNavigationProp<RootStackParamList, AppNavigation.SIGN_IN>;
 };
 
-export const SignInForm = (props: SignInFormType) => {
-    const {navigation, route} = props;
+export const SignInForm = ({navigation}: SignProps) => {
     const {signIn, loading, error} = useSignIn();
 
     const navigateToMainMenu = () => {

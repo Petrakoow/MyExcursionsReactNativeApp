@@ -77,4 +77,4 @@ yarn-error.log
 .vscode
 
 #firebase
-src/shared/api/firebase.ts
+android/app/google-services.json
