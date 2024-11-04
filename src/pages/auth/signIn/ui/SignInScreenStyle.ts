@@ -11,12 +11,7 @@ export const styles = StyleSheet.create({
         marginBottom: moderateScale(36),
     },
     inputContainer: {
-        gap: moderateScale(12),
-        marginBottom: moderateScale(32),
-    },
-    linkContainer: {
-        alignSelf: 'center',
-        marginBottom: moderateScale(24),
+        marginBottom: moderateScale(12),
     },
     separatorContainer: {
         marginBottom: moderateScale(24),

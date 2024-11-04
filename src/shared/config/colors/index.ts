@@ -6,5 +6,6 @@ export const Colors = {
     button: '#3D4BDB',
     link: '#4F5BE8',
     error: '#F44336',
-    descriptionError: '#E57373'
+    descriptionError: '#E57373',
+    indicator: '#3D4BDB',
 };

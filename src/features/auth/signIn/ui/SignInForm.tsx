@@ -15,19 +15,9 @@ import {
     RootStackParamList,
 } from '@/shared/config/navigation/navigation';
 
-type SignProps = {
-    navigation: NativeStackNavigationProp<RootStackParamList, AppNavigation.SIGN_IN>;
-};
-
-export const SignInForm = ({navigation}: SignProps) => {
+export const SignInForm = () => {
     const {signIn, loading, error} = useSignIn();
 
-    const navigateToMainMenu = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{name: AppNavigation.MAIN}],
-        });
-    };
     return (
         <Formik
             initialValues={{emailOrUsername: '', password: ''}}
@@ -35,15 +25,14 @@ export const SignInForm = ({navigation}: SignProps) => {
             validateOnChange={false}
             onSubmit={async (values, {resetForm}) => {
                 const {emailOrUsername, password} = values;
-                const uid = await signIn(emailOrUsername, password);
+                const user = await signIn(emailOrUsername, password);
 
-                if (uid) {
-                    console.log('User registered with UID:', uid);
+                if (user) {
+                    console.log('User registered with UID:', user.uid);
                     resetForm();
-                    navigateToMainMenu();
                 }
             }}>
-            {({handleChange, handleSubmit, resetForm, errors, values}) => {
+            {({handleChange, handleSubmit, errors, values}) => {
                 const errorsLine = createCommonLine(errors);
                 return (
                     <View>

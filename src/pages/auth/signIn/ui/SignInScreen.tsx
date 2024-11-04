@@ -14,26 +14,16 @@ import {CustomText} from '@/shared/ui/customText';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {styles} from './SignInScreenStyle';
 import {SignInForm} from '@/features/auth/signIn';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type AuthScreenType = NativeStackScreenProps<
-    RootStackParamList,
-    AppNavigation.SIGN_IN
->;
-
-export const AuthScreen = (props: AuthScreenType) => {
+export const AuthScreen = () => {
     return (
         <ScreenContent>
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
                     <Logotype title="TourismApp" />
                 </View>
-                <SignInForm navigation={props.navigation} />
-                <View style={styles.linkContainer}>
-                    <LinkScreenNavigate
-                        title="Forgot password?"
-                        screenName={AppNavigation.FORGOT_PASSWORD}
-                    />
+                <View style={styles.inputContainer}>
+                    <SignInForm />
                 </View>
                 <View style={styles.separatorContainer}>
                     <LineSeparator />

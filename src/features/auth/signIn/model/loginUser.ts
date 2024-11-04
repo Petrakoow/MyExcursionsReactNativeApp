@@ -5,31 +5,55 @@ import {
     query,
     where,
     getDocs,
+    getDoc,
+    doc,
 } from '@/shared/api/firebase';
+import {User, RolesEnum} from '@/entities/user/model';
+import {createUserByRole} from '@/entities/user/model';
 
-export const loginUser = async (emailOrUsername: string, password: string) => {
-    if (emailOrUsername.includes('@')) {
-        const userCredential = await auth().signInWithEmailAndPassword(
-            emailOrUsername,
-            password,
-        );
-        return userCredential.user;
-    } else {
-        const userQuery = query(
-            collection(firestore(), 'users'),
-            where('username', '==', emailOrUsername),
-        );
-        const userSnapshot = await getDocs(userQuery);
+export const loginUser = async (
+    emailOrUsername: string,
+    password: string,
+): Promise<User> => {
+    let userCredential;
 
-        if (!userSnapshot.empty) {
+    try {
+        if (emailOrUsername.includes('@')) {
+            userCredential = await auth().signInWithEmailAndPassword(
+                emailOrUsername,
+                password,
+            );
+        } else {
+            const userQuery = query(
+                collection(firestore(), 'users'),
+                where('username', '==', emailOrUsername),
+            );
+            const userSnapshot = await getDocs(userQuery);
+            if (userSnapshot.empty) {
+                throw new Error('User not found');
+            }
             const email = userSnapshot.docs[0].data().email;
-            const userCredential = await auth().signInWithEmailAndPassword(
+            userCredential = await auth().signInWithEmailAndPassword(
                 email,
                 password,
             );
-            return userCredential.user;
-        } else {
-            throw new Error('User not found');
         }
+    } catch {
+        throw new Error('Authentication failed - firebase');
     }
+
+    const {uid} = userCredential.user;
+    const userDoc = await getDoc(doc(firestore(), 'users', uid));
+    const userData = userDoc.data();
+
+    if (!userData) {
+        throw new Error('User data not found');
+    }
+
+    return createUserByRole(
+        uid,
+        userData.email,
+        userData.username,
+        userData.role as RolesEnum,
+    );
 };

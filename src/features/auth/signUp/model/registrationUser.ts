@@ -1,19 +1,20 @@
 import {
-    setDoc,
-    doc,
+    auth,
+    firestore,
     collection,
     query,
     where,
     getDocs,
-    auth,
-    firestore,
+    setDoc,
+    doc,
 } from '@/shared/api/firebase';
+import { AuthorizedUser } from '@/entities/user/model';
 
 export const registerUser = async (
     email: string,
     password: string,
     username: string,
-) => {
+): Promise<AuthorizedUser> => {
     const usersRef = collection(firestore(), 'users');
     const usernameQuery = query(usersRef, where('username', '==', username));
     const querySnapshot = await getDocs(usernameQuery);
@@ -28,8 +29,14 @@ export const registerUser = async (
     );
     const {uid} = userCredential.user;
 
-    await setDoc(doc(firestore(), 'users', uid), {username, email});
-    console.log('User data saved to Firestore');
+    const newUser = new AuthorizedUser(uid, email, username);
 
-    return uid;
+    await setDoc(doc(firestore(), 'users', uid), {
+        email: newUser.email,
+        username: newUser.username,
+        role: newUser.role,
+    });
+
+    console.log('User data saved to Firestore');
+    return newUser;
 };

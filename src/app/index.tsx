@@ -1,36 +1,14 @@
-import {AuthScreen} from '@/pages/auth/signIn';
-import {RegistrationScreen} from '@/pages/auth/signUp';
-import {HomePage} from '@/pages/home/main';
-import {
-    AppNavigation,
-    NavigationStackList,
-} from '@/shared/config/navigation/navigation';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator<NavigationStackList>();
+import {RoleProvider} from '@/features/auth/role';
+import {AppNavigator} from './navigation';
 
 const App = () => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name={AppNavigation.SIGN_IN}
-                    component={AuthScreen}
-                    options={{headerShown: false}}
-                />
-                <Stack.Screen
-                    name={AppNavigation.SIGN_UP}
-                    component={RegistrationScreen}
-                    options={{headerShown: false}}
-                />
-                <Stack.Screen
-                    name={AppNavigation.MAIN}
-                    component={HomePage}
-                    options={{headerShown: false}}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <RoleProvider>
+            <NavigationContainer>
+                <AppNavigator />
+            </NavigationContainer>
+        </RoleProvider>
     );
 };
 

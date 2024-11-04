@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../colors';
+import {moderateScale} from 'react-native-size-matters';
 
 export const Theme = {
     light: StyleSheet.create({
@@ -24,6 +25,11 @@ export const Theme = {
         },
         errorDescription: {
             color: Colors.descriptionError,
+        },
+        indicator: {
+            color: Colors.indicator,
+            padding: moderateScale(20),
+            textAlign: 'center',
         },
     }),
 };

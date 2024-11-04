@@ -1,8 +1,8 @@
 import {Text, View} from 'react-native';
-import {styles} from './HomePageScreenStyle';
 import React from 'react';
-
+import { useAuth } from '@/features/auth/role';
 export const HomePage = () => {
+    console.log(useAuth());
     return (
         <View>
             <Text>HomePage</Text>
