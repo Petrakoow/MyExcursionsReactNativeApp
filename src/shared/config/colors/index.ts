@@ -8,4 +8,8 @@ export const Colors = {
     error: '#F44336',
     descriptionError: '#E57373',
     indicator: '#3D4BDB',
+    tabs: {
+        focus: '#3D4ADB',
+        unfocus: '#000000',
+    },
 };

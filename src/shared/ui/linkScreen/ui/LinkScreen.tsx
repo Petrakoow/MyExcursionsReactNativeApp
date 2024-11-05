@@ -4,10 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {CustomText} from '../../customText';
 import {styles} from './LinkScreenStyle';
-import {
-    AppNavigation,
-    RootStackParamList,
-} from '@/shared/config/navigation/navigation';
+import {AppNavigation, RootStackParamList} from '@/shared/config/navigation';
 import {TextSize} from '@/shared/config/font';
 
 type LinkScreenType = TouchableOpacityProps & {

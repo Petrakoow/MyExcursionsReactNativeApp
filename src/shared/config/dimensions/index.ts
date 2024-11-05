@@ -20,3 +20,8 @@ export const CONTENT_PADDING_VERTICAL = moderateScale(25);
 export const CONTENT_RADIUS = moderateScale(30);
 
 // NAVIGATION
+export const NAV_HEIGHT = moderateScale(63);
+export const NAV_PADDING_VERTICAL = moderateScale(10);
+export const NAV_PADDING_TOP = moderateScale(5);
+export const NAV_PADDING_BOTTOM = moderateScale(8);
+export const NAV_FONT_SIZE = moderateScale(11);

@@ -4,7 +4,7 @@ import {ScreenContent} from '@/shared/ui/screenContent';
 import {CustomText} from '@/shared/ui/customText';
 import {Logotype} from '@/shared/ui/customLogo';
 import {LinkScreenNavigate} from '@/shared/ui/linkScreen';
-import {AppNavigation} from '@/shared/config/navigation/navigation';
+import {AppNavigation} from '@/shared/config/navigation';
 import {SignUpForm} from '@/features/auth/signUp';
 import {styles} from './SignUpScreenStyle';
 

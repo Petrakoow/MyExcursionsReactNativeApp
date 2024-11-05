@@ -10,10 +10,7 @@ import {ErrorText} from '@/shared/ui/errorText';
 import {styleButton} from '@/shared/ui/customButton';
 import {useSignIn} from '../hook/useSignIn';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-    AppNavigation,
-    RootStackParamList,
-} from '@/shared/config/navigation/navigation';
+import {AppNavigation, RootStackParamList} from '@/shared/config/navigation';
 
 export const SignInForm = () => {
     const {signIn, loading, error} = useSignIn();
