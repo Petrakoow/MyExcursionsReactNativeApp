@@ -14,6 +14,7 @@ type CustomButtonProps = TouchableOpacityProps & {
     Icon?: React.FC<SvgProps>;
     textButton?: string;
     textColor?: ColorValue;
+    textSize?: TextSize;
 };
 
 const ICON_SIZE = moderateScale(25);
@@ -24,15 +25,16 @@ export const CustomButton = (props: CustomButtonProps) => {
         textButton = 'default text',
         style,
         textColor = Colors.white,
+        textSize = TextSize.S_XL,
         disabled,
         ...res
     } = props;
     return (
         <TouchableOpacity
-            style={[style, styles.container, disabled && styles.disabled]}
+            style={[styles.container, style, disabled && styles.disabled]}
             disabled={disabled}
             {...res}>
-            <CustomText size={TextSize.S_XL} style={{color: textColor}}>
+            <CustomText size={textSize} style={{color: textColor}}>
                 {textButton}
             </CustomText>
             {Icon && (

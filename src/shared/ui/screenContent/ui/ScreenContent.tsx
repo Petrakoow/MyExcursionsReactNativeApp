@@ -1,5 +1,11 @@
 import {ReactNode} from 'react';
-import {KeyboardAvoidingView, ColorValue, ScrollView, View} from 'react-native';
+import {
+    KeyboardAvoidingView,
+    ColorValue,
+    ScrollView,
+    View,
+    FlexStyle,
+} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './ScreenContentStyle';
 import {Colors} from '@/shared/config/colors';
@@ -11,6 +17,8 @@ type ScreenProps = {
     backgroundColor?: ColorValue;
     avoiding?: boolean;
     scrollEnabled?: boolean;
+    scrollActivation?: boolean;
+    contentStyle?: FlexStyle;
 };
 
 export const ScreenContent = (props: ScreenProps) => {
@@ -21,6 +29,8 @@ export const ScreenContent = (props: ScreenProps) => {
         excludeEdges = [],
         backgroundColor = Colors.white,
         scrollEnabled = true,
+        scrollActivation = true,
+        contentStyle,
     } = props;
 
     return (
@@ -29,10 +39,17 @@ export const ScreenContent = (props: ScreenProps) => {
             behavior="height"
             enabled={avoiding}>
             <SafeAreaView
-                edges={edges.filter(el => !excludeEdges.includes(el))}>
-                <ScrollView scrollEnabled = {scrollEnabled}>
-                    <View style={styles.content}>{children}</View>
-                </ScrollView>
+                edges={edges.filter(el => !excludeEdges.includes(el))}
+                style={styles.container}>
+                {scrollActivation ? (
+                    <ScrollView scrollEnabled={scrollEnabled}>
+                        <View style={styles.content}>{children}</View>
+                    </ScrollView>
+                ) : (
+                    <View style={[styles.content, contentStyle]}>
+                        {children}
+                    </View>
+                )}
             </SafeAreaView>
         </KeyboardAvoidingView>
     );

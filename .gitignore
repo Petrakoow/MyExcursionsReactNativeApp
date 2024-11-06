@@ -78,3 +78,6 @@ yarn-error.log
 
 #firebase
 android/app/google-services.json
+
+#sputnik8
+src/shared/config/api/sputnik8/

@@ -1,4 +1,4 @@
-import {Theme} from '@/shared/config/theme';
+import { Colors } from '@/shared/config/colors';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -9,6 +9,6 @@ export const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     linkText: {
-        ...Theme.light.link,
+        color: Colors.link,
     },
 });

@@ -5,3 +5,6 @@ export {default as Checkmark} from './Checkmark.svg';
 export {default as Booking} from './Booking.svg';
 export {default as Home} from './Home.svg';
 export {default as Favourite} from './Favourite.svg';
+export {default as User} from './User.svg';
+export {default as Tours} from './Tours.svg';
+export {default as Information} from './information.svg';

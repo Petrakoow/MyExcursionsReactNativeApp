@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {Theme} from '@/shared/config/theme';
 import {moderateScale} from 'react-native-size-matters';
+import {Colors} from '@/shared/config/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -15,6 +15,8 @@ export const styles = StyleSheet.create({
         gap: 20,
     },
     colorTitle: {
-        ...Theme.light.indicator,
+        color: Colors.indicator,
+        padding: moderateScale(20),
+        textAlign: 'center',
     },
 });

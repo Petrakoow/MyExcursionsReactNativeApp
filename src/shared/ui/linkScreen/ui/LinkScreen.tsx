@@ -4,7 +4,10 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {CustomText} from '../../customText';
 import {styles} from './LinkScreenStyle';
-import {AppNavigation, RootStackParamList} from '@/shared/config/navigation';
+import {
+    AppNavigation,
+    RootStackParamList,
+} from '@/shared/config/navigation/types';
 import {TextSize} from '@/shared/config/font';
 
 type LinkScreenType = TouchableOpacityProps & {
@@ -29,8 +32,10 @@ export const LinkScreenNavigate = (props: LinkScreenType) => {
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const onPressNavigation = () => {
-        if (mustReplace) navigation.replace(screenName, params);
-        else navigation.navigate(screenName, params);
+        mustReplace
+            ? navigation.replace(screenName, params)
+            : navigation.navigate(screenName, params as any);
+
         if (callBack) callBack();
     };
 

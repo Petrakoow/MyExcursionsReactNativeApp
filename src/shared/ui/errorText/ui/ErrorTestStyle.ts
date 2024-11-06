@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {Theme} from '@/shared/config/theme';
+import {Colors} from '@/shared/config/colors';
 export const styles = StyleSheet.create({
     container: {},
     titleError: {
-        ...Theme.light.error,
+        color: Colors.error,
     },
     descriptionError: {
-        ...Theme.light.errorDescription,
+        color: Colors.descriptionError,
     },
 });

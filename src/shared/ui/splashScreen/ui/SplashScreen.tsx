@@ -14,21 +14,25 @@ import {Logotype} from '../../customLogo';
 type SplashScreenType = ActivityIndicatorProps & {
     titleIndicator?: string;
     titleLogotype?: string;
+    showLogotype?: boolean;
 };
 
 export const SplashScreen = (props: SplashScreenType) => {
     const {
         titleIndicator = 'Hello!',
-        titleLogotype = "TourismApp",
+        titleLogotype = 'TourismApp',
         color = Colors.indicator,
+        showLogotype = true,
         size = 'large',
         ...res
     } = props;
     return (
         <View style={styles.container}>
-            <View>
-                <Logotype title={titleLogotype} />
-            </View>
+            {showLogotype && (
+                <View>
+                    <Logotype title={titleLogotype} />
+                </View>
+            )}
             <View style={styles.content}>
                 <CustomText
                     size={TextSize.S_2XL}

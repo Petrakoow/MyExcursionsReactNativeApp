@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Theme} from '@/shared/config/theme';
+import { Colors } from '@/shared/config/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     line: {
         flex: 1,
         height: 1,
-        ...Theme.light.separator,
+        backgroundColor: Colors.separator,
     },
     text: {
         marginHorizontal: 10,

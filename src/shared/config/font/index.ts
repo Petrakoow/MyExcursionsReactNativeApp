@@ -8,6 +8,18 @@ export type CustomTextType = TextProps & {
     weight?: TextWeight;
 };
 
+export enum FontFamily {
+    INTER_BLACK = 'Inter_Black',
+    INTER_BOLD = 'Inter_Bold',
+    INTER_EXTRABOLD = 'Inter_ExtraBold',
+    INTER_EXTRALIGHT = 'Inter_ExtraLight',
+    INTER_LIGHT = 'Inter_Light',
+    INTER_MEDIUM = 'Inter_Medium',
+    INTER_REGULAR = 'Inter_Regular',
+    INTER_SEMIBOLD = 'Inter_SemiBold',
+    INTER_THIN = 'Inter_Thin',
+}
+
 export enum TextSize {
     S_XS = 'size_xs',
     S_SM = 'size_sm',

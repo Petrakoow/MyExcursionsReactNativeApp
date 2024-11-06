@@ -2,46 +2,35 @@ import {StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabBarIcon} from './TabBarIcon';
 import React from 'react';
-import {NavigationTabList} from '@/shared/config/navigation';
-import {AppTabNavigation} from '@/shared/config/navigation';
+import {NavigationTabList} from '@/shared/config/navigation/types';
+import {AppTabNavigation} from '@/shared/config/navigation/types';
 import {HomePage} from '@/pages/home/main';
-import {Theme} from '@/shared/config/theme';
+import {ToursPageScreen} from '@/pages/tours';
 import {Colors} from '@/shared/config/colors';
 import * as Icons from '@/shared/assets/icons';
+import {screenOptions} from './BottomTabNavigationStyle';
 
-import {
-    NAV_PADDING_BOTTOM,
-    NAV_PADDING_TOP,
-    NAV_HEIGHT,
-    NAV_FONT_SIZE,
-    CONTENT_PADDING_HORIZONTAL,
-} from '@/shared/config/dimensions';
 const Tab = createBottomTabNavigator<NavigationTabList>();
-
-const screenOptions = {
-    headerShown: false,
-    tabBarStyle: {
-        paddingTop: NAV_PADDING_TOP,
-        paddingBottom: NAV_PADDING_BOTTOM,
-        height: NAV_HEIGHT,
-    },
-    tabBarLabelStyle: {
-        fontSize: NAV_FONT_SIZE,
-        fontFamily: 'Inter_Regular',
-        fontWeight: 400,
-    },
-    headerLeftContainerStyle: {
-        paddingLeft: CONTENT_PADDING_HORIZONTAL - 5,
-    },
-    headerRightContainerStyle: {
-        paddingRight: CONTENT_PADDING_HORIZONTAL - 5,
-    },
-    freezeOnBlur: true,
-} as const;
 
 export const BottomTabNavigation = () => {
     return (
         <Tab.Navigator screenOptions={{...screenOptions}}>
+            <Tab.Screen
+                name={AppTabNavigation.EXCURSIONS}
+                component={ToursPageScreen}
+                options={{
+                    title: AppTabNavigation.EXCURSIONS,
+                    headerTransparent: true,
+                    headerTitle: '',
+                    tabBarIcon: ({focused}) =>
+                        TabBarIcon({
+                            colorFocus: Colors.tabs.focus,
+                            colorUnfocus: Colors.tabs.unfocus,
+                            focused: focused,
+                            Icon: Icons.Tours,
+                        }),
+                }}
+            />
             <Tab.Screen
                 name={AppTabNavigation.FAVOURITE}
                 component={HomePage}
@@ -51,25 +40,25 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            color: focused
-                                ? Colors.tabs.focus
-                                : Colors.tabs.unfocus,
+                            colorFocus: Colors.tabs.focus,
+                            colorUnfocus: Colors.tabs.unfocus,
+                            focused: focused,
                             Icon: Icons.Favourite,
                         }),
                 }}
             />
             <Tab.Screen
-                name={AppTabNavigation.MAIN}
+                name={AppTabNavigation.HOME}
                 component={HomePage}
                 options={{
-                    title: AppTabNavigation.MAIN,
+                    title: AppTabNavigation.HOME,
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            color: focused
-                                ? Colors.tabs.focus
-                                : Colors.tabs.unfocus,
+                            colorFocus: Colors.tabs.focus,
+                            colorUnfocus: Colors.tabs.unfocus,
+                            focused: focused,
                             Icon: Icons.Home,
                         }),
                 }}
@@ -83,10 +72,26 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            color: focused
-                                ? Colors.tabs.focus
-                                : Colors.tabs.unfocus,
+                            colorFocus: Colors.tabs.focus,
+                            colorUnfocus: Colors.tabs.unfocus,
+                            focused: focused,
                             Icon: Icons.Booking,
+                        }),
+                }}
+            />
+            <Tab.Screen
+                name={AppTabNavigation.USER}
+                component={HomePage}
+                options={{
+                    title: AppTabNavigation.USER,
+                    headerTransparent: true,
+                    headerTitle: '',
+                    tabBarIcon: ({focused}) =>
+                        TabBarIcon({
+                            colorFocus: Colors.tabs.focus,
+                            colorUnfocus: Colors.tabs.unfocus,
+                            focused: focused,
+                            Icon: Icons.User,
                         }),
                 }}
             />
@@ -94,4 +99,3 @@ export const BottomTabNavigation = () => {
     );
 };
 
-const styles = StyleSheet.create({});

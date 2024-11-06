@@ -1,9 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationStackList} from '@/shared/config/navigation';
+import {NavigationStackList} from '@/shared/config/navigation/types';
 import {AuthScreen} from '@/pages/auth/signIn';
 import {RegistrationScreen} from '@/pages/auth/signUp';
-import {AppNavigation} from '@/shared/config/navigation';
+import {AppNavigation} from '@/shared/config/navigation/types';
 const Stack = createNativeStackNavigator<NavigationStackList>();
 
 export const GuestStack = () => (

@@ -2,7 +2,6 @@ import {CONTENT_RADIUS} from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {Colors} from '@/shared/config/colors';
-import {Theme} from '@/shared/config/theme';
 export const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
@@ -20,6 +19,12 @@ export const styles = StyleSheet.create({
 });
 
 export const styleButton = StyleSheet.create({
-    firstTypeButton: Theme.light.buttonFirstType,
-    secondTypeButton: {...Theme.light.buttonSecondType, borderWidth: 1},
+    firstTypeButton: {
+        backgroundColor: Colors.button,
+        color: Colors.white,
+    },
+    secondTypeButton: {
+        borderWidth: 1,
+        backgroundColor: Colors.white,
+    },
 });

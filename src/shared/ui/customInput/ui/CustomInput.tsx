@@ -3,8 +3,6 @@ import React, {useState} from 'react';
 import {CustomText} from '@/shared/ui/customText';
 import {styles as FontStyle, TextSize, TextWeight} from '@/shared/config/font';
 import {styles} from './CustomInputStyle';
-
-import {Theme} from '@/shared/config/theme';
 import {Trailing} from './Trailing';
 type CustomTextType = TextInputProps & {
     label?: string;
@@ -25,10 +23,10 @@ export const CustomInput = (props: CustomTextType) => {
                     {...res}
                     style={[
                         styles.input,
-                        Theme.light.input,
+                        styles.borderColor,
                         FontStyle.font_normal,
                         FontStyle.size_lg,
-                        secureTextEntry && styles.paddingInput
+                        secureTextEntry && styles.paddingInput,
                     ]}
                     numberOfLines={1}
                     secureTextEntry={isSecure}

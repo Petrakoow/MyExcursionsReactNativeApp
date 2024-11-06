@@ -6,7 +6,10 @@ import {Colors} from '@/shared/config/colors';
 import {LineSeparator} from '@/shared/ui/customSeparator';
 import {Logotype} from '@/shared/ui/customLogo';
 import {LinkScreenNavigate} from '@/shared/ui/linkScreen';
-import {AppNavigation, RootStackParamList} from '@/shared/config/navigation';
+import {
+    AppNavigation,
+    RootStackParamList,
+} from '@/shared/config/navigation/types';
 import {CustomText} from '@/shared/ui/customText';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {styles} from './SignInScreenStyle';
