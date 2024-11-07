@@ -5,6 +5,9 @@ import {ExcursionInfoPageScreen} from '@/pages/tours';
 import {AppNavigation} from '@/shared/config/navigation/types';
 import {BottomTabNavigation} from '@/widgets/tabNavigation';
 import {HeaderStackNavigationStyleOptions} from '@/shared/config/navigation';
+
+import {getEnumTranslation} from '@/shared/config/navigation';
+
 const Stack = createNativeStackNavigator<NavigationStackList>();
 
 export const UserStack = () => (
@@ -18,7 +21,9 @@ export const UserStack = () => (
             name={AppNavigation.EXCURSION_INFO}
             component={ExcursionInfoPageScreen}
             options={{
-                ...HeaderStackNavigationStyleOptions(AppNavigation.EXCURSION_INFO),
+                ...HeaderStackNavigationStyleOptions(
+                    getEnumTranslation(AppNavigation.EXCURSION_INFO),
+                ),
             }}
         />
     </Stack.Navigator>

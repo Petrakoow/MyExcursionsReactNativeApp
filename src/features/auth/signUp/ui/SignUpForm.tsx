@@ -9,10 +9,12 @@ import {styles} from './SignUpFormStyles';
 import {ErrorText} from '@/shared/ui/errorText';
 import {ExplanationText} from '@/shared/ui/explanationText';
 import {useSignUp} from '../hook/useSignUp';
-import React from 'react';
+import React, {useState} from 'react';
+import {SuccessText} from '@/shared/ui/successText';
 
 export const SignUpForm = () => {
     const {signUp, loading, error} = useSignUp();
+    const [success, setSuccess] = useState(false);
     return (
         <Formik
             initialValues={{
@@ -25,12 +27,12 @@ export const SignUpForm = () => {
             validateOnChange={false}
             onSubmit={async (values, {resetForm}) => {
                 const {email, password, username} = values;
-                const uid = await signUp(email, password, username);
+                const user = await signUp(email, password, username);
 
-                if (uid) {
-                    console.log('User registered with UID:', uid);
+                if (user) {
                     resetForm();
-                }
+                    setSuccess(true);
+                } else setSuccess(false);
             }}>
             {({handleChange, handleSubmit, values, errors}) => {
                 const errorsLine = createCommonLine(errors);
@@ -38,7 +40,7 @@ export const SignUpForm = () => {
                     <View style={styles.container}>
                         <View style={styles.inputContainer}>
                             <CustomInput
-                                label="Email"
+                                label="Почта"
                                 placeholder="example@example.com"
                                 onChangeText={handleChange('email')}
                                 keyboardType="email-address"
@@ -46,22 +48,22 @@ export const SignUpForm = () => {
                             />
 
                             <CustomInput
-                                label="Username"
-                                placeholder="User123..."
+                                label="Имя пользователя"
+                                placeholder="example..."
                                 onChangeText={handleChange('username')}
                                 keyboardType="default"
                                 value={values.username}
                             />
                             <CustomInput
-                                label="Password"
-                                placeholder="example123..."
+                                label="Пароль"
+                                placeholder="example..."
                                 secureTextEntry={true}
                                 onChangeText={handleChange('password')}
                                 value={values.password}
                             />
                             <CustomInput
-                                label="Confirm password"
-                                placeholder="example123..."
+                                label="Подвердите пароль"
+                                placeholder="example"
                                 secureTextEntry={true}
                                 onChangeText={handleChange('confirmPassword')}
                                 value={values.confirmPassword}
@@ -70,22 +72,25 @@ export const SignUpForm = () => {
                         <View style={styles.informationContainer}>
                             {errorsLine && (
                                 <ErrorText
-                                    title="Validation Error"
+                                    title="Ошибка валидации"
                                     description={errorsLine}
                                 />
                             )}
                             {error && (
                                 <ErrorText
-                                    title="Registration Error"
+                                    title="Ошибка при регистрации"
                                     description={error}
                                 />
                             )}
-                            <ExplanationText description="Password must be at least 8 character" />
-                            <ExplanationText description="Password must contain numbers" />
+                            {success && (
+                                <SuccessText title="Регистрация прошла успешно" />
+                            )}
+                            <ExplanationText description="Пароль должен быть минимум 8 символов" />
+                            <ExplanationText description="Пароль должен содержать цифры" />
                         </View>
                         <View>
                             <CustomButton
-                                textButton="Agree and continue"
+                                textButton="Подвердить и продолжить"
                                 style={styleButton.firstTypeButton}
                                 onPress={() => handleSubmit()}
                                 disabled={loading}

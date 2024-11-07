@@ -12,7 +12,9 @@ export type TourTypeRequest = {
             | 'private_tour, ticket_per_group'
             | 'private_tour, ticket_per_person';
         is_base: boolean;
-        duration: string | number;
+        duration: {
+            name: string;
+        };
         order_lines: {
             price: number;
             discount?: {

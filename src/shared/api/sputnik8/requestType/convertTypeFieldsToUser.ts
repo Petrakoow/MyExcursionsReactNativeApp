@@ -1,35 +1,40 @@
-export const getActivityTypeLabel = (type: string) => {
-    switch (type) {
-        case 'tour': return 'Excursion';
-        case 'entry_ticket': return 'Entry Ticket';
-        case 'transfer': return 'Transfer';
-        case 'composite_activity': return 'Composite Activity';
-        default: return 'Unknown';
-    }
+export const UNKNOWN = 'Данные отсутствуют';
+
+export const ActivityTypeLabels = {
+    tour: 'Экскурсия',
+    entry_ticket: 'Только входной билет',
+    transfer: 'Трансфер',
+    composite_activity: 'Сборная экскурсия',
 };
 
-export const getTicketTypeLabel = (type: string) => {
-    switch (type) {
-        case 'group_tour, ticket_per_person': return 'Group Tour, Per Person';
-        case 'private_tour, ticket_per_group': return 'Private Tour, Per Group';
-        case 'private_tour, ticket_per_person': return 'Private Tour, Per Person';
-        default: return 'Unknown';
-    }
+export const TicketTypeLabels = {
+    'group_tour, ticket_per_person':
+        'Билет на групповую сборную экскурсию, цена за каждого человека',
+    'private_tour, ticket_per_group':
+        'Билет для частных групп, цена за всю группу',
+    'private_tour, ticket_per_person':
+        'Индивидуальная экскурсия, цена за одного человека',
 };
 
-export const getPayTypeLabel = (type: string) => {
-    switch (type) {
-        case 'post_pay': return 'Pay on Spot';
-        case 'deposit': return 'Deposit';
-        case 'full_pay': return 'Full Payment';
-        default: return 'Unknown';
-    }
+export const PayTypeLabels = {
+    post_pay: 'Оплата на месте',
+    deposit: 'Частичная предоплата',
+    full_pay: 'Полная предоплата',
 };
 
-export const getProductTypeLabel = (type: string) => {
-    switch (type) {
-        case 'shared': return 'Shared Tour';
-        case 'private': return 'Private Tour';
-        default: return 'Unknown';
-    }
+export const ProductTypeLabels = {
+    shared: 'Групповая, сборная',
+    private: 'Индивидуальная',
 };
+
+export const getActivityTypeLabel = (type: keyof typeof ActivityTypeLabels) =>
+    ActivityTypeLabels[type] || UNKNOWN;
+
+export const getTicketTypeLabel = (type: keyof typeof TicketTypeLabels) =>
+    TicketTypeLabels[type] || UNKNOWN;
+
+export const getPayTypeLabel = (type: keyof typeof PayTypeLabels) =>
+    PayTypeLabels[type] || UNKNOWN;
+
+export const getProductTypeLabel = (type: keyof typeof ProductTypeLabels) =>
+    ProductTypeLabels[type] || UNKNOWN;

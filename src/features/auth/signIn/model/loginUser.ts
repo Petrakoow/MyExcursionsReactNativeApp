@@ -8,13 +8,8 @@ import {
     getDoc,
     doc,
 } from '@/shared/api/firebase';
-import {User, RolesEnum} from '@/entities/user/model';
-import {createUserByRole} from '@/entities/user/model';
 
-export const loginUser = async (
-    emailOrUsername: string,
-    password: string,
-): Promise<User> => {
+export const loginUser = async (emailOrUsername: string, password: string) => {
     let userCredential;
 
     try {
@@ -49,11 +44,4 @@ export const loginUser = async (
     if (!userData) {
         throw new Error('User data not found');
     }
-
-    return createUserByRole(
-        uid,
-        userData.email,
-        userData.username,
-        userData.role as RolesEnum,
-    );
 };

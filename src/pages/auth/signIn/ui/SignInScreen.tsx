@@ -30,7 +30,7 @@ export const AuthScreen = () => {
                 </View>
                 <View style={styles.continueAsGuestContainer}>
                     <CustomButton
-                        textButton="Continue as guest"
+                        textButton="Продолжить как гость"
                         style={styleButton.secondTypeButton}
                         textColor={Colors.black}
                         Icon={AnonymousIcon}
@@ -38,10 +38,10 @@ export const AuthScreen = () => {
                 </View>
                 <View style={styles.accountContainer}>
                     <CustomText style={styles.textAccount}>
-                        Don't have an account?
+                        У вас ещё нету аккаунта?
                     </CustomText>
                     <LinkScreenNavigate
-                        title="Sign Up"
+                        title="Регистрация"
                         screenName={AppNavigation.SIGN_UP}
                         mustReplace={true}
                     />

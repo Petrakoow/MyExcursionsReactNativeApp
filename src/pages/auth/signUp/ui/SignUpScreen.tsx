@@ -16,10 +16,10 @@ export const RegistrationScreen = () => {
                 <SignUpForm />
                 <View style={styles.accountContainer}>
                     <CustomText style={styles.textAccount}>
-                        You have account?
+                        У вас уже есть аккаунт?
                     </CustomText>
                     <LinkScreenNavigate
-                        title="Sign In"
+                        title="Авторизация"
                         screenName={AppNavigation.SIGN_IN}
                         mustReplace={true}
                     />

@@ -9,6 +9,7 @@ import {ToursPageScreen} from '@/pages/tours';
 import {Colors} from '@/shared/config/colors';
 import * as Icons from '@/shared/assets/icons';
 import {screenOptions} from './BottomTabNavigationStyle';
+import {getEnumTranslation} from '@/shared/config/navigation';
 
 const Tab = createBottomTabNavigator<NavigationTabList>();
 
@@ -19,7 +20,7 @@ export const BottomTabNavigation = () => {
                 name={AppTabNavigation.EXCURSIONS}
                 component={ToursPageScreen}
                 options={{
-                    title: AppTabNavigation.EXCURSIONS,
+                    title: getEnumTranslation(AppTabNavigation.EXCURSIONS),
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
@@ -35,7 +36,7 @@ export const BottomTabNavigation = () => {
                 name={AppTabNavigation.FAVOURITE}
                 component={HomePage}
                 options={{
-                    title: AppTabNavigation.FAVOURITE,
+                    title: getEnumTranslation(AppTabNavigation.FAVOURITE),
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
@@ -51,7 +52,7 @@ export const BottomTabNavigation = () => {
                 name={AppTabNavigation.HOME}
                 component={HomePage}
                 options={{
-                    title: AppTabNavigation.HOME,
+                    title: getEnumTranslation(AppTabNavigation.HOME),
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
@@ -67,7 +68,7 @@ export const BottomTabNavigation = () => {
                 name={AppTabNavigation.BOOKING}
                 component={HomePage}
                 options={{
-                    title: AppTabNavigation.BOOKING,
+                    title: getEnumTranslation(AppTabNavigation.BOOKING),
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
@@ -83,7 +84,7 @@ export const BottomTabNavigation = () => {
                 name={AppTabNavigation.USER}
                 component={HomePage}
                 options={{
-                    title: AppTabNavigation.USER,
+                    title: getEnumTranslation(AppTabNavigation.USER),
                     headerTransparent: true,
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
@@ -98,4 +99,3 @@ export const BottomTabNavigation = () => {
         </Tab.Navigator>
     );
 };
-

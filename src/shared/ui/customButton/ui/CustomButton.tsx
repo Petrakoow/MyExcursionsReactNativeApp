@@ -12,7 +12,7 @@ import {Colors} from '@/shared/config/colors';
 
 type CustomButtonProps = TouchableOpacityProps & {
     Icon?: React.FC<SvgProps>;
-    textButton?: string;
+    textButton?: string | number;
     textColor?: ColorValue;
     textSize?: TextSize;
 };

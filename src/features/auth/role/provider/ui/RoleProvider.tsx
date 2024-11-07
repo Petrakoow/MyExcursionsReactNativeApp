@@ -1,14 +1,13 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {auth, firestore, doc, getDoc} from '@/shared/api/firebase';
 import {RolesEnum, User} from '@/entities/user/model';
 import {SplashScreen} from '@/shared/ui/splashScreen';
-import {createUserByRole} from '@/entities/user/model';
+import {useAuthStateListener} from '../../hook/useAuthStateListener';
 
-interface AuthContextType {
+type AuthContextType = {
     user: User | null;
     role: RolesEnum;
     setRole: (role: RolesEnum) => void;
-}
+};
 
 export const AuthContext = createContext<AuthContextType>({
     user: null,
@@ -17,37 +16,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const RoleProvider = ({children}: {children: ReactNode}) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [role, setRole] = useState<RolesEnum>(RolesEnum.GUEST);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const unsubscribe = auth().onAuthStateChanged(async authUser => {
-            if (authUser) {
-                const userDoc = await getDoc(
-                    doc(firestore(), 'users', authUser.uid),
-                );
-                const userData = userDoc.data();
-                if (userData) {
-                    setUser(
-                        createUserByRole(
-                            authUser.uid,
-                            userData.email,
-                            userData.username,
-                            userData.role,
-                        ),
-                    );
-                    setRole(userData.role as RolesEnum);
-                }
-            } else {
-                setUser(null);
-                setRole(RolesEnum.GUEST);
-            }
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, []);
+    const {user, role, loading, setRole} = useAuthStateListener();
 
     if (loading) {
         return (

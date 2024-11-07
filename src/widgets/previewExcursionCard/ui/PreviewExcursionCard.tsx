@@ -37,7 +37,7 @@ export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
                             <CustomText
                                 weight={TextWeight.BOLD}
                                 style={styles.rating}>
-                                {tour.host.review_rating.toFixed(1)} / 5
+                                {tour.customers_review_rating.toFixed(1)} / 5
                             </CustomText>
                         </CustomText>
                     </View>

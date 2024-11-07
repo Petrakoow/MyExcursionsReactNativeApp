@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import {registerUser} from '../model/registrationUser';
-
+import {auth} from '@/shared/api/firebase';
+import {useAuth} from '@/features/auth/role';
 export const useSignUp = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const {setRole, user} = useAuth();
 
     const signUp = async (
         email: string,
@@ -11,10 +13,14 @@ export const useSignUp = () => {
         username: string,
     ) => {
         setLoading(true);
-        setError(null); 
+        setError(null);
         try {
-            const uid = await registerUser(email, password, username);
-            return uid;
+            const newUser = await registerUser(email, password, username);
+            if (newUser) {
+                await auth().signInWithEmailAndPassword(email, password);
+                setRole(newUser.role);
+            }
+            return user;
         } catch (err) {
             setError((err as Error).message);
         } finally {

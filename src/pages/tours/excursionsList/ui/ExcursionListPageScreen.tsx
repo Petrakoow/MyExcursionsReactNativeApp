@@ -18,6 +18,7 @@ import {styles} from './ExcursionListPageScreenStyle';
 export const ToursPageScreen = () => {
     const [loading, setLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+    const [isFirstLoading, setFirstLoading] = useState(true);
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
@@ -34,7 +35,7 @@ export const ToursPageScreen = () => {
             console.log(error);
         } finally {
             setLoading(false);
-            setIsFetching(false); // Сброс блокировки после завершения запроса
+            setIsFetching(false);
         }
     };
 
@@ -47,6 +48,7 @@ export const ToursPageScreen = () => {
             setIsFetching(true);
             setPage(prevPage => prevPage + 1);
             flatListRef.current?.scrollToOffset({offset: 0, animated: true});
+            setFirstLoading(false);
         }
     }, [loading, hasMore, isFetching]);
 
@@ -69,7 +71,7 @@ export const ToursPageScreen = () => {
         />
     );
 
-    if (loading && page === 1) {
+    if (loading && isFirstLoading) {
         return (
             <SplashScreen
                 showLogotype={false}
@@ -94,17 +96,17 @@ export const ToursPageScreen = () => {
                     style={[styleButton.firstTypeButton, styles.pageButton]}
                     onPress={handleLoadPreviousPage}
                     disabled={page === 1 || loading || isFetching}
-                    textButton="Previous"
+                    textButton="Назад"
                     textSize={TextSize.S_BASE}
                 />
                 <CustomText
                     size={TextSize.S_BASE}
-                    weight={TextWeight.LIGHT}>{`Page ${page}`}</CustomText>
+                    weight={TextWeight.LIGHT}>{`Стр. ${page}`}</CustomText>
                 <CustomButton
                     style={[styleButton.firstTypeButton, styles.pageButton]}
                     onPress={handleLoadNextPage}
                     disabled={!hasMore || loading || isFetching}
-                    textButton="Next"
+                    textButton="Далее"
                     textSize={TextSize.S_BASE}
                 />
             </View>
