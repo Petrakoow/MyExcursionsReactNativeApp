@@ -28,10 +28,10 @@ export const Colors = {
         informationTourCard: {
             title: '#3D4BDB',
             activityType: '#8B8B8B',
-            price: '#00308F',
-            paymentType: '#5072A7',
-            productType: '#5072A7',
-            guideTitle: '#00308F',
+            price: '#3D4BDB',
+            paymentType: '#5887FF',
+            productType: '#5887FF',
+            guideTitle: '#3D4BDB',
             rating: '#FDCC0D',
             guideImageBorder: '#00308F',
             bottomPanel: {
@@ -39,7 +39,7 @@ export const Colors = {
                 unactive: '#FFFFFF',
             },
             reviews: {
-                header: '#00308F',
+                header: '#3D4BDB',
                 title: '#3D4BDB',
                 mark: '#FDCC0D',
                 noReviews: '#8B8B8B',
@@ -49,11 +49,18 @@ export const Colors = {
             markTitle: '#3D4BDB',
             markHeaderTitle: '#00308F',
         },
+        reviewExcursionCard: {
+            backgroundColor: '#f9f9f9',
+            title: '#3D4BDB',
+            rating: '#FDCC0D',
+            content: '#',
+            date: '#',
+        },
     },
     headerStack: {
-        backgroundColor: '#5887FF',
+        backgroundColor: '#3D4BDB',
     },
     bottomPanel: {
-        backgroundColor: '#5887FF',
+        backgroundColor: '#3D4BDB',
     },
 };

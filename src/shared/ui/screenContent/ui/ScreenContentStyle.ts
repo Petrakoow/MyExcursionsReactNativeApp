@@ -1,8 +1,4 @@
-import {NativeModules, StyleSheet} from 'react-native';
-import {
-    CONTENT_PADDING_HORIZONTAL,
-    CONTENT_PADDING_VERTICAL,
-} from '@/shared/config/dimensions';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,7 +6,5 @@ export const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
-        paddingVertical: CONTENT_PADDING_VERTICAL,
     },
 });

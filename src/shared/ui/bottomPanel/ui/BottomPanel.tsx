@@ -12,6 +12,7 @@ import {Colors} from '@/shared/config/colors';
 import {SvgProps} from 'react-native-svg';
 import {CustomText} from '../../customText';
 import {TextSize} from '@/shared/config/font';
+import {CONTENT_PADDING_HORIZONTAL} from '@/shared/config/dimensions';
 
 const ICON_SIZE = moderateScale(23);
 
@@ -51,10 +52,12 @@ BottomPanel.Button = (props: BottomPanelButtonType) => {
 const styles = StyleSheet.create({
     bottomPanel: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
+
         alignItems: 'center',
         backgroundColor: Colors.bottomPanel.backgroundColor,
         padding: moderateScale(10),
+        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
         borderTopRightRadius: moderateScale(10),
         borderTopLeftRadius: moderateScale(10),
         overflow: 'hidden',

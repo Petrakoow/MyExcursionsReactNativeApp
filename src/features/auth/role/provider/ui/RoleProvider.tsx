@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const RoleProvider = ({children}: {children: ReactNode}) => {
     const {user, role, loading, setRole} = useAuthStateListener();
-
+    
     if (loading) {
         return (
             <SplashScreen titleIndicator="Welcome to the tourism app, wait a minute..." />

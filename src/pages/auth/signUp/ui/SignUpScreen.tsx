@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React from 'react';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {CustomText} from '@/shared/ui/customText';
@@ -11,20 +11,22 @@ import {styles} from './SignUpScreenStyle';
 export const RegistrationScreen = () => {
     return (
         <ScreenContent>
-            <View style={styles.container}>
-                <Logotype title="TourismApp" />
-                <SignUpForm />
-                <View style={styles.accountContainer}>
-                    <CustomText style={styles.textAccount}>
-                        У вас уже есть аккаунт?
-                    </CustomText>
-                    <LinkScreenNavigate
-                        title="Авторизация"
-                        screenName={AppNavigation.SIGN_IN}
-                        mustReplace={true}
-                    />
+            <ScrollView>
+                <View style={styles.content}>
+                    <Logotype title="TourismApp" />
+                    <SignUpForm />
+                    <View style={styles.accountContainer}>
+                        <CustomText style={styles.textAccount}>
+                            У вас уже есть аккаунт?
+                        </CustomText>
+                        <LinkScreenNavigate
+                            title="Авторизация"
+                            screenName={AppNavigation.SIGN_IN}
+                            mustReplace={true}
+                        />
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         </ScreenContent>
     );
 };

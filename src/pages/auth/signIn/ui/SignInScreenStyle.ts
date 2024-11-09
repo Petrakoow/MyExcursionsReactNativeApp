@@ -1,11 +1,16 @@
+import {
+    CONTENT_PADDING_HORIZONTAL,
+    CONTENT_PADDING_VERTICAL,
+} from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexGrow: 1,
+    content: {
+        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+        paddingVertical: CONTENT_PADDING_VERTICAL,
         justifyContent: 'space-between',
+        flex: 1,
     },
     logoContainer: {
         marginBottom: moderateScale(36),

@@ -1,35 +1,61 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {BottomPanel} from '@/shared/ui/bottomPanel';
 import * as Icons from '@/shared/assets/icons';
 import {TourTypeRequest} from '@/shared/api/sputnik8';
 import {BookingModal} from '@/widgets/excursionModalWindow';
 import {Colors} from '@/shared/config/colors';
+import {View} from 'react-native';
+import {
+    addToFavorites,
+    isFavorite,
+    removeFromFavorites,
+} from '@/entities/excursion';
 
 type BottomExcursionPanelProps = {
     orderOptions: TourTypeRequest['order_options'];
     onToggleReviews: () => void;
     isReviewsVisible: boolean;
+    excursionId: number;
 };
 
-export const BottomExcursionPanel = (props: BottomExcursionPanelProps) => {
-    const {orderOptions, onToggleReviews, isReviewsVisible} = props;
+export const BottomExcursionPanel = ({
+    orderOptions,
+    onToggleReviews,
+    isReviewsVisible,
+    excursionId,
+}: BottomExcursionPanelProps) => {
     const [isBookingModalVisible, setBookingModalVisible] = useState(false);
-    const handleBookingPress = () => {
-        setBookingModalVisible(true);
+    const [isFavoriteExcursion, setIsFavoriteExcursion] = useState(false);
+
+    useEffect(() => {
+        const fetchFavoriteStatus = async () => {
+            const favoriteStatus = await isFavorite(excursionId);
+            setIsFavoriteExcursion(favoriteStatus);
+        };
+        fetchFavoriteStatus();
+    }, [excursionId]);
+
+    const handleFavoriteToggle = async () => {
+        if (isFavoriteExcursion) {
+            await removeFromFavorites(excursionId);
+        } else {
+            await addToFavorites(excursionId);
+        }
+        setIsFavoriteExcursion(!isFavoriteExcursion);
     };
 
     return (
-        <>
+        <View>
             <BottomPanel>
                 <BottomPanel.Button
-                    title="Добавить"
+                    title={isFavoriteExcursion ? 'Удалить' : 'Добавить'}
                     Icon={Icons.FavouriteExcursionAction}
-                    onPress={() => {}}
+                    onPress={handleFavoriteToggle}
                 />
                 <BottomPanel.Button
                     title="Бронь"
                     Icon={Icons.BookingExcursionAction}
-                    onPress={handleBookingPress}
+                    onPress={() => setBookingModalVisible(true)}
                 />
                 <BottomPanel.Button
                     title="Отзывы"
@@ -50,6 +76,6 @@ export const BottomExcursionPanel = (props: BottomExcursionPanelProps) => {
                 visible={isBookingModalVisible}
                 onClose={() => setBookingModalVisible(false)}
             />
-        </>
+        </View>
     );
 };

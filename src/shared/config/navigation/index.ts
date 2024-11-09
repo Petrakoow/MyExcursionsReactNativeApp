@@ -1,9 +1,6 @@
-export type {
-    NavigationTabList,
-    NavigationStackList,
-    AppNavigation,
-    AppTabNavigation,
-} from './types/index';
+export {AppNavigation, AppTabNavigation} from './types/index';
+
+export type {NavigationTabList, NavigationStackList} from './types/index';
 
 export {HeaderStackNavigationStyleOptions} from './header/index';
 

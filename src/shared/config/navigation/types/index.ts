@@ -11,7 +11,7 @@ export enum AppNavigation {
 export enum AppTabNavigation {
     HOME = 'Home',
     BOOKING = 'Booking',
-    FAVOURITE = 'Favourite',
+    FAVOURITE = 'Favorite',
     USER = 'Profile',
     EXCURSIONS = 'Excursions',
 }

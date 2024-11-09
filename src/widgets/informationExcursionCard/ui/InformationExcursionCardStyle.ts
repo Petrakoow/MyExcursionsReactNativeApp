@@ -1,9 +1,17 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {CONTENT_RADIUS} from '@/shared/config/dimensions';
+import {
+    CONTENT_PADDING_HORIZONTAL,
+    CONTENT_PADDING_VERTICAL,
+    CONTENT_RADIUS,
+} from '@/shared/config/dimensions';
 import {Colors} from '@/shared/config/colors';
 
 export const styles = StyleSheet.create({
+    content: {
+        paddingVertical: CONTENT_PADDING_VERTICAL,
+        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+    },
     coverImage: {
         width: '100%',
         height: 300,
@@ -17,10 +25,7 @@ export const styles = StyleSheet.create({
     },
     activityType: {
         color: Colors.widget.informationTourCard.activityType,
-        marginBottom: moderateScale(20),
-        paddingBottom: moderateScale(16),
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.widget.informationTourCard.activityType,
+        paddingBottom: moderateScale(4),
     },
     imageSection: {
         height: 80,

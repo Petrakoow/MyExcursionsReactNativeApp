@@ -13,7 +13,7 @@ export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
     const {tour, onPress} = props;
     return (
         <TouchableOpacity onPress={onPress} style={styles.card}>
-            <Image source={{uri: tour.image_big}} style={styles.image} />
+            <Image source={{uri: tour.main_photo.big}} style={styles.image} />
             <View style={styles.infoContainer}>
                 <CustomText
                     weight={TextWeight.BOLD}
@@ -43,10 +43,10 @@ export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
                     </View>
                 )}
                 <CustomText weight={TextWeight.LIGHT} style={styles.duration}>
-                    Длительность: {tour.duration}
+                    Длительность: {tour.order_options[0].duration.name}
                 </CustomText>
                 <CustomText weight={TextWeight.LIGHT} style={styles.price}>
-                    Цена: {tour.price}{' '}
+                    Цена: {tour.netto_price}{' '}
                 </CustomText>
             </View>
         </TouchableOpacity>

@@ -28,9 +28,6 @@ export const ScreenContent = (props: ScreenProps) => {
         edges = ['top', 'bottom', 'left', 'right'],
         excludeEdges = [],
         backgroundColor = Colors.white,
-        scrollEnabled = true,
-        scrollActivation = true,
-        contentStyle,
     } = props;
 
     return (
@@ -41,15 +38,7 @@ export const ScreenContent = (props: ScreenProps) => {
             <SafeAreaView
                 edges={edges.filter(el => !excludeEdges.includes(el))}
                 style={styles.container}>
-                {scrollActivation ? (
-                    <ScrollView scrollEnabled={scrollEnabled}>
-                        <View style={styles.content}>{children}</View>
-                    </ScrollView>
-                ) : (
-                    <View style={[styles.content, contentStyle]}>
-                        {children}
-                    </View>
-                )}
+                <View style={[styles.content]}>{children}</View>
             </SafeAreaView>
         </KeyboardAvoidingView>
     );

@@ -8,8 +8,10 @@ import {ScreenContent} from '@/shared/ui/screenContent';
 import {InformationExcursionCard} from '@/widgets/informationExcursionCard';
 import {View} from 'react-native';
 import {styles} from './ExcursionInfoPageScreenStyle';
-import {BottomExcursionPanel} from '@/widgets/bottomExcursionPanel/ui/BottomExcursionPanel';
-import {InformationExcursionReviewsCard} from '@/widgets/informationExcursionCard';
+import {BottomExcursionPanel} from '@/widgets/bottomExcursionPanel';
+import {InformationExcursionReviewsCard} from '@/widgets/InformationExcursionReviewsCard';
+import {database} from '@/shared/db';
+
 export const ExcursionInfoPageScreen = () => {
     const route =
         useRoute<
@@ -23,10 +25,9 @@ export const ExcursionInfoPageScreen = () => {
         setShowReviews(prev => !prev);
     };
 
-    console.log(excursion.reviews_list, excursion);
     return (
-        <View style={styles.container}>
-            <ScreenContent contentStyle={styles.container}>
+        <ScreenContent>
+            <View style={styles.container}>
                 {showReviews ? (
                     <InformationExcursionReviewsCard
                         customers_review_rating={
@@ -34,17 +35,19 @@ export const ExcursionInfoPageScreen = () => {
                         }
                         reviews={excursion.reviews}
                         reviews_with_text={excursion.reviews_with_text}
-                        reviews_list={excursion.reviews_list}
+                        uid={excursion.id}
                     />
                 ) : (
                     <InformationExcursionCard excursion={excursion} />
                 )}
-            </ScreenContent>
-            <BottomExcursionPanel
-                orderOptions={excursion.order_options}
-                onToggleReviews={toggleReviews}
-                isReviewsVisible={showReviews}
-            />
-        </View>
+
+                <BottomExcursionPanel
+                    orderOptions={excursion.order_options}
+                    onToggleReviews={toggleReviews}
+                    isReviewsVisible={showReviews}
+                    excursionId={excursion.id}
+                />
+            </View>
+        </ScreenContent>
     );
 };

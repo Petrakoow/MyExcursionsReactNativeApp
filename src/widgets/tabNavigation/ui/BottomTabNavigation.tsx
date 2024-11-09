@@ -10,6 +10,7 @@ import {Colors} from '@/shared/config/colors';
 import * as Icons from '@/shared/assets/icons';
 import {screenOptions} from './BottomTabNavigationStyle';
 import {getEnumTranslation} from '@/shared/config/navigation';
+import { ExcursionFavoritesListPageScreen } from '@/pages/favorites/excursionList';
 
 const Tab = createBottomTabNavigator<NavigationTabList>();
 
@@ -34,7 +35,7 @@ export const BottomTabNavigation = () => {
             />
             <Tab.Screen
                 name={AppTabNavigation.FAVOURITE}
-                component={HomePage}
+                component={ExcursionFavoritesListPageScreen}
                 options={{
                     title: getEnumTranslation(AppTabNavigation.FAVOURITE),
                     headerTransparent: true,
