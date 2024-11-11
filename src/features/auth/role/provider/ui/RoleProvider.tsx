@@ -2,31 +2,41 @@ import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {RolesEnum, User} from '@/entities/user/model';
 import {SplashScreen} from '@/shared/ui/splashScreen';
 import {useAuthStateListener} from '../../hook/useAuthStateListener';
+import {UserSessionType} from '@/shared/db/models/user';
+import {ErrorText} from '@/shared/ui/errorText';
 
 type AuthContextType = {
-    user: User | null;
-    role: RolesEnum;
-    setRole: (role: RolesEnum) => void;
+    reloadState: () => Promise<void>;
+    getSessionState: () => Promise<UserSessionType | null>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
-    user: null,
-    role: RolesEnum.GUEST,
-    setRole: () => {},
+    reloadState: async () => {},
+    getSessionState: async () => null,
 });
 
 export const RoleProvider = ({children}: {children: ReactNode}) => {
-    const {user, role, loading, setRole} = useAuthStateListener();
-    
-    if (loading) {
-        return (
-            <SplashScreen titleIndicator="Welcome to the tourism app, wait a minute..." />
-        );
-    }
+    try {
+        const {loading, reloadState, getSessionState} = useAuthStateListener();
+        useEffect(() => {
+            reloadState();
+        }, [reloadState]);
 
-    return (
-        <AuthContext.Provider value={{user, role, setRole}}>
-            {children}
-        </AuthContext.Provider>
-    );
+        if (loading) {
+            return (
+                <SplashScreen titleIndicator="Welcome to the tourism app, wait a minute..." />
+            );
+        }
+
+        return (
+            <AuthContext.Provider value={{reloadState, getSessionState}}>
+                {children}
+            </AuthContext.Provider>
+        );
+    } catch (error) {
+        <ErrorText
+            title="RoleProvider Error"
+            description={(error as Error).message}
+        />;
+    }
 };

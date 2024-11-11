@@ -9,9 +9,10 @@ import {
     doc,
 } from '@/shared/api/firebase';
 
+import {useEffect} from 'react';
+
 export const loginUser = async (emailOrUsername: string, password: string) => {
     let userCredential;
-
     try {
         if (emailOrUsername.includes('@')) {
             userCredential = await auth().signInWithEmailAndPassword(

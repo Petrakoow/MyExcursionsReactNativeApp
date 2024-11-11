@@ -27,9 +27,9 @@ export const SignUpForm = () => {
             validateOnChange={false}
             onSubmit={async (values, {resetForm}) => {
                 const {email, password, username} = values;
-                const user = await signUp(email, password, username);
+                await signUp(email, password, username);
 
-                if (user) {
+                if (!error) {
                     resetForm();
                     setSuccess(true);
                 } else setSuccess(false);

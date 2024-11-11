@@ -1,4 +1,4 @@
-import {appSchema, tableSchema} from '@nozbe/watermelondb';
+import {appSchema} from '@nozbe/watermelondb';
 import {favoriteExcursionSchema} from './excursions/schema/schema';
 
 export {FavoriteExcursion} from './excursions/model/FavoriteExcursions';

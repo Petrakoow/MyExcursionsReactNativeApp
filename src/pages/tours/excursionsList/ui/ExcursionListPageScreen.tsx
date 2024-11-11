@@ -14,6 +14,7 @@ import {styles} from './ExcursionListPageScreenStyle';
 import {ErrorText} from '@/shared/ui/errorText';
 import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetExcursionsByPageNumber} from '@/features/excursions';
+import { FilterExcursionPanel } from '@/widgets/filterExcursionPanel';
 export const ToursPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
     const flatListRef = useRef<FlatList>(null);
@@ -31,7 +32,7 @@ export const ToursPageScreen = () => {
         handlePreviousPage,
     } = useGetExcursionsByPageNumber();
 
-    // useEffect(() => {
+    // useEffect(() => { // реализовать перезагрузку при невозможности получить информацию 
     //     if (isError && retryCount < 3) {
     //         const retryTimeout = setTimeout(() => {
     //             getToursByPage(page);
@@ -67,6 +68,7 @@ export const ToursPageScreen = () => {
 
     return (
         <ScreenContent>
+            <FilterExcursionPanel/>
             {isError && <ErrorText title="Load Error" description={isError} />}
             <FlatList
                 ref={flatListRef}

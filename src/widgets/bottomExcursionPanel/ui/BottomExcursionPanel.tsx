@@ -10,6 +10,8 @@ import {
     isFavorite,
     removeFromFavorites,
 } from '@/entities/excursion';
+import {useDatabase} from '@/app/providers';
+import {ErrorText} from '@/shared/ui/errorText';
 
 type BottomExcursionPanelProps = {
     orderOptions: TourTypeRequest['order_options'];
@@ -27,9 +29,11 @@ export const BottomExcursionPanel = ({
     const [isBookingModalVisible, setBookingModalVisible] = useState(false);
     const [isFavoriteExcursion, setIsFavoriteExcursion] = useState(false);
 
+    const database = useDatabase();
+
     useEffect(() => {
         const fetchFavoriteStatus = async () => {
-            const favoriteStatus = await isFavorite(excursionId);
+            const favoriteStatus = await isFavorite(database, excursionId);
             setIsFavoriteExcursion(favoriteStatus);
         };
         fetchFavoriteStatus();
@@ -37,9 +41,9 @@ export const BottomExcursionPanel = ({
 
     const handleFavoriteToggle = async () => {
         if (isFavoriteExcursion) {
-            await removeFromFavorites(excursionId);
+            await removeFromFavorites(database, excursionId);
         } else {
-            await addToFavorites(excursionId);
+            await addToFavorites(database, excursionId);
         }
         setIsFavoriteExcursion(!isFavoriteExcursion);
     };

@@ -1,15 +1,24 @@
 import {Database} from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
-import {favoriteExcursionSchema} from './models';
 import {FavoriteExcursion} from './models';
 import {schema} from './models';
 
-const adapter = new SQLiteAdapter({
-    dbName: 'appDatabase',
-    schema,
-});
+let database: Database | null = null;
 
-export const database = new Database({
-    adapter,
-    modelClasses: [FavoriteExcursion],
-});
+function initializeDatabase() {
+    if (!database) {
+        const adapter = new SQLiteAdapter({
+            dbName: 'appDatabase',
+            schema,
+        });
+        database = new Database({
+            adapter,
+            modelClasses: [FavoriteExcursion],
+        });
+    }
+    return database;
+}
+
+export function getDatabase() {
+    return initializeDatabase();
+}

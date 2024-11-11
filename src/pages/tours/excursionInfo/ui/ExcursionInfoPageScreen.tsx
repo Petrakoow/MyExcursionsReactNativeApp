@@ -10,7 +10,6 @@ import {View} from 'react-native';
 import {styles} from './ExcursionInfoPageScreenStyle';
 import {BottomExcursionPanel} from '@/widgets/bottomExcursionPanel';
 import {InformationExcursionReviewsCard} from '@/widgets/InformationExcursionReviewsCard';
-import {database} from '@/shared/db';
 
 export const ExcursionInfoPageScreen = () => {
     const route =

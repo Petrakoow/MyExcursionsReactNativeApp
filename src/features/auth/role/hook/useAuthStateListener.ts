@@ -1,48 +1,71 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {auth, firestore, doc, getDoc} from '@/shared/api/firebase';
-import {RolesEnum, User} from '@/entities/user/model';
-import {createUserByRole} from '@/entities/user/model';
+import {RolesEnum} from '@/entities/user/model';
+import {UserSessionType} from '@/shared/db/models/user';
+
+import {
+    getUserSession,
+    saveUserSession,
+    clearUserSession,
+} from '@/shared/db/models/user';
+import {UNAUTHORIZED_USER} from '@/shared/config/constants';
+import {useDatabase} from '@/app/providers';
 
 type AuthState = {
-    user: User | null;
-    role: RolesEnum;
     loading: boolean;
-    setRole: (role: RolesEnum) => void;
+    getSessionState: () => Promise<UserSessionType | null>;
+    reloadState: () => Promise<void>;
 };
 
 export const useAuthStateListener = (): AuthState => {
-    const [user, setUser] = useState<User | null>(null);
-    const [role, setRole] = useState<RolesEnum>(RolesEnum.GUEST);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const unsubscribe = auth().onAuthStateChanged(async authUser => {
+    const database = useDatabase();
+
+    const reloadState = useCallback(async () => {
+        try {
+            setLoading(true);
+            const authUser = auth().currentUser;
             if (authUser) {
                 const userDoc = await getDoc(
                     doc(firestore(), 'users', authUser.uid),
                 );
                 const userData = userDoc.data();
-
                 if (userData) {
-                    setUser(
-                        createUserByRole(
-                            authUser.uid,
-                            userData.email,
-                            userData.username,
-                            userData.role,
-                        ),
+                    console.log(userData);
+                    await saveSessionState(
+                        authUser.uid,
+                        userData.role as RolesEnum,
                     );
-                    setRole(userData.role as RolesEnum);
+                    console.log('User session saved:', await getSessionState());
                 }
             } else {
-                setUser(null);
-                setRole(RolesEnum.GUEST);
+                await saveSessionState(UNAUTHORIZED_USER, RolesEnum.GUEST);
             }
+        } catch (error) {
+            throw new Error(`Error in reloadState: ${(error as Error).message}`)
+        } finally {
             setLoading(false);
-        });
-
-        return unsubscribe;
+        }
     }, []);
 
-    return {user, role, loading, setRole};
+    const saveSessionState = async (userId: string, role: RolesEnum) => {
+        await saveUserSession(database, {userId, role});
+    };
+
+    const getSessionState = async () => {
+        const session = await getUserSession(database);
+        return session || null;
+    };
+
+    const clearSessionState = async () => {
+        try {
+            await clearUserSession(database);
+            console.log('Session state cleared');
+        } catch (error) {
+            console.error('Error clearing session state:', error);
+        }
+    };
+
+    return {loading, reloadState, getSessionState};
 };

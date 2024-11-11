@@ -1,13 +1,17 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {RoleProvider} from '@/features/auth/role';
 import {AppNavigator} from './navigation';
+import {DatabaseProvider} from './providers';
+
 const App = () => {
     return (
-        <RoleProvider>
-            <NavigationContainer>
-                <AppNavigator />
-            </NavigationContainer>
-        </RoleProvider>
+        <DatabaseProvider>
+            <RoleProvider>
+                <NavigationContainer>
+                    <AppNavigator />
+                </NavigationContainer>
+            </RoleProvider>
+        </DatabaseProvider>
     );
 };
 
