@@ -5,10 +5,9 @@ import React, {
     useEffect,
     useState,
 } from 'react';
-import {Database} from '@nozbe/watermelondb';
-import {getDatabase} from '@/shared/db';
-
-const DatabaseContext = createContext<Database | null>(null);
+import Realm from 'realm';
+import {SCHEMAS, SCHEM_VERSION} from '@/shared/db';
+const DatabaseContext = createContext<Realm | null>(null);
 
 export const useDatabase = () => {
     const context = useContext(DatabaseContext);
@@ -19,17 +18,29 @@ export const useDatabase = () => {
 };
 
 export const DatabaseProvider = ({children}: {children: ReactNode}) => {
-    const [database, setDatabase] = useState<Database | null>(null);
+    const [realm, setRealm] = useState<Realm | null>(null);
     useEffect(() => {
-        setDatabase(getDatabase());
+        const initializeRealm = async () => {
+            const realmInstance = await Realm.open({
+                schema: SCHEMAS,
+                schemaVersion: SCHEM_VERSION,
+            });
+            setRealm(realmInstance);
+        };
+
+        initializeRealm();
+
+        return () => {
+            realm?.close();
+        };
     }, []);
 
-    if (!database) {
+    if (!realm) {
         return null;
     }
 
     return (
-        <DatabaseContext.Provider value={database}>
+        <DatabaseContext.Provider value={realm}>
             {children}
         </DatabaseContext.Provider>
     );

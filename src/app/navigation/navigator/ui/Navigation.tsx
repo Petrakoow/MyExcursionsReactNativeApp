@@ -19,7 +19,7 @@ export const AppNavigator = () => {
     }, [getSessionState]);
 
     if (role === null) {
-        return <SplashScreen titleIndicator="Loading..." />;
+        return <SplashScreen titleIndicator="Choose a route..." />;
     }
 
     switch (role) {

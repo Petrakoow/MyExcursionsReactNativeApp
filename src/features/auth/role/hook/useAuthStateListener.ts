@@ -9,7 +9,6 @@ import {
     clearUserSession,
 } from '@/shared/db/models/user';
 import {UNAUTHORIZED_USER} from '@/shared/config/constants';
-import {useDatabase} from '@/app/providers';
 
 type AuthState = {
     loading: boolean;
@@ -19,8 +18,6 @@ type AuthState = {
 
 export const useAuthStateListener = (): AuthState => {
     const [loading, setLoading] = useState(true);
-
-    const database = useDatabase();
 
     const reloadState = useCallback(async () => {
         try {
@@ -50,17 +47,17 @@ export const useAuthStateListener = (): AuthState => {
     }, []);
 
     const saveSessionState = async (userId: string, role: RolesEnum) => {
-        await saveUserSession(database, {userId, role});
+        await saveUserSession({userId, role});
     };
 
     const getSessionState = async () => {
-        const session = await getUserSession(database);
+        const session = await getUserSession();
         return session || null;
     };
 
     const clearSessionState = async () => {
         try {
-            await clearUserSession(database);
+            await clearUserSession();
             console.log('Session state cleared');
         } catch (error) {
             console.error('Error clearing session state:', error);

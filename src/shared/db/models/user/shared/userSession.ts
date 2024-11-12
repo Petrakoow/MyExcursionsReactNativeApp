@@ -1,47 +1,37 @@
-import {RolesEnum} from '@/entities/user/model';
-import {Database} from '@nozbe/watermelondb';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RolesEnum } from '@/entities/user/model';
 
 export type UserSessionType = {
     userId: string;
     role: RolesEnum;
 };
 
-export const saveUserSession = async (
-    database: Database,
-    session: UserSessionType,
-) => {
+export const saveUserSession = async (session: UserSessionType) => {
     try {
-        await database.localStorage.set(
-            'user_session',
-            JSON.stringify(session),
-        );
+        await AsyncStorage.setItem('user_session', JSON.stringify(session));
         console.log('Session saved');
     } catch (error) {
         throw new Error(`Error while saving: ${(error as Error).message}`);
     }
 };
 
-export const getUserSession = async (
-    database: Database,
-): Promise<UserSessionType | null> => {
+export const getUserSession = async (): Promise<UserSessionType | null> => {
     try {
-        const sessionData = (await database.localStorage.get(
-            'user_session',
-        )) as string;
+        const sessionData = await AsyncStorage.getItem('user_session');
         if (sessionData) {
             console.log('Session found');
             return JSON.parse(sessionData);
         }
         return null;
     } catch (error) {
-        throw new Error(`Error while receiving: ${(error as Error).message}`);
+        throw new Error(`Error while retrieving: ${(error as Error).message}`);
     }
 };
 
-export const clearUserSession = async (database: Database) => {
+export const clearUserSession = async () => {
     try {
-        await database.localStorage.remove('user_session');
-        console.log('session cleared');
+        await AsyncStorage.removeItem('user_session');
+        console.log('Session cleared');
     } catch (error) {
         throw new Error(`Error while clearing: ${(error as Error).message}`);
     }

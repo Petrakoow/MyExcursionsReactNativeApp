@@ -1,13 +1,12 @@
+import Realm from 'realm';
 import {FavoriteExcursion} from '@/shared/db/models';
-import {Database} from '@nozbe/watermelondb';
 
-export async function addToFavorites(database: Database, excursionId: number) {
-    await database.write(async () => {
-        await database
-            .get<FavoriteExcursion>('favorite_excursions')
-            .create(excursion => {
-                excursion.excursionId = excursionId;
-                excursion.createdAt = new Date();
-            });
+export async function addToFavorites(realm: Realm, excursionId: number) {
+    realm.write(() => {
+        realm.create(FavoriteExcursion.schema.name, {
+            excursionId,
+            createdAt: new Date(),
+        });
     });
+    console.log(`Excursion ${excursionId} added to favorites.`);
 }

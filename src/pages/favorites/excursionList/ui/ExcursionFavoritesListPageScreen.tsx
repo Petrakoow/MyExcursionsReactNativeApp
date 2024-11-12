@@ -1,5 +1,6 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import Realm from 'realm';
 import {FavoriteExcursion} from '@/shared/db/models';
 import {fetchTourInfo, TourTypeRequest} from '@/shared/api/sputnik8';
 import {PreviewExcursionCard} from '@/widgets/previewExcursionCard';
@@ -21,19 +22,22 @@ export const ExcursionFavoritesListPageScreen = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState<string | null>(null);
 
-    const database = useDatabase();
+    const realm = useDatabase();
 
     useEffect(() => {
-        const subscription = database
-            .get<FavoriteExcursion>('favorite_excursions')
-            .query()
-            .observe()
-            .subscribe(favoriteExcursions => {
-                setFavorites(favoriteExcursions);
-            });
+        const favoriteExcursions =
+            realm.objects<FavoriteExcursion>('FavoriteExcursion');
 
-        return () => subscription.unsubscribe();
-    }, []);
+        const handleChange = () => {
+            setFavorites(favoriteExcursions.slice());
+        };
+
+        favoriteExcursions.addListener(handleChange);
+
+        return () => {
+            favoriteExcursions.removeListener(handleChange);
+        };
+    }, [realm]);
 
     useEffect(() => {
         const fetchTours = async () => {

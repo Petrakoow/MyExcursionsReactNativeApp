@@ -1,20 +1,14 @@
-import {Q} from '@nozbe/watermelondb';
-import {FavoriteExcursion} from '@/shared/db/models';
-import {Database} from '@nozbe/watermelondb';
+import Realm from 'realm';
+import { FavoriteExcursion } from '@/shared/db/models';
 
-export async function removeFromFavorites(
-    database: Database,
-    excursionId: number,
-) {
-    await database.write(async () => {
-        const record = await database
-            .get<FavoriteExcursion>('favorite_excursions')
-            .query(Q.where('excursion_id', excursionId))
-            .fetch();
-
-        if (record.length) {
-            await record[0].markAsDeleted();
-            await record[0].destroyPermanently();
+export async function removeFromFavorites(realm: Realm, excursionId: number) {
+    realm.write(() => {
+        const excursion = realm.objectForPrimaryKey(FavoriteExcursion.schema.name, excursionId);
+        if (excursion) {
+            realm.delete(excursion);
+            console.log(`Excursion ${excursionId} removed from favorites.`);
+        } else {
+            console.log(`Excursion ${excursionId} not found in favorites.`);
         }
     });
 }
