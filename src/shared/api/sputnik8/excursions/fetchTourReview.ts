@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {API_KEY, USERNAME, BASE_URL} from '@/shared/config/api/sputnik8';
-import {LanguageType, WithEmptyContent} from './fetchParamsType';
-import { TourReviewTypeRequest } from '../requestType/tourReviewTypeRequest';
+import {API_KEY, USERNAME, PRODUCT_URL} from '@/shared/config/api/sputnik8';
+import {LanguageType, WithEmptyContent} from '../fetchType/fetchParamsType';
+import {TourReviewTypeRequest} from '../requestType/tourReviewTypeRequest';
 export const fetchTourReview = async (
     productId: number,
     lang: LanguageType = 'ru',
@@ -10,7 +10,7 @@ export const fetchTourReview = async (
     withEmptyContent: WithEmptyContent = true,
 ) => {
     try {
-        const requestURL = `${BASE_URL}/${productId}/reviews`;
+        const requestURL = `${PRODUCT_URL}/${productId}/reviews`;
         const response = await axios.get(requestURL, {
             params: {
                 api_key: API_KEY,
@@ -22,7 +22,7 @@ export const fetchTourReview = async (
             },
         });
 
-        return response.data as TourReviewTypeRequest; 
+        return response.data as TourReviewTypeRequest;
     } catch (error) {
         console.error('Failed to fetch tour reviews:', error);
         throw error;

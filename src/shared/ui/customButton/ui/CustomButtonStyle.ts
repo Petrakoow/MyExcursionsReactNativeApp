@@ -8,13 +8,13 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         gap: moderateScale(15),
-        paddingHorizontal: moderateScale(20),
-        paddingVertical: moderateScale(15),
         borderRadius: CONTENT_RADIUS,
-        maxHeight: 55,
     },
     disabled: {
         opacity: 0.7,
+    },
+    content: {
+        paddingHorizontal: moderateScale(10),
     },
 });
 
@@ -26,5 +26,11 @@ export const styleButton = StyleSheet.create({
     secondTypeButton: {
         borderWidth: 1,
         backgroundColor: Colors.white,
+    },
+    heightFirstType: {
+        minHeight: moderateScale(45),
+    },
+    heightSecondType: {
+        minHeight: moderateScale(25),
     },
 });

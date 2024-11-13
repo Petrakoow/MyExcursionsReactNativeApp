@@ -91,7 +91,10 @@ export const SignUpForm = () => {
                         <View>
                             <CustomButton
                                 textButton="Подвердить и продолжить"
-                                style={styleButton.firstTypeButton}
+                                style={[
+                                    styleButton.firstTypeButton,
+                                    styleButton.heightFirstType,
+                                ]}
                                 onPress={() => handleSubmit()}
                                 disabled={loading}
                             />

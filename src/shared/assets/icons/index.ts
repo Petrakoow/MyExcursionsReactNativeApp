@@ -7,6 +7,11 @@ export {default as Home} from './Home.svg';
 export {default as Favourite} from './Favourite.svg';
 export {default as User} from './User.svg';
 export {default as Tours} from './Tours.svg';
+
 export {default as FavouriteExcursionAction} from './excursion/FavouriteAction.svg';
 export {default as ReviewsExcursionAction} from './excursion/ReviewsAction.svg';
 export {default as BookingExcursionAction} from './excursion/BookingAction.svg';
+
+export {default as AddFilterAction} from './filter/Add.svg';
+export {default as DeleteFilterAction} from './filter/Delete.svg';
+export {default as DropdownAction} from './filter/ArrowDown.svg';

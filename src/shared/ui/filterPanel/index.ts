@@ -1,1 +1,1 @@
-export {FilterPanel} from './ui/FilterPanel';
+export {FilterPanel, SearchFilterComponent} from './ui/FilterPanel';

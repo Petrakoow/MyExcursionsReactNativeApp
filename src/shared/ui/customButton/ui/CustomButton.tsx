@@ -15,6 +15,7 @@ type CustomButtonProps = TouchableOpacityProps & {
     textButton?: string | number;
     textColor?: ColorValue;
     textSize?: TextSize;
+    iconSize?: number;
 };
 
 const ICON_SIZE = moderateScale(25);
@@ -22,11 +23,12 @@ const ICON_SIZE = moderateScale(25);
 export const CustomButton = (props: CustomButtonProps) => {
     const {
         Icon,
-        textButton = 'default text',
-        style,
+        textButton,
         textColor = Colors.white,
         textSize = TextSize.S_XL,
         disabled,
+        style,
+        iconSize = ICON_SIZE,
         ...res
     } = props;
     return (
@@ -34,11 +36,13 @@ export const CustomButton = (props: CustomButtonProps) => {
             style={[styles.container, style, disabled && styles.disabled]}
             disabled={disabled}
             {...res}>
-            <CustomText size={textSize} style={{color: textColor}}>
-                {textButton}
-            </CustomText>
+            {textButton && (
+                <CustomText size={textSize} style={[{color: textColor}, styles.content]}>
+                    {textButton}
+                </CustomText>
+            )}
             {Icon && (
-                <Icon width={ICON_SIZE} height={ICON_SIZE} fill={textColor} />
+                <Icon width={iconSize} height={iconSize} fill={textColor} />
             )}
         </TouchableOpacity>
     );

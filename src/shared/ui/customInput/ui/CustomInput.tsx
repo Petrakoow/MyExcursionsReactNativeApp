@@ -10,15 +10,17 @@ type CustomTextType = TextInputProps & {
 };
 
 export const CustomInput = (props: CustomTextType) => {
-    const {label = 'Input field', secureTextEntry, isSwitching, ...res} = props;
+    const {label, secureTextEntry, isSwitching, style, ...res} = props;
     const [isSecure, setIsSecure] = useState<boolean>(secureTextEntry || false);
 
     return (
         <View style={styles.container}>
-            <CustomText size={TextSize.S_XL} weight={TextWeight.MEDIUM}>
-                {label}
-            </CustomText>
-            <View style={styles.wrapper}>
+            {label && (
+                <CustomText size={TextSize.S_XL} weight={TextWeight.NORMAL}>
+                    {label}
+                </CustomText>
+            )}
+            <View style={secureTextEntry && styles.wrapper}>
                 <TextInput
                     {...res}
                     style={[
@@ -27,6 +29,7 @@ export const CustomInput = (props: CustomTextType) => {
                         FontStyle.font_normal,
                         FontStyle.size_lg,
                         secureTextEntry && styles.paddingInput,
+                        style,
                     ]}
                     numberOfLines={1}
                     secureTextEntry={isSecure}

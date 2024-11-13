@@ -14,9 +14,13 @@ import {styles} from './ExcursionListPageScreenStyle';
 import {ErrorText} from '@/shared/ui/errorText';
 import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetExcursionsByPageNumber} from '@/features/excursions';
-import { FilterExcursionPanel } from '@/widgets/filterExcursionPanel';
+import {FilterExcursionPanel} from '@/widgets/filterExcursionPanel';
 export const ToursPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
+    const [selectedFilters, setSelectedFilters] = useState({
+        countries: [],
+        cities: [],
+    });
     const flatListRef = useRef<FlatList>(null);
 
     const {
@@ -30,21 +34,18 @@ export const ToursPageScreen = () => {
         getToursByPage,
         handleNextPage,
         handlePreviousPage,
-    } = useGetExcursionsByPageNumber();
-
-    // useEffect(() => { // реализовать перезагрузку при невозможности получить информацию 
-    //     if (isError && retryCount < 3) {
-    //         const retryTimeout = setTimeout(() => {
-    //             getToursByPage(page);
-    //         }, 2000);
-                
-    //         return () => clearTimeout(retryTimeout);
-    //     }
-    // }, [isError, retryCount, page]);
+    } = useGetExcursionsByPageNumber();``
 
     useEffect(() => {
         getToursByPage(page);
     }, [page]);
+
+    const handleFiltersChange = (filters: {
+        countries: {id: number; name: string}[];
+        cities: {id: number; name: string}[];
+    }) => {
+        setSelectedFilters(filters);
+    };
 
     const renderTourCard = ({item}: {item: TourTypeRequest}) => (
         <PreviewExcursionCard
@@ -68,7 +69,7 @@ export const ToursPageScreen = () => {
 
     return (
         <ScreenContent>
-            <FilterExcursionPanel/>
+            <FilterExcursionPanel onFiltersChange={handleFiltersChange} />
             {isError && <ErrorText title="Load Error" description={isError} />}
             <FlatList
                 ref={flatListRef}

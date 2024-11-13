@@ -18,7 +18,7 @@ type AuthState = {
 
 export const useAuthStateListener = (): AuthState => {
     const [loading, setLoading] = useState(true);
-
+    
     const reloadState = useCallback(async () => {
         try {
             setLoading(true);

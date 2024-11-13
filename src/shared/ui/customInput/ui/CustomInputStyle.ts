@@ -3,6 +3,7 @@ import {CONTENT_RADIUS, moderateScale} from '@/shared/config/dimensions';
 import {Colors} from '@/shared/config/colors';
 export const styles = StyleSheet.create({
     container: {
+        flex: 1,
         gap: moderateScale(5),
     },
     input: {

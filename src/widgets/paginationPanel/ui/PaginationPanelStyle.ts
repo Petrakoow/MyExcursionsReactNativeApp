@@ -8,8 +8,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     pageButton: {
-        paddingVertical: moderateScale(5),
-        paddingHorizontal: moderateScale(15),
         width: moderateScale(100),
+        height: moderateScale(25),
     },
 });

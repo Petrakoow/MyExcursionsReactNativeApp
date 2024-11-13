@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_KEY, USERNAME, BASE_URL} from '@/shared/config/api/sputnik8';
+import {API_KEY, USERNAME, PRODUCT_URL} from '@/shared/config/api/sputnik8';
 import {TourTypeRequest} from '../requestType/tourTypeRequest';
 
 import {
@@ -7,7 +7,7 @@ import {
     OrderFieldType,
     LanguageType,
     OrderType,
-} from './fetchParamsType';
+} from '../fetchType/fetchParamsType';
 
 export const fetchTours = async (
     lang: LanguageType = 'ru',
@@ -25,7 +25,7 @@ export const fetchTours = async (
         if (limit > 100 || limit < 1) {
             throw new Error('the limit can be set in the range from 1 to 100 ');
         }
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get(PRODUCT_URL, {
             params: {
                 api_key: API_KEY,
                 username: USERNAME,

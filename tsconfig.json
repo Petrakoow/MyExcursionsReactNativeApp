@@ -3,7 +3,6 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {

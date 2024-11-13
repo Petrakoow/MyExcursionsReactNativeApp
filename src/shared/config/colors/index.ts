@@ -63,4 +63,15 @@ export const Colors = {
     bottomPanel: {
         backgroundColor: '#3D4BDB',
     },
+    toggleButton: {
+        active: '#FDCC0D',
+        inActive: '#FFF',
+        textActive: '#FFF',
+        textInActive: '#000',
+    },
+    searchFilter: {
+        flatList: {
+            backgroundColor: '#3D4BDB',
+        },
+    },
 };

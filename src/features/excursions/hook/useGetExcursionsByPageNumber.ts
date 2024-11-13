@@ -2,6 +2,11 @@ import {TourTypeRequest, fetchTours} from '@/shared/api/sputnik8';
 
 import {useState} from 'react';
 
+type GetToursType = {
+    page: number;
+    filters: {countries: number; cities: number};
+};
+
 export const useGetExcursionsByPageNumber = () => {
     const [page, setPage] = useState(1);
     const [isFetching, setIsFetching] = useState(false);
@@ -9,10 +14,16 @@ export const useGetExcursionsByPageNumber = () => {
     const [isError, setError] = useState<string | null>(null);
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
     const [retryCount, setRetryCount] = useState(0);
-    const getToursByPage = async (page: number) => {
+    const getToursByPage = async (toursProps: GetToursType) => {
+        const {page, filters} = toursProps;
         try {
             setIsFetching(true);
-            const toursData = await fetchTours('ru', page);
+            const toursData = await fetchTours(
+                'ru',
+                page,
+                filters.countries,
+                filters.cities,
+            );
             setTours(toursData);
             setError(null);
             setRetryCount(0);

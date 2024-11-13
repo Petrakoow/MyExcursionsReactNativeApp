@@ -33,7 +33,7 @@ export const AuthScreen = () => {
                     <View style={styles.continueAsGuestContainer}>
                         <CustomButton
                             textButton="Продолжить как гость"
-                            style={styleButton.secondTypeButton}
+                            style={[styleButton.secondTypeButton, styleButton.heightFirstType]}
                             textColor={Colors.black}
                             Icon={AnonymousIcon}
                         />
