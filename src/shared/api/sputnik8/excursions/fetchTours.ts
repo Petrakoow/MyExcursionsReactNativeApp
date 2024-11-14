@@ -15,11 +15,11 @@ export const fetchTours = async (
     limit = 50,
     cityId?: number,
     countryId?: number,
+    order?: OrderFieldType,
+    order_type?: OrderType,
     categoryId?: number,
     categorySlug?: string,
     currency?: CurrencyType,
-    order?: OrderFieldType,
-    order_type?: OrderType,
 ) => {
     try {
         if (limit > 100 || limit < 1) {
@@ -33,12 +33,12 @@ export const fetchTours = async (
                 page,
                 limit,
                 ...(cityId && {city_id: cityId}),
-                ...(countryId && {city_id: countryId}),
+                ...(countryId && {country_id: countryId}),
                 ...(categoryId && {category_id: categoryId}),
                 ...(categorySlug && {category_slug: categorySlug}),
-                ...(currency && {currency}),
-                ...(order && {order}),
-                ...(order_type && {order_type}),
+                ...(currency && {currency: currency}),
+                ...(order && {order: order}),
+                ...(order_type && {order_type: order_type}),
             },
         });
         return response.data as TourTypeRequest[];

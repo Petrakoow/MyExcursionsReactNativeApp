@@ -12,7 +12,7 @@ export const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} =
 
 // PADDING
 export const CONTENT_PADDING_HORIZONTAL = moderateScale(20);
-export const CONTENT_PADDING_VERTICAL = moderateScale(25);
+export const CONTENT_PADDING_VERTICAL = moderateScale(20);
 
 // MARGIN
 

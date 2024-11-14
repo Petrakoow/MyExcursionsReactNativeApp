@@ -1,1 +1,2 @@
-export {FilterPanel, SearchFilterComponent} from './ui/FilterPanel';
+export {FilterPanel} from './ui/FilterPanel';
+export {} from './hook/useDropdownFilter';

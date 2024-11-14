@@ -1,27 +1,14 @@
-import {
-    ColorValue,
-    TouchableOpacity,
-    TouchableOpacityProps,
-} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {CustomText} from '../../customText';
 import {styles} from './ToggleButtonStyle';
 import {Colors} from '@/shared/config/colors';
-
-type ToggleButtonType = TouchableOpacityProps & {
-    title?: string;
-    isActive?: boolean; 
-    activeColor?: string;
-    inactiveColor?: string;
-    textActiveColor?: ColorValue;
-    textInActiveColor?: ColorValue;
-    callback?: () => void;
-};
+import {ToggleButtonType} from '../type/toggleButtonType';
 
 export const ToggleButton = (props: ToggleButtonType) => {
     const {
         title,
-        isActive = false, // Default to false if not provided
+        isActive = false, 
         activeColor = Colors.toggleButton.active,
         inactiveColor = Colors.toggleButton.inActive,
         textActiveColor = Colors.toggleButton.textActive,

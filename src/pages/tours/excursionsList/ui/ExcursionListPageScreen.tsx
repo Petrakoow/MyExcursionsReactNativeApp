@@ -1,7 +1,6 @@
 import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {ScreenContent} from '@/shared/ui/screenContent';
-import {fetchTours} from '@/shared/api/sputnik8';
 import {SplashScreen} from '@/shared/ui/splashScreen';
 import {useNavigation} from '@react-navigation/native';
 import {PreviewExcursionCard} from '@/widgets/previewExcursionCard';
@@ -13,14 +12,22 @@ import {TourTypeRequest} from '@/shared/api/sputnik8';
 import {styles} from './ExcursionListPageScreenStyle';
 import {ErrorText} from '@/shared/ui/errorText';
 import {PaginationPanel} from '@/widgets/paginationPanel';
-import {useGetExcursionsByPageNumber} from '@/features/excursions';
+import {
+    ExcursionFilterType,
+    useGetExcursionsByPageNumber,
+} from '@/features/excursions';
 import {FilterExcursionPanel} from '@/widgets/filterExcursionPanel';
+import {PAGE_LIMIT} from '@/shared/config/constants';
+
+const PAGE_LANGUAGE = 'ru';
+
 export const ToursPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
-    const [selectedFilters, setSelectedFilters] = useState({
-        countries: [],
-        cities: [],
-    });
+
+    const [selectedFilters, setSelectedFilters] = useState<
+        ExcursionFilterType | undefined
+    >(undefined);
+
     const flatListRef = useRef<FlatList>(null);
 
     const {
@@ -30,21 +37,28 @@ export const ToursPageScreen = () => {
         isFetching,
         isLoading,
         page,
-        retryCount,
         getToursByPage,
         handleNextPage,
         handlePreviousPage,
-    } = useGetExcursionsByPageNumber();``
+        setPage,
+    } = useGetExcursionsByPageNumber();
 
     useEffect(() => {
-        getToursByPage(page);
-    }, [page]);
+        setPage(page => (page = 1));
+    }, [selectedFilters]);
 
-    const handleFiltersChange = (filters: {
-        countries: {id: number; name: string}[];
-        cities: {id: number; name: string}[];
-    }) => {
-        setSelectedFilters(filters);
+    useEffect(() => {
+        getToursByPage({
+            language: PAGE_LANGUAGE,
+            limit: PAGE_LIMIT,
+            filters: selectedFilters,
+        });
+    }, [page, selectedFilters]);
+
+    console.log(selectedFilters);
+
+    const handleFiltersChange = (props: ExcursionFilterType) => {
+        setSelectedFilters(props);
     };
 
     const renderTourCard = ({item}: {item: TourTypeRequest}) => (
@@ -69,15 +83,22 @@ export const ToursPageScreen = () => {
 
     return (
         <ScreenContent>
-            <FilterExcursionPanel onFiltersChange={handleFiltersChange} />
-            {isError && <ErrorText title="Load Error" description={isError} />}
-            <FlatList
-                ref={flatListRef}
-                data={tours}
-                renderItem={renderTourCard}
-                keyExtractor={(item, index) => `${item.id}-${index}`}
-                contentContainerStyle={styles.content}
-            />
+            <View style={styles.content}>
+                <View>
+                    <FilterExcursionPanel
+                        onFiltersChange={handleFiltersChange}
+                    />
+                </View>
+                {isError && (
+                    <ErrorText title="Load Error" description={isError} />
+                )}
+                <FlatList
+                    ref={flatListRef}
+                    data={tours}
+                    renderItem={renderTourCard}
+                    keyExtractor={(item, index) => `${item.id}-${index}`}
+                />
+            </View>
             <View style={[styles.content, styles.pagination]}>
                 <PaginationPanel
                     page={page}

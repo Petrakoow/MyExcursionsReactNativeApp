@@ -1,11 +1,6 @@
 import {TourTypeRequest, fetchTours} from '@/shared/api/sputnik8';
-
 import {useState} from 'react';
-
-type GetToursType = {
-    page: number;
-    filters: {countries: number; cities: number};
-};
+import {ExcursionSettingsType} from '../type/excursionFilterType';
 
 export const useGetExcursionsByPageNumber = () => {
     const [page, setPage] = useState(1);
@@ -13,27 +8,28 @@ export const useGetExcursionsByPageNumber = () => {
     const [isLoading, setLoading] = useState(true);
     const [isError, setError] = useState<string | null>(null);
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
-    const [retryCount, setRetryCount] = useState(0);
-    const getToursByPage = async (toursProps: GetToursType) => {
-        const {page, filters} = toursProps;
+    const getToursByPage = async (props: ExcursionSettingsType) => {
+        const {language, filters, limit} = props;
+        
         try {
             setIsFetching(true);
             const toursData = await fetchTours(
-                'ru',
+                language,
                 page,
-                filters.countries,
-                filters.cities,
+                limit,
+                filters?.city?.id,
+                filters?.country?.id,
+                filters?.product,
+                filters?.ascDesc,
             );
             setTours(toursData);
             setError(null);
-            setRetryCount(0);
         } catch (error) {
             setError(
                 error instanceof Error
                     ? error.message
                     : 'An unexpected error occurred',
             );
-            setRetryCount(prev => prev + 1);
         } finally {
             setIsFetching(false);
             setLoading(false);
@@ -57,9 +53,9 @@ export const useGetExcursionsByPageNumber = () => {
         isError,
         tours,
         page,
-        retryCount,
         getToursByPage,
         handleNextPage,
         handlePreviousPage,
+        setPage,
     };
 };

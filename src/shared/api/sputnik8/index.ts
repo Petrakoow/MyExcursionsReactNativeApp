@@ -15,6 +15,7 @@ export type {
     CurrencyType,
     LanguageType,
     OrderFieldType,
+    OrderType
 } from './fetchType/fetchParamsType';
 
 export {

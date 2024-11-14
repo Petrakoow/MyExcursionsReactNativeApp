@@ -7,10 +7,14 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
     content: {
-        paddingVertical: CONTENT_PADDING_VERTICAL,
+        paddingTop: CONTENT_PADDING_VERTICAL,
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+        flex: 1,
+        gap: moderateScale(5),
     },
     pagination: {
-        paddingVertical: moderateScale(5),
+        flex: 0,
+        paddingTop: moderateScale(5),
+        paddingBottom: moderateScale(5),
     },
 });

@@ -43,7 +43,7 @@ export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
                     </View>
                 )}
                 <CustomText weight={TextWeight.LIGHT} style={styles.duration}>
-                    Длительность: {tour.order_options[0].duration.name}
+                    Длительность: {tour.order_options[0]?.duration.name}
                 </CustomText>
                 <CustomText weight={TextWeight.LIGHT} style={styles.price}>
                     Цена: {tour.netto_price}{' '}

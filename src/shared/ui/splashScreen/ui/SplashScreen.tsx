@@ -10,21 +10,23 @@ import {Colors} from '@/shared/config/colors';
 import {CustomText} from '../../customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {Logotype} from '../../customLogo';
+import {CustomIndicator} from '../../customIndicator';
 
-type SplashScreenType = ActivityIndicatorProps & {
+type SplashScreenType = {
     titleIndicator?: string;
     titleLogotype?: string;
     showLogotype?: boolean;
+    color?: ColorValue;
+    size?: number | "large" | "small" | undefined;
 };
 
 export const SplashScreen = (props: SplashScreenType) => {
     const {
         titleIndicator = 'Hello!',
         titleLogotype = 'TourismApp',
-        color = Colors.indicator,
         showLogotype = true,
+        color = Colors.indicator,
         size = 'large',
-        ...res
     } = props;
     return (
         <View style={styles.container}>
@@ -40,7 +42,7 @@ export const SplashScreen = (props: SplashScreenType) => {
                     style={styles.colorTitle}>
                     {titleIndicator}
                 </CustomText>
-                <ActivityIndicator size={size} color={color} {...res} />
+                <CustomIndicator size={size} color={color} />
             </View>
         </View>
     );
