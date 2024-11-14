@@ -10,6 +10,7 @@ export const stylesFilterPanel = StyleSheet.create({
     container: {
         gap: moderateScale(1),
         marginBottom: moderateScale(5),
+        width: "100%",
     },
     contentFilter: {
         maxHeight: moderateScale(100),
@@ -17,9 +18,6 @@ export const stylesFilterPanel = StyleSheet.create({
     },
     contentFilterList: {
         gap: moderateScale(3),
-        // padding: 5,
-        // marginVertical: 5,
-        // backgroundColor: Colors.searchFilter.flatList.backgroundColor,
     },
 });
 
