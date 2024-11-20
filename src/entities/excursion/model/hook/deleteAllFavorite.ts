@@ -7,7 +7,7 @@ export const deleteAllFavoriteExcursions = (
 ): void => {
     realm.write(() => {
         const userFavorites = realm
-            .objects<FavoriteExcursion>('FavoriteExcursion')
+            .objects<FavoriteExcursion>(FavoriteExcursion.schema.name)
             .filtered(`userId == $0`, userId);
         realm.delete(userFavorites);
     });

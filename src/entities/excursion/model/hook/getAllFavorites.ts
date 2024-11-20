@@ -6,7 +6,7 @@ export const getAllFavoriteExcursions = (
     userId: string,
 ): FavoriteExcursion[] => {
     return realm
-        .objects<FavoriteExcursion>('FavoriteExcursion')
+        .objects<FavoriteExcursion>(FavoriteExcursion.schema.name)
         .filtered(`userId == $0`, userId)
         .slice();
 };

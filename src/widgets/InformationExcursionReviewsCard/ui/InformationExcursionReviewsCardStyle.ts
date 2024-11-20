@@ -52,4 +52,7 @@ export const styles = StyleSheet.create({
     reviewButton: {
         padding: moderateScale(3),
     },
+    contentDatabaseReviews: {
+        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+    }
 });

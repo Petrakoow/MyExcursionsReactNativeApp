@@ -5,17 +5,16 @@ import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {CustomText} from '@/shared/ui/customText';
 import {palette} from '@/shared/config/colors';
 import {MODAL_WIDTH, moderateScale} from '@/shared/config/dimensions';
-import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import {Review} from '@/shared/db/models';
-import {useDatabase} from '@/app/providers';
 
 type ReviewModalType = ModalProps & {
     userId: string;
     excursionId: number;
     userInitials: string;
+    existingReview?: Review; // Passing existingReview as a prop
     onClose: () => void;
-    onReviewSubmit: () => void;
+    onReviewSubmit: (rating: number, reviewText: string) => void;
+    onReviewDelete: () => void;
 };
 
 export const ReviewModal = (props: ReviewModalType) => {
@@ -26,63 +25,50 @@ export const ReviewModal = (props: ReviewModalType) => {
         visible,
         onClose,
         onReviewSubmit,
+        onReviewDelete,
+        existingReview, // Use existingReview directly as a prop
         ...res
     } = props;
 
-    const [existingReview, setExistingReview] = useState<Review | undefined>(
-        undefined,
-    );
+    // Form state
+    const [rating, setRating] = useState<string>('');
+    const [reviewText, setReviewText] = useState<string>('');
+    const [error, setError] = useState<string>(''); // State for error messages
 
-    const database = useDatabase();
-
+    // Update form state when `existingReview` changes
     useEffect(() => {
-        const review = database.objectForPrimaryKey<Review>('Review', userId);
-        setExistingReview(review || undefined);
-    }, [database, userId]);
+        if (existingReview) {
+            setRating(existingReview.rating.toString());
+            setReviewText(existingReview.reviewText);
+        } else {
+            setRating('');
+            setReviewText('');
+        }
+        setError(''); // Clear errors when modal resets
+    }, [existingReview]);
 
-    const formik = useFormik({
-        initialValues: {
-            rating: existingReview?.rating?.toString() || '0',
-            reviewText: existingReview?.reviewText || '',
-        },
-        validationSchema: Yup.object({
-            rating: Yup.number()
-                .required('Рейтинг обязателен')
-                .min(1, 'Рейтинг должен быть от 1 до 5')
-                .max(5, 'Рейтинг должен быть от 1 до 5'),
-            reviewText: Yup.string()
-                .required('Текст отзыва обязателен')
-                .max(500, 'Максимальная длина текста отзыва - 500 символов'),
-        }),
-        enableReinitialize: true,
-        onSubmit: values => {
-            database.write(() => {
-                database.create(
-                    'Review',
-                    {
-                        userId,
-                        excursionId,
-                        userInitials,
-                        rating: parseInt(values.rating, 10),
-                        reviewText: values.reviewText,
-                        reviewDate: new Date(),
-                    },
-                    true,
-                );
-            });
-            onReviewSubmit();
-            onClose();
-        },
-    });
+    const validateForm = (): boolean => {
+        const parsedRating = parseInt(rating, 10);
+        if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+            setError('Рейтинг должен быть числом от 1 до 5.');
+            return false;
+        }
+        if (reviewText.trim().length === 0) {
+            setError('Текст отзыва не может быть пустым.');
+            return false;
+        }
+        setError('');
+        return true;
+    };
+
+    const handleSubmit = () => {
+        if (validateForm()) {
+            onReviewSubmit(parseInt(rating, 10), reviewText.trim());
+        }
+    };
 
     const handleDelete = () => {
-        if (existingReview) {
-            database.write(() => {
-                database.delete(existingReview);
-            });
-            onReviewSubmit();
-            onClose();
-        }
+        onReviewDelete(); // Call the parent's delete handler
     };
 
     return (
@@ -107,24 +93,15 @@ export const ReviewModal = (props: ReviewModalType) => {
                             style={styles.input}
                             keyboardType="numeric"
                             placeholder="Оценка (1-5)"
-                            value={formik.values.rating}
+                            value={rating}
                             onChangeText={value => {
-                                const numericValue = Math.max(
-                                    1,
-                                    Math.min(5, parseInt(value || '0', 10)),
+                                const numericValue = value.replace(
+                                    /[^0-9]/g,
+                                    '',
                                 );
-                                formik.setFieldValue(
-                                    'rating',
-                                    numericValue.toString(),
-                                );
+                                setRating(numericValue.slice(0, 1));
                             }}
-                            onBlur={formik.handleBlur('rating')}
                         />
-                        {formik.touched.rating && formik.errors.rating && (
-                            <CustomText style={styles.errorText}>
-                                {formik.errors.rating}
-                            </CustomText>
-                        )}
                     </View>
                     <View>
                         <CustomText
@@ -136,29 +113,28 @@ export const ReviewModal = (props: ReviewModalType) => {
                             style={[styles.input, styles.textArea]}
                             multiline
                             placeholder="Текст отзыва"
-                            value={formik.values.reviewText}
-                            onChangeText={formik.handleChange('reviewText')}
-                            onBlur={formik.handleBlur('reviewText')}
+                            value={reviewText}
+                            onChangeText={setReviewText}
                         />
-                        {formik.touched.reviewText &&
-                            formik.errors.reviewText && (
-                                <CustomText style={styles.errorText}>
-                                    {formik.errors.reviewText}
-                                </CustomText>
-                            )}
                     </View>
+                    {error ? (
+                        <CustomText
+                            size={TextSize.S_BASE}
+                            style={styles.errorText}>
+                            {error}
+                        </CustomText>
+                    ) : null}
                     <View style={styles.buttonContainer}>
                         {existingReview && (
                             <CustomButton
                                 textButton="Удалить"
                                 onPress={handleDelete}
-                                style={styleButton.secondTypeButton}
-                                textColor={palette.light.warning}
+                                style={styleButton.firstTypeButton}
                             />
                         )}
                         <CustomButton
                             textButton="Сохранить"
-                            onPress={() => formik.handleSubmit}
+                            onPress={handleSubmit}
                             style={styleButton.firstTypeButton}
                         />
                         <CustomButton
@@ -201,15 +177,13 @@ const styles = StyleSheet.create({
         height: 100,
         textAlignVertical: 'top',
     },
+    errorText: {
+        color: palette.light.warning,
+        marginBottom: 10,
+    },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: moderateScale(10),
-    },
-    errorText: {
-        color: palette.light.warning,
-        fontSize: 12,
-        marginTop: -5,
-        marginBottom: 10,
     },
 });
