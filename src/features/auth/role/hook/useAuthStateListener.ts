@@ -32,12 +32,13 @@ export const useAuthStateListener = (): AuthState => {
                     console.log(userData);
                     await saveSessionState(
                         authUser.uid,
+                        userData.username,
                         userData.role as RolesEnum,
                     );
                     console.log('User session saved:', await getSessionState());
                 }
             } else {
-                await saveSessionState(UNAUTHORIZED_USER, RolesEnum.GUEST);
+                await saveSessionState(UNAUTHORIZED_USER, UNAUTHORIZED_USER, RolesEnum.GUEST);
             }
         } catch (error) {
             throw new Error(`Error in reloadState: ${(error as Error).message}`)
@@ -46,8 +47,8 @@ export const useAuthStateListener = (): AuthState => {
         }
     }, []);
 
-    const saveSessionState = async (userId: string, role: RolesEnum) => {
-        await saveUserSession({userId, role});
+    const saveSessionState = async (userId: string, username: string, role: RolesEnum) => {
+        await saveUserSession({userId, username, role});
     };
 
     const getSessionState = async () => {

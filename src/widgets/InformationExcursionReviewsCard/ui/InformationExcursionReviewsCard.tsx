@@ -9,7 +9,7 @@ import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetReviewsByTokenString, useReviews} from '@/features/reviews';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {ReviewModal} from '@/widgets/reviewModal';
-import {getUserSession} from '@/shared/db/models/user';
+import {getUserSession, UserBasicFieldType} from '@/shared/db/models/user';
 
 type InformationReviewsType = {
     uid: number;
@@ -35,25 +35,31 @@ export const InformationExcursionReviewsCard = (
     } = useGetReviewsByTokenString();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [userId, setUserId] = useState<string>('');
+    const [userSession, setUserSession] = useState<UserBasicFieldType>({
+        userId: '',
+        username: '',
+    });
     const {reviews, existingReview, addOrUpdate, remove} = useReviews(
         uid,
-        userId,
+        userSession,
     );
 
     useEffect(() => {
         const fetchUserSession = async () => {
             const session = await getUserSession();
             if (session) {
-                setUserId(session.userId);
+                setUserSession({
+                    userId: session.userId,
+                    username: session.username,
+                });
             }
         };
 
         fetchUserSession();
         getToursByExcursionId(currentToken, uid);
-    }, [currentToken, uid, userId]);
+    }, [currentToken, uid]);
 
-    if (isLoading || userId === null) {
+    if (isLoading || !userSession) {
         return (
             <SplashScreen
                 showLogotype={false}
@@ -104,7 +110,9 @@ export const InformationExcursionReviewsCard = (
                             return (
                                 <ReviewExcursionCard
                                     item={item}
-                                    isPrimary={item.userId === userId}
+                                    isPrimary={
+                                        item.userId === userSession.userId
+                                    }
                                 />
                             );
                         }}

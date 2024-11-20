@@ -9,8 +9,9 @@ import {
     getReviewUser,
     updateReview,
 } from '@/entities/reviews';
+import { UserBasicFieldType } from '@/shared/db/models/user';
 
-export const useReviews = (uid: number, userId: string) => {
+export const useReviews = (uid: number, user: UserBasicFieldType) => {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [existingReview, setExistingReview] = useState<Review | undefined>(
         undefined,
@@ -19,19 +20,19 @@ export const useReviews = (uid: number, userId: string) => {
 
     useEffect(() => {
         const allReviews = getReviews(database, uid) || [];
-        const userReview = getReviewUser(database, uid, userId) || undefined;
+        const userReview = getReviewUser(database, uid, user.userId) || undefined;
         setReviews(allReviews);
         setExistingReview(userReview);
-    }, [uid, userId]);
+    }, [uid, user.userId]);
 
     const addOrUpdate = (rating: number, text: string) => {
         try {
             if (existingReview) {
-                updateReview(database, userId, uid, rating, text);
+                updateReview(database, user.userId, uid, rating, text);
             } else {
-                addReview(database, userId, uid, 'AA', rating, text);
+                addReview(database, user.userId, uid, user.username, rating, text);
             }
-            const userReview = getReviewUser(database, uid, userId);
+            const userReview = getReviewUser(database, uid, user.userId);
             if (userReview) {
                 setReviews(getReviews(database, uid));
                 setExistingReview(userReview);
@@ -44,7 +45,7 @@ export const useReviews = (uid: number, userId: string) => {
     const remove = () => {
         try {
             if (existingReview) {
-                deleteReview(database, userId, uid);
+                deleteReview(database, user.userId, uid);
                 setReviews(getReviews(database, uid));
                 setExistingReview(undefined);
             }
