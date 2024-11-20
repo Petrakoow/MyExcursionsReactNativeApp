@@ -1,6 +1,6 @@
 import {moderateScale} from 'react-native-size-matters';
 import {StyleSheet} from 'react-native';
-import {Colors} from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 export const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
     title: {
         marginBottom: moderateScale(12),
-        color: Colors.widget.previewTourCard.title,
+        color: palette.light.primary,
     },
     shortInfo: {
         marginBottom: moderateScale(12),
@@ -30,17 +30,17 @@ export const styles = StyleSheet.create({
     },
     duration: {
         marginBottom: moderateScale(4),
-        color: Colors.widget.previewTourCard.duration,
+        color: palette.light.primary,
     },
     price: {
         marginBottom: moderateScale(5),
-        color: Colors.widget.previewTourCard.price,
+        color: palette.light.primary,
     },
     ratingContainer: {
         marginBottom: moderateScale(10),
     },
     rating: {
         marginBottom: moderateScale(14),
-        color: Colors.widget.previewTourCard.rating,
+        color: palette.light.warning,
     },
 });

@@ -2,9 +2,9 @@ import {GestureResponderEvent, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {CustomText} from '../../customText';
 import {styles} from './ToggleButtonStyle';
-import {Colors} from '@/shared/config/colors';
 import {ToggleButtonType} from '../type/toggleButtonType';
 import {moderateScale} from 'react-native-size-matters';
+import {palette} from '@/shared/config/colors';
 
 const ICON_SIZE = moderateScale(20);
 
@@ -12,10 +12,10 @@ export const ToggleButton = (props: ToggleButtonType) => {
     const {
         title,
         isActive = false,
-        activeColor = Colors.toggleButton.active,
-        inactiveColor = Colors.toggleButton.inActive,
-        textActiveColor = Colors.toggleButton.textActive,
-        textInActiveColor = Colors.toggleButton.textInActive,
+        activeColor = palette.light.warning,
+        inactiveColor = palette.light.background,
+        textActiveColor = palette.light.textPrimaryInv,
+        textInActiveColor = palette.light.textPrimaryInv,
         Icon,
         style,
         onPress,

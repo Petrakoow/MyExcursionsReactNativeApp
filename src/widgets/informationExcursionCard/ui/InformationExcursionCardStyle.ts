@@ -5,7 +5,7 @@ import {
     CONTENT_PADDING_VERTICAL,
     CONTENT_RADIUS,
 } from '@/shared/config/dimensions';
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 
 export const styles = StyleSheet.create({
     content: {
@@ -19,12 +19,12 @@ export const styles = StyleSheet.create({
         marginBottom: moderateScale(16),
     },
     title: {
-        color: Colors.widget.informationTourCard.title,
+        color: palette.light.primary,
         textAlign: 'left',
         marginBottom: moderateScale(10),
     },
     activityType: {
-        color: Colors.widget.informationTourCard.activityType,
+        color: palette.light.textSecondary,
         paddingBottom: moderateScale(4),
     },
     imageSection: {
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     },
     infoSectionMainContainer: {
         borderBottomWidth: 1,
-        borderBottomColor: Colors.widget.informationTourCard.activityType,
+        borderBottomColor: palette.light.textSecondary,
         marginBottom: moderateScale(20),
         paddingBottom: moderateScale(16),
     },
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         textAlign: 'right',
     },
     infoPrice: {
-        color: Colors.widget.informationTourCard.price,
+        color: palette.light.primary,
     },
     infoDuration: {},
     infoRating: {},
@@ -59,30 +59,30 @@ export const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     infoPaymentType: {
-        color: Colors.widget.informationTourCard.paymentType,
+        color: palette.light.primary,
     },
     infoProductType: {
-        color: Colors.widget.informationTourCard.productType,
+        color: palette.light.primary,
     },
     sectionDescription: {
-        backgroundColor: Colors.white,
+        backgroundColor: palette.light.background,
         marginBottom: moderateScale(16),
     },
     sectionTitleDescrtiption: {
         marginBottom: moderateScale(16),
-        color: Colors.widget.informationTourCard.title,
+        color: palette.light.primary,
     },
     sectionContent: {
         lineHeight: moderateScale(24),
         borderBottomWidth: 1,
-        borderBottomColor: Colors.widget.informationTourCard.activityType,
+        borderBottomColor: palette.light.border,
         paddingBottom: moderateScale(16),
     },
     sectionContainerGuide: {
         marginBottom: moderateScale(10),
     },
     sectionTitleGuide: {
-        color: Colors.widget.informationTourCard.guideTitle,
+        color: palette.light.primary,
         marginBottom: moderateScale(10),
     },
     sectionContainerGuideLocal: {
@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
         gap: moderateScale(12),
     },
     sectionGuideRating: {
-        color: Colors.widget.informationTourCard.rating,
+        color: palette.light.warning,
     },
     hostInfo: {
         flexDirection: 'row',

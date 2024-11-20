@@ -3,7 +3,6 @@ import {BottomPanel} from '@/shared/ui/bottomPanel';
 import * as Icons from '@/shared/assets/icons';
 import {TourTypeRequest} from '@/shared/api/sputnik8';
 import {BookingModal} from '@/widgets/excursionModalWindow';
-import {Colors} from '@/shared/config/colors';
 import {View} from 'react-native';
 import {
     addToFavorites,
@@ -12,6 +11,7 @@ import {
 } from '@/entities/excursion';
 import {useDatabase} from '@/app/providers';
 import {getUserSession} from '@/shared/db/models/user';
+import {palette} from '@/shared/config/colors';
 
 type BottomExcursionPanelProps = {
     orderOptions: TourTypeRequest['order_options'];
@@ -26,7 +26,7 @@ export const BottomExcursionPanel = ({
     isReviewsVisible,
     excursionId,
 }: BottomExcursionPanelProps) => {
-    const [userId, setUserId] = useState<string | null>(null); 
+    const [userId, setUserId] = useState<string | null>(null);
     const [isBookingModalVisible, setBookingModalVisible] = useState(false);
     const [isFavoriteExcursion, setIsFavoriteExcursion] = useState(false);
 
@@ -52,7 +52,11 @@ export const BottomExcursionPanel = ({
         if (!userId) return;
 
         const fetchFavoriteStatus = async () => {
-            const favoriteStatus = await isFavorite(database, excursionId, userId);
+            const favoriteStatus = await isFavorite(
+                database,
+                excursionId,
+                userId,
+            );
             setIsFavoriteExcursion(favoriteStatus);
         };
         fetchFavoriteStatus();
@@ -91,16 +95,16 @@ export const BottomExcursionPanel = ({
                     onPress={onToggleReviews}
                     color={
                         isReviewsVisible
-                            ? Colors.widget.informationTourCard.bottomPanel.active
-                            : Colors.widget.informationTourCard.bottomPanel.unactive
+                            ? palette.light.warning
+                            : palette.light.background
                     }
                 />
             </BottomPanel>
-
             <BookingModal
                 orderOptions={orderOptions}
                 visible={isBookingModalVisible}
                 onClose={() => setBookingModalVisible(false)}
+                animationType="fade"
             />
         </View>
     );

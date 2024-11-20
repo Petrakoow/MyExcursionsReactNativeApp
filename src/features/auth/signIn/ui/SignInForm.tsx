@@ -59,7 +59,7 @@ export const SignInForm = () => {
                                 textButton="Продолжить"
                                 style={[
                                     styleButton.firstTypeButton,
-                                    styleButton.heightForm,
+                                    styles.heightButton,
                                 ]}
                                 disabled={loading}
                             />

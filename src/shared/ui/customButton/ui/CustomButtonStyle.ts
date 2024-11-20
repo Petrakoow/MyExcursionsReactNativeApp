@@ -1,7 +1,8 @@
+import {palette} from '@/shared/config/colors';
 import {CONTENT_RADIUS} from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {Colors} from '@/shared/config/colors';
+
 export const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
@@ -20,14 +21,11 @@ export const styles = StyleSheet.create({
 
 export const styleButton = StyleSheet.create({
     firstTypeButton: {
-        backgroundColor: Colors.button,
-        color: Colors.white,
+        backgroundColor: palette.light.primary,
+        color: palette.light.textPrimaryInv,
     },
     secondTypeButton: {
         borderWidth: 1,
-        backgroundColor: Colors.white,
-    },
-    heightForm: {
-        minHeight: moderateScale(45),
+        backgroundColor: palette.light.background,
     },
 });

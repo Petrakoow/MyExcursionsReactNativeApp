@@ -1,38 +1,21 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RolesEnum } from '@/entities/user/model';
+import { saveItem, getItem, removeItem } from '@/shared/db/utils';
 
 export type UserSessionType = {
     userId: string;
     role: RolesEnum;
 };
 
+const USER_SESSION_KEY = 'user_session';
+
 export const saveUserSession = async (session: UserSessionType) => {
-    try {
-        await AsyncStorage.setItem('user_session', JSON.stringify(session));
-        console.log('Session saved');
-    } catch (error) {
-        throw new Error(`Error while saving: ${(error as Error).message}`);
-    }
+    await saveItem<UserSessionType>(USER_SESSION_KEY, session);
 };
 
 export const getUserSession = async (): Promise<UserSessionType | null> => {
-    try {
-        const sessionData = await AsyncStorage.getItem('user_session');
-        if (sessionData) {
-            console.log('Session found');
-            return JSON.parse(sessionData);
-        }
-        return null;
-    } catch (error) {
-        throw new Error(`Error while retrieving: ${(error as Error).message}`);
-    }
+    return await getItem<UserSessionType>(USER_SESSION_KEY);
 };
 
 export const clearUserSession = async () => {
-    try {
-        await AsyncStorage.removeItem('user_session');
-        console.log('Session cleared');
-    } catch (error) {
-        throw new Error(`Error while clearing: ${(error as Error).message}`);
-    }
+    await removeItem(USER_SESSION_KEY);
 };

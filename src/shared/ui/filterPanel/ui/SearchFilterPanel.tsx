@@ -10,7 +10,7 @@ import {moderateScale} from 'react-native-size-matters';
 import {ToggleButton} from '../../toggleButton';
 import {FilterItem} from '@/features/excursions';
 import {useDropdownFilter} from '../hook/useDropdownFilter';
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 
 type SearchFilterComponentType<T = {}> = {
     title?: string;
@@ -102,7 +102,7 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
                         title={selectedItem.name}
                         isActive={true}
                         onPress={() => toggleItemActive(selectedItem)}
-                        activeColor={Colors.searchFilter.selectedItem}
+                        activeColor={palette.light.primary}
                     />
                 </View>
             )}

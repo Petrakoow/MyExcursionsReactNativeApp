@@ -1,5 +1,5 @@
+import { palette } from '@/shared/config/colors';
 import {StyleSheet} from 'react-native';
-import {Colors} from '@/shared/config/colors';
 import {moderateScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
@@ -9,17 +9,17 @@ export const styles = StyleSheet.create({
         padding: moderateScale(8),
         paddingHorizontal: moderateScale(12),
         borderRadius: 8,
-        backgroundColor: Colors.widget.reviewExcursionCard.backgroundColor,
+        backgroundColor: palette.light.surface,
         gap: moderateScale(6),
     },
     reviewDate: {
-        color: '#888',
+        color: palette.light.textSecondary,
     },
     reviewRatingTitle: {
-        color: Colors.widget.reviewExcursionCard.title,
+        color: palette.light.primary,
     },
     reviewRating: {
-        color: Colors.widget.reviewExcursionCard.rating,
+        color: palette.light.warning,
     },
     reviewContent: {
         color: '#333',

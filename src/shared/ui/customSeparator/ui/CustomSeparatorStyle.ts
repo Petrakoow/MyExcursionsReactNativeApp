@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import { Colors } from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
+import { moderateScale } from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,10 +11,10 @@ export const styles = StyleSheet.create({
     line: {
         flex: 1,
         height: 1,
-        backgroundColor: Colors.separator,
+        backgroundColor: palette.light.border,
     },
     text: {
-        marginHorizontal: 10,
+        marginHorizontal: moderateScale(10),
         position: 'relative',
         top: -2.5,
     },

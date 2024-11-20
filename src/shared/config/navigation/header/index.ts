@@ -1,18 +1,17 @@
-import {Colors} from '../../colors';
+import { palette } from '../../colors';
 import {FontFamily} from '../../font';
 export const HeaderStackNavigationStyleOptions = (title: string) => {
     return {
         title,
         headerStyle: {
-            backgroundColor: Colors.headerStack.backgroundColor,
+            backgroundColor: palette.light.primary,
         },
         headerTitleStyle: {
             fontFamily: FontFamily.INTER_REGULAR,
-            color: Colors.white,
             fontSize: 18,
         },
         headerBackTitleVisible: false,
         headerTitleAlign: 'center',
-        headerTintColor: Colors.white,
+        headerTintColor: palette.light.textPrimaryInv,
     } as const;
 };

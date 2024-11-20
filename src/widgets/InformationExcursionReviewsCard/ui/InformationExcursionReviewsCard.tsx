@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View, FlatList, ScrollView} from 'react-native';
-import {fetchTourReview, TourReviewTypeRequest} from '@/shared/api/sputnik8';
+import {View, FlatList} from 'react-native';
 import {CustomText} from '@/shared/ui/customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {SplashScreen} from '@/shared/ui/splashScreen';
@@ -8,18 +7,20 @@ import {ReviewExcursionCard} from '@/widgets/reviewExcursionCard';
 import {styles} from './InformationExcursionReviewsCardStyle';
 import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetReviewsByTokenString} from '@/features/excursions';
+import {CustomButton, styleButton} from '@/shared/ui/customButton';
+import {ReviewModal} from '@/widgets/reviewModal';
 
 type InformationReviewsType = {
     uid: number;
-    customers_review_rating: number;
+    customersReviewRating: number;
     reviews: number;
-    reviews_with_text: number;
+    reviewsWithText: number;
 };
 
 export const InformationExcursionReviewsCard = (
     props: InformationReviewsType,
 ) => {
-    const {customers_review_rating, reviews, reviews_with_text, uid} = props;
+    const {customersReviewRating, reviews, reviewsWithText, uid} = props;
     const flatListRef = useRef<FlatList>(null);
 
     const {
@@ -38,11 +39,17 @@ export const InformationExcursionReviewsCard = (
         getToursByExcursionId(currentToken, uid);
     }, [currentToken]);
 
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const handleAddOrUpdateReview = (rating: number, text: string) => {
+        addOrUpdateReview(rating, text);
+    };
+
     if (isLoading) {
         return (
             <SplashScreen
                 showLogotype={false}
-                titleIndicator="Loading reviews..."
+                titleIndicator="Загрузка отзывов..."
             />
         );
     }
@@ -62,12 +69,18 @@ export const InformationExcursionReviewsCard = (
                         weight={TextWeight.BOLD}
                         size={TextSize.S_XL}
                         style={styles.rating}>
-                        {customers_review_rating.toFixed(1)} / 5
+                        {customersReviewRating.toFixed(1)} / 5
                     </CustomText>
                 </CustomText>
                 <CustomText size={TextSize.S_XL} style={styles.summary}>
-                    Всего отзывов: {reviews} ({reviews_with_text} с текстом)
+                    Всего отзывов: {reviews} ({reviewsWithText} с текстом)
                 </CustomText>
+                <CustomButton
+                    style={[styleButton.firstTypeButton, styles.reviewButton]}
+                    textButton="Оставить отзыв"
+                    textSize={TextSize.S_BASE}
+                    onPress={() => setModalVisible(true)}
+                />
             </View>
 
             <View style={styles.contentReview}>
@@ -108,6 +121,9 @@ export const InformationExcursionReviewsCard = (
                     }}
                 />
             </View>
+            <ReviewModal
+                
+            />
         </View>
     );
 };

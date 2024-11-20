@@ -1,14 +1,8 @@
 import {ReactNode} from 'react';
-import {
-    KeyboardAvoidingView,
-    ColorValue,
-    ScrollView,
-    View,
-    FlexStyle,
-} from 'react-native';
+import {KeyboardAvoidingView, ColorValue, View, FlexStyle} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './ScreenContentStyle';
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 
 type ScreenProps = {
     children: ReactNode;
@@ -27,7 +21,7 @@ export const ScreenContent = (props: ScreenProps) => {
         avoiding = true,
         edges = ['top', 'bottom', 'left', 'right'],
         excludeEdges = [],
-        backgroundColor = Colors.white,
+        backgroundColor = palette.light.background,
     } = props;
 
     return (

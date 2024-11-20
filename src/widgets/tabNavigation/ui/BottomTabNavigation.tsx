@@ -1,4 +1,3 @@
-import {StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabBarIcon} from './TabBarIcon';
 import React from 'react';
@@ -6,11 +5,11 @@ import {NavigationTabList} from '@/shared/config/navigation/types';
 import {AppTabNavigation} from '@/shared/config/navigation/types';
 import {HomePage} from '@/pages/home/main';
 import {ToursPageScreen} from '@/pages/tours';
-import {Colors} from '@/shared/config/colors';
 import * as Icons from '@/shared/assets/icons';
 import {screenOptions} from './BottomTabNavigationStyle';
 import {getEnumTranslation} from '@/shared/config/navigation';
-import { ExcursionFavoritesListPageScreen } from '@/pages/favorites/excursionList';
+import {ExcursionFavoritesListPageScreen} from '@/pages/favorites/excursionList';
+import {palette} from '@/shared/config/colors';
 
 const Tab = createBottomTabNavigator<NavigationTabList>();
 
@@ -26,8 +25,8 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            colorFocus: Colors.tabs.focus,
-                            colorUnfocus: Colors.tabs.unfocus,
+                            colorFocus: palette.light.primary,
+                            colorUnfocus: palette.light.textPrimary,
                             focused: focused,
                             Icon: Icons.Tours,
                         }),
@@ -42,8 +41,8 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            colorFocus: Colors.tabs.focus,
-                            colorUnfocus: Colors.tabs.unfocus,
+                            colorFocus: palette.light.primary,
+                            colorUnfocus: palette.light.textPrimary,
                             focused: focused,
                             Icon: Icons.Favourite,
                         }),
@@ -58,8 +57,8 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            colorFocus: Colors.tabs.focus,
-                            colorUnfocus: Colors.tabs.unfocus,
+                            colorFocus: palette.light.primary,
+                            colorUnfocus: palette.light.textPrimary,
                             focused: focused,
                             Icon: Icons.Home,
                         }),
@@ -74,8 +73,8 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            colorFocus: Colors.tabs.focus,
-                            colorUnfocus: Colors.tabs.unfocus,
+                            colorFocus: palette.light.primary,
+                            colorUnfocus: palette.light.textPrimary,
                             focused: focused,
                             Icon: Icons.Booking,
                         }),
@@ -90,8 +89,8 @@ export const BottomTabNavigation = () => {
                     headerTitle: '',
                     tabBarIcon: ({focused}) =>
                         TabBarIcon({
-                            colorFocus: Colors.tabs.focus,
-                            colorUnfocus: Colors.tabs.unfocus,
+                            colorFocus: palette.light.primary,
+                            colorUnfocus: palette.light.textPrimary,
                             focused: focused,
                             Icon: Icons.User,
                         }),

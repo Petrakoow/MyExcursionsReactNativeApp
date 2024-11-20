@@ -29,11 +29,11 @@ export const ExcursionInfoPageScreen = () => {
             <View style={styles.container}>
                 {showReviews ? (
                     <InformationExcursionReviewsCard
-                        customers_review_rating={
+                        customersReviewRating={
                             excursion.customers_review_rating
                         }
                         reviews={excursion.reviews}
-                        reviews_with_text={excursion.reviews_with_text}
+                        reviewsWithText={excursion.reviews_with_text}
                         uid={excursion.id}
                     />
                 ) : (

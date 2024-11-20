@@ -1,4 +1,4 @@
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 import {
     NAV_PADDING_BOTTOM,
     NAV_PADDING_TOP,
@@ -15,14 +15,14 @@ export const screenOptions = {
         paddingBottom: NAV_PADDING_BOTTOM,
         height: NAV_HEIGHT,
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL - 10,
-        backgroundColor: Colors.tabs.backgroundColor,
-        borderTopColor: Colors.tabs.borderTop,
+        backgroundColor: palette.light.background,
+        borderTopColor: palette.light.border,
     },
     tabBarLabelStyle: {
         fontSize: NAV_FONT_SIZE,
         fontFamily: FontFamily.INTER_REGULAR,
         fontWeight: 400,
     },
-    tabBarInactiveTintColor: Colors.tabs.inActive,
-    tabBarActiveTintColor: Colors.tabs.active,
+    tabBarInactiveTintColor: palette.light.textPrimary,
+    tabBarActiveTintColor: palette.light.primary,
 } as const;

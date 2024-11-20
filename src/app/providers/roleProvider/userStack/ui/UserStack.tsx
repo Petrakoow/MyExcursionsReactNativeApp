@@ -7,7 +7,6 @@ import {BottomTabNavigation} from '@/widgets/tabNavigation';
 import {HeaderStackNavigationStyleOptions} from '@/shared/config/navigation';
 
 import {getEnumTranslation} from '@/shared/config/navigation';
-import {ExcursionFavoritesListPageScreen} from '@/pages/favorites/excursionList';
 
 const Stack = createNativeStackNavigator<NavigationStackList>();
 

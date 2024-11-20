@@ -36,4 +36,7 @@ export const styles = StyleSheet.create({
     continueAsGuestContainer: {
         marginBottom: moderateScale(82),
     },
+    heightButton: {
+        minHeight: moderateScale(45),
+    },
 });

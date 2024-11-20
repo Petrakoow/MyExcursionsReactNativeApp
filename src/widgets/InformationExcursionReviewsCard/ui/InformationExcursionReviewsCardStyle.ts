@@ -1,7 +1,11 @@
-import { Colors } from "@/shared/config/colors";
-import { CONTENT_PADDING_VERTICAL, CONTENT_PADDING_HORIZONTAL } from "@/shared/config/dimensions";
-import { StyleSheet } from "react-native";
-import { moderateScale } from "react-native-size-matters";
+import { palette } from '@/shared/config/colors';
+import {
+    CONTENT_PADDING_VERTICAL,
+    CONTENT_PADDING_HORIZONTAL,
+    GAP_BASE,
+} from '@/shared/config/dimensions';
+import {StyleSheet} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,6 +14,8 @@ export const styles = StyleSheet.create({
     contentHeader: {
         paddingTop: CONTENT_PADDING_VERTICAL,
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+        marginBottom: moderateScale(12),
+        gap: GAP_BASE - 1,
     },
     contentBottom: {
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
@@ -21,27 +27,29 @@ export const styles = StyleSheet.create({
         paddingVertical: moderateScale(5),
     },
     header: {
-        color: Colors.widget.informationTourCard.reviews.header,
+        color: palette.light.primary,
         marginBottom: moderateScale(12),
     },
     ratingTitle: {
-        color: Colors.widget.informationTourCard.reviews.title,
+        color: palette.light.primary,
     },
     rating: {
         marginBottom: moderateScale(4),
-        color: Colors.widget.informationTourCard.reviews.mark,
+        color: palette.light.warning,
     },
     summary: {
-        marginBottom: moderateScale(12),
-        color: Colors.widget.informationTourCard.reviews.title,
+        color: palette.light.primary,
     },
     noReviewsText: {
         textAlign: 'center',
         marginTop: moderateScale(16),
-        color: Colors.widget.informationTourCard.reviews.noReviews,
+        color: palette.light.textSecondary,
     },
     pagination: {
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
         paddingVertical: moderateScale(5),
-    }
+    },
+    reviewButton: {
+        padding: moderateScale(3),
+    },
 });

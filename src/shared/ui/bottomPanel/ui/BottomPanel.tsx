@@ -8,11 +8,10 @@ import {
 } from 'react-native';
 import React, {ReactNode} from 'react';
 import {moderateScale} from 'react-native-size-matters';
-import {Colors} from '@/shared/config/colors';
 import {SvgProps} from 'react-native-svg';
-import {CustomText} from '../../customText';
-import {TextSize} from '@/shared/config/font';
-import {CONTENT_PADDING_HORIZONTAL} from '@/shared/config/dimensions';
+import {CustomText} from '@/shared/ui/customText';
+import {palette} from '@/shared/config/colors';
+import {styles} from './BottomPanelStyle';
 
 const ICON_SIZE = moderateScale(23);
 
@@ -32,7 +31,7 @@ export const BottomPanel = (props: BottomPanelType) => {
 };
 
 BottomPanel.Button = (props: BottomPanelButtonType) => {
-    const {title, Icon, color = Colors.white, ...res} = props;
+    const {title, Icon, color = palette.light.textPrimaryInv, ...res} = props;
     return (
         <TouchableOpacity {...res}>
             <View style={styles.bottomPanelButtonContainer}>
@@ -48,24 +47,3 @@ BottomPanel.Button = (props: BottomPanelButtonType) => {
         </TouchableOpacity>
     );
 };
-
-const styles = StyleSheet.create({
-    bottomPanel: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-        alignItems: 'center',
-        backgroundColor: Colors.bottomPanel.backgroundColor,
-        padding: moderateScale(10),
-        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
-        borderTopRightRadius: moderateScale(10),
-        borderTopLeftRadius: moderateScale(10),
-        overflow: 'hidden',
-        flexWrap: 'wrap',
-    },
-    bottomPanelButtonContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

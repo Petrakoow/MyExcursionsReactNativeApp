@@ -28,3 +28,7 @@ export const NAV_FONT_SIZE = moderateScale(11);
 
 // GAP
 export const GAP_BASE = moderateScale(5);
+
+// MODAL
+export const MODAL_WIDTH = '90%';
+export const MODAL_HEIGHT = '90%';

@@ -1,24 +1,25 @@
+import { palette } from '@/shared/config/colors';
 import {
     CONTENT_PADDING_HORIZONTAL,
     CONTENT_PADDING_VERTICAL,
     CONTENT_RADIUS,
+    MODAL_WIDTH,
 } from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {Colors} from '@/shared/config/colors';
 
 export const styles = StyleSheet.create({
     modalBackground: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: palette.light.modalBackground,
     },
     modalContainer: {
-        width: '90%',
+        width: MODAL_WIDTH,
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL - 5,
         paddingVertical: CONTENT_PADDING_VERTICAL - 10,
-        backgroundColor: 'white',
+        backgroundColor: palette.light.background,
         borderRadius: CONTENT_RADIUS - 15,
         gap: moderateScale(10),
         alignItems: 'center',
@@ -30,11 +31,11 @@ export const styles = StyleSheet.create({
         marginBottom: moderateScale(6),
     },
     toggleButton: {
-        padding: 10,
+        padding: moderateScale(10),
         borderRadius: '50%',
     },
     titleWindow: {
-        color: Colors.widget.filterExcursionPanel.title,
+        color: palette.light.primary,
     },
     filterSearchContainer: {
         gap: moderateScale(12),

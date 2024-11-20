@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {CONTENT_RADIUS, moderateScale} from '@/shared/config/dimensions';
-import {Colors} from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -20,6 +20,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     borderColor: {
-        borderColor: Colors.input,
+        borderColor: palette.light.border,
     },
 });

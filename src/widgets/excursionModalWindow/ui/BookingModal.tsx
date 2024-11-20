@@ -1,37 +1,34 @@
 import React from 'react';
-import {View, Modal, ScrollView} from 'react-native';
+import {View, Modal, ScrollView, ModalProps} from 'react-native';
 import {TourTypeRequest} from '@/shared/api/sputnik8';
 import {styles} from './BookingModalStyle';
 import {getTicketTypeLabel} from '@/shared/api/sputnik8';
 import {CustomText} from '@/shared/ui/customText';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {TextSize, TextWeight} from '@/shared/config/font';
-type BookingModalProps = {
+type BookingModalProps = ModalProps & {
     orderOptions: TourTypeRequest['order_options'];
-    visible: boolean;
     onClose: () => void;
 };
 
 export const BookingModal = (props: BookingModalProps) => {
-    const {visible, onClose, orderOptions} = props;
+    const {visible, onClose, orderOptions, ...res} = props;
     return (
-        <Modal
-            transparent
-            visible={visible}
-            animationType="slide"
-            onRequestClose={onClose}>
+        <Modal transparent visible={visible} onRequestClose={onClose} {...res}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                    <CustomButton
-                        textButton="Закрыть"
-                        onPress={onClose}
-                        style={[
-                            styleButton.firstTypeButton,
-                            styles.closeButton,
-                        ]}
-                        textSize={TextSize.S_BASE}
-                    />
-                    <ScrollView>
+                    <View style={[styles.content, styles.closeContent]}>
+                        <CustomButton
+                            textButton="Закрыть"
+                            onPress={onClose}
+                            style={[
+                                styleButton.firstTypeButton,
+                                styles.closeButton,
+                            ]}
+                            textSize={TextSize.S_BASE}
+                        />
+                    </View>
+                    <ScrollView style={[styles.content, styles.contentScroll]}>
                         {orderOptions.map((option, index) => (
                             <View key={index} style={styles.optionContainer}>
                                 <CustomText

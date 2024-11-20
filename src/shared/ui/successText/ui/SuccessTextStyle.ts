@@ -1,11 +1,11 @@
+import { palette } from '@/shared/config/colors';
 import {StyleSheet} from 'react-native';
-import {Colors} from '@/shared/config/colors';
 export const styles = StyleSheet.create({
     container: {},
     titleSuccess: {
-        color: Colors.success,
+        color: palette.light.success,
     },
     descriptionSuccess: {
-        color: Colors.descriptionSuccess,
+        color: palette.light.successSecondary,
     },
 });

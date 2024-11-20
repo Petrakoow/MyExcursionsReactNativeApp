@@ -8,7 +8,7 @@ import {CustomText} from '@/shared/ui/customText';
 import {SvgProps} from 'react-native-svg';
 import {styles} from './CustomButtonStyle';
 import {TextSize} from '@/shared/config/font';
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 
 type CustomButtonProps = TouchableOpacityProps & {
     Icon?: React.FC<SvgProps>;
@@ -24,7 +24,7 @@ export const CustomButton = (props: CustomButtonProps) => {
     const {
         Icon,
         textButton,
-        textColor = Colors.white,
+        textColor = palette.light.textPrimaryInv,
         textSize = TextSize.S_XL,
         disabled,
         style,

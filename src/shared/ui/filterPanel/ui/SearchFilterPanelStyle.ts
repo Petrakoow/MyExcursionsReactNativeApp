@@ -1,4 +1,4 @@
-import {Colors} from '@/shared/config/colors';
+import { palette } from '@/shared/config/colors';
 import {CONTENT_RADIUS} from '@/shared/config/dimensions';
 import {TextSize, styles} from '@/shared/config/font';
 import {StyleSheet} from 'react-native';
@@ -12,8 +12,8 @@ export const stylesFilterPanel = StyleSheet.create({
         maxHeight: moderateScale(100),
         overflow: 'hidden',
         borderWidth: 1,
-        borderRadius: 10,
-        borderColor: Colors.searchFilter.flatList.borderColor,
+        borderRadius: CONTENT_RADIUS - 20,
+        borderColor: palette.light.border,
         padding: moderateScale(4),
     },
     contentFilterList: {
@@ -33,7 +33,7 @@ export const stylesSearchFilter = StyleSheet.create({
         marginBottom: moderateScale(5),
     },
     inputSearchFilter: {
-        paddingVertical: moderateScale(5),
+        paddingVertical: 3,
         paddingHorizontal: moderateScale(12),
         ...styles[TextSize.S_BASE],
     },
@@ -44,6 +44,6 @@ export const stylesSearchFilter = StyleSheet.create({
         paddingBottom: moderateScale(10),
     },
     selectedItem: {
-        color: Colors.searchFilter.selectedItem,
+        color: palette.light.primary,
     },
 });

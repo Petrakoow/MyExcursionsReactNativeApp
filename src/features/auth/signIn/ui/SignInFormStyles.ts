@@ -9,4 +9,7 @@ export const styles = StyleSheet.create({
     continueContainer: {
         marginBottom: moderateScale(16),
     },
+    heightButton: {
+        minHeight: moderateScale(45),
+    },
 });

@@ -1,5 +1,6 @@
+import { FavoriteExcursion } from '@/shared/db/models';
 import Realm from 'realm';
-import {FavoriteExcursion} from '@/shared/db/models';
+
 
 export async function addToFavorites(realm: Realm, excursionId: number, userId: string) {
     realm.write(() => {

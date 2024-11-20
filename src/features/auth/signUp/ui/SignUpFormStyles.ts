@@ -11,4 +11,7 @@ export const styles = StyleSheet.create({
     informationContainer: {
         gap: moderateScale(10),
     },
+    heightButton: {
+        minHeight: moderateScale(45),
+    },
 });

@@ -1,16 +1,14 @@
 import {
     View,
-    ActivityIndicator,
     ColorValue,
-    ActivityIndicatorProps,
 } from 'react-native';
 import React from 'react';
 import {styles} from './SplashScreenStyle';
-import {Colors} from '@/shared/config/colors';
 import {CustomText} from '../../customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {Logotype} from '../../customLogo';
 import {CustomIndicator} from '../../customIndicator';
+import { palette } from '@/shared/config/colors';
 
 type SplashScreenType = {
     titleIndicator?: string;
@@ -25,7 +23,7 @@ export const SplashScreen = (props: SplashScreenType) => {
         titleIndicator = 'Hello!',
         titleLogotype = 'TourismApp',
         showLogotype = true,
-        color = Colors.indicator,
+        color = palette.light.primary,
         size = 'large',
     } = props;
     return (
