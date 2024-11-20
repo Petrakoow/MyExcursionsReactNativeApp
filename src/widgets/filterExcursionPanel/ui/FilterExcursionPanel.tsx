@@ -1,26 +1,17 @@
-import {StyleSheet, View, Modal, Button, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {FilterPanel} from '@/shared/ui/filterPanel';
-import {
-    ExcursionFilterType,
-    FilterAscDesc,
-    FilterByNameAndId,
-    FilterByQualityProduct,
-} from '@/features/excursions';
+import {View, Modal} from 'react-native';
+import React from 'react';
+import {ExcursionFilterType} from '@/features/excursions';
 import {useGetCities, useGetCountries} from '@/features/filters';
 import {ErrorText} from '@/shared/ui/errorText';
 import {CustomIndicator} from '@/shared/ui/customIndicator';
 import {ToggleButtonGroup} from '@/shared/ui/toggleButton';
-import {
-    CONTENT_PADDING_HORIZONTAL,
-    CONTENT_PADDING_VERTICAL,
-    CONTENT_RADIUS,
-    moderateScale,
-} from '@/shared/config/dimensions';
+import {styles} from './FilterExcursionPanelStyle';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {CustomText} from '@/shared/ui/customText';
-import {Colors} from '@/shared/config/colors';
+import * as Icons from '@/shared/assets/icons';
+import {SearchFilterComponent} from '@/shared/ui/filterPanel';
+import {useFilterExcursionPanel} from '../hook/useFilterExcursionPanel';
 
 type FilterExcursionPanelProps = {
     onFiltersChange: (filters: ExcursionFilterType) => void;
@@ -29,15 +20,6 @@ type FilterExcursionPanelProps = {
 export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
     const {onFiltersChange} = props;
 
-    const [selectedCountry, setSelectedCountry] = useState<FilterByNameAndId>();
-    const [selectedCity, setSelectedCity] = useState<FilterByNameAndId>();
-
-    const [sortField, setSortField] =
-        useState<FilterByQualityProduct>(undefined);
-    const [sortOrder, setSortOrder] = useState<FilterAscDesc>(undefined);
-
-    const [modalVisible, setModalVisible] = useState(false);
-
     const {
         countries,
         loading: countriesLoading,
@@ -45,14 +27,18 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
     } = useGetCountries();
     const {cities, loading: citiesLoading, error: citiesError} = useGetCities();
 
-    useEffect(() => {
-        onFiltersChange({
-            country: selectedCountry,
-            city: selectedCity,
-            product: sortField,
-            ascDesc: sortOrder,
-        });
-    }, [selectedCountry, selectedCity, sortField, sortOrder]);
+    const {
+        selectedCountry,
+        setSelectedCountry,
+        selectedCity,
+        setSelectedCity,
+        sortField,
+        sortOrder,
+        modalVisible,
+        toggleModal,
+        handleOrderSelectionChange,
+        handleFieldSelectionChange,
+    } = useFilterExcursionPanel(onFiltersChange);
 
     if (countriesLoading || citiesLoading) {
         return <CustomIndicator />;
@@ -72,82 +58,83 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
             <CustomButton
                 textButton="Открыть фильтры"
                 textSize={TextSize.S_BASE}
-                onPress={() => setModalVisible(true)}
-                style={[styleButton.firstTypeButton, {paddingVertical: 4}]}
+                onPress={toggleModal}
+                style={[styleButton.firstTypeButton, styles.buttonPadding]}
             />
 
             <Modal
-                animationType="slide"
-                transparent={true}
+                animationType="fade"
+                transparent={modalVisible}
                 visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}>
+                onRequestClose={toggleModal}>
                 <View style={styles.modalBackground}>
                     <View style={styles.modalContainer}>
                         <CustomText
+                            style={styles.titleWindow}
                             size={TextSize.S_XL}
-                            weight={TextWeight.BOLD}>
-                            Filter Options
+                            weight={TextWeight.NORMAL}>
+                            Опции для фильтрации
                         </CustomText>
 
-                        <FilterPanel>
-                            <FilterPanel.SearchFilterComponent
+                        <View style={styles.filterSearchContainer}>
+                            <SearchFilterComponent
                                 title="Поиск по городу"
                                 hasDropdownList={true}
                                 itemsList={cities}
-                                onSelectionChange={setSelectedCity}
+                                selectedFilterItem={selectedCity}
+                                onSelectionChange={newCity =>
+                                    setSelectedCity(newCity)
+                                }
                             />
-                            <FilterPanel.SearchFilterComponent
+                            <SearchFilterComponent
                                 title="Поиск по стране"
                                 hasDropdownList={true}
                                 itemsList={countries}
-                                onSelectionChange={setSelectedCountry}
+                                selectedFilterItem={selectedCountry}
+                                onSelectionChange={newCountry =>
+                                    setSelectedCountry(newCountry)
+                                }
                             />
-                        </FilterPanel>
+                        </View>
 
                         <View style={styles.toggleContainer}>
-                            <ToggleButtonGroup group="sortFields">
+                            <ToggleButtonGroup
+                                group="sortFields"
+                                state={sortField}>
                                 <ToggleButtonGroup.ToggleButtonContextWrapper
                                     name="product_id"
-                                    title="Product ID"
-                                    callback={() =>
-                                        setSortField(prev =>
-                                            prev === 'product_id'
-                                                ? undefined
-                                                : 'product_id',
-                                        )
+                                    Icon={Icons.Product}
+                                    style={styles.toggleButton}
+                                    onPress={() =>
+                                        handleFieldSelectionChange('product_id')
                                     }
                                 />
                                 <ToggleButtonGroup.ToggleButtonContextWrapper
                                     name="rating"
-                                    title="Rating"
-                                    callback={() =>
-                                        setSortField(prev =>
-                                            prev === 'rating'
-                                                ? undefined
-                                                : 'rating',
-                                        )
+                                    Icon={Icons.Rating}
+                                    style={styles.toggleButton}
+                                    onPress={() =>
+                                        handleFieldSelectionChange('rating')
                                     }
                                 />
                             </ToggleButtonGroup>
-                            <ToggleButtonGroup group="sortOrder">
+                            <ToggleButtonGroup
+                                group="sortOrder"
+                                state={sortOrder}>
                                 <ToggleButtonGroup.ToggleButtonContextWrapper
                                     name="asc"
-                                    title="Ascending"
-                                    callback={() =>
-                                        setSortOrder(prev =>
-                                            prev === 'asc' ? undefined : 'asc',
-                                        )
+                                    Icon={Icons.Asc}
+                                    style={styles.toggleButton}
+                                    onPress={() =>
+                                        handleOrderSelectionChange('asc')
                                     }
                                 />
                                 <ToggleButtonGroup.ToggleButtonContextWrapper
                                     name="desc"
-                                    title="Descending"
-                                    callback={() =>
-                                        setSortOrder(prev =>
-                                            prev === 'desc'
-                                                ? undefined
-                                                : 'desc',
-                                        )
+                                    Icon={Icons.Desc}
+                                    style={styles.toggleButton}
+                                    onPress={() =>
+                                        handleOrderSelectionChange('desc')
                                     }
                                 />
                             </ToggleButtonGroup>
@@ -156,10 +143,10 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
                         <CustomButton
                             textButton="Закрыть"
                             textSize={TextSize.S_BASE}
-                            onPress={() => setModalVisible(false)}
+                            onPress={toggleModal}
                             style={[
                                 styleButton.firstTypeButton,
-                                {paddingHorizontal: 10, paddingVertical: 5},
+                                styles.buttonPadding,
                             ]}
                         />
                     </View>
@@ -168,26 +155,3 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    modalBackground: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContainer: {
-        width: '90%',
-        paddingHorizontal: CONTENT_PADDING_HORIZONTAL - 5,
-        paddingVertical: CONTENT_PADDING_VERTICAL - 10,
-        backgroundColor: 'white',
-        borderRadius: CONTENT_RADIUS - 15,
-        gap: moderateScale(10),
-        alignItems: 'center',
-    },
-    toggleContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-});

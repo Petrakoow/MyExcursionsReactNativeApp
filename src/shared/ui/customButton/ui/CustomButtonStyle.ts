@@ -27,10 +27,7 @@ export const styleButton = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: Colors.white,
     },
-    heightFirstType: {
+    heightForm: {
         minHeight: moderateScale(45),
-    },
-    heightSecondType: {
-        minHeight: moderateScale(25),
     },
 });

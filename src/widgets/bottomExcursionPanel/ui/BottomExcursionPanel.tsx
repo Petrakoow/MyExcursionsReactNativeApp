@@ -11,7 +11,7 @@ import {
     removeFromFavorites,
 } from '@/entities/excursion';
 import {useDatabase} from '@/app/providers';
-import {ErrorText} from '@/shared/ui/errorText';
+import {getUserSession} from '@/shared/db/models/user';
 
 type BottomExcursionPanelProps = {
     orderOptions: TourTypeRequest['order_options'];
@@ -26,24 +26,48 @@ export const BottomExcursionPanel = ({
     isReviewsVisible,
     excursionId,
 }: BottomExcursionPanelProps) => {
+    const [userId, setUserId] = useState<string | null>(null); 
     const [isBookingModalVisible, setBookingModalVisible] = useState(false);
     const [isFavoriteExcursion, setIsFavoriteExcursion] = useState(false);
 
     const database = useDatabase();
 
     useEffect(() => {
+        const fetchUserSession = async () => {
+            try {
+                const session = await getUserSession();
+                if (session?.userId) {
+                    setUserId(session.userId);
+                } else {
+                    console.error('User session not found.');
+                }
+            } catch (error) {
+                console.error('Error retrieving user session:', error);
+            }
+        };
+        fetchUserSession();
+    }, []);
+
+    useEffect(() => {
+        if (!userId) return;
+
         const fetchFavoriteStatus = async () => {
-            const favoriteStatus = await isFavorite(database, excursionId);
+            const favoriteStatus = await isFavorite(database, excursionId, userId);
             setIsFavoriteExcursion(favoriteStatus);
         };
         fetchFavoriteStatus();
-    }, [excursionId]);
+    }, [excursionId, userId]);
 
     const handleFavoriteToggle = async () => {
+        if (!userId) {
+            console.error('Cannot toggle favorite: userId is not available.');
+            return;
+        }
+
         if (isFavoriteExcursion) {
-            await removeFromFavorites(database, excursionId);
+            await removeFromFavorites(database, excursionId, userId);
         } else {
-            await addToFavorites(database, excursionId);
+            await addToFavorites(database, excursionId, userId);
         }
         setIsFavoriteExcursion(!isFavoriteExcursion);
     };
@@ -67,10 +91,8 @@ export const BottomExcursionPanel = ({
                     onPress={onToggleReviews}
                     color={
                         isReviewsVisible
-                            ? Colors.widget.informationTourCard.bottomPanel
-                                  .active
-                            : Colors.widget.informationTourCard.bottomPanel
-                                  .unactive
+                            ? Colors.widget.informationTourCard.bottomPanel.active
+                            : Colors.widget.informationTourCard.bottomPanel.unactive
                     }
                 />
             </BottomPanel>

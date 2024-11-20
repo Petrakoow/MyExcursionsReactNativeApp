@@ -25,3 +25,6 @@ export const NAV_PADDING_VERTICAL = moderateScale(10);
 export const NAV_PADDING_TOP = moderateScale(5);
 export const NAV_PADDING_BOTTOM = moderateScale(8);
 export const NAV_FONT_SIZE = moderateScale(11);
+
+// GAP
+export const GAP_BASE = moderateScale(5);

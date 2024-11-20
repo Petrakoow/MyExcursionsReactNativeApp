@@ -1,10 +1,13 @@
 import Realm from 'realm';
 import {FavoriteExcursion} from '@/shared/db/models';
 
-export function isFavorite(realm: Realm, excursionId: number): boolean {
-    const record = realm.objectForPrimaryKey(
-        FavoriteExcursion.schema.name,
-        excursionId,
-    );
-    return record !== null;
+export function isFavorite(
+    realm: Realm,
+    excursionId: number,
+    userId: string,
+): boolean {
+    const record = realm
+        .objects(FavoriteExcursion.schema.name)
+        .filtered('excursionId = $0 AND userId = $1', excursionId, userId)[0];
+    return !!record;
 }

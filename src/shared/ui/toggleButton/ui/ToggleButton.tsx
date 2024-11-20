@@ -1,20 +1,24 @@
-import {TouchableOpacity} from 'react-native';
+import {GestureResponderEvent, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {CustomText} from '../../customText';
 import {styles} from './ToggleButtonStyle';
 import {Colors} from '@/shared/config/colors';
 import {ToggleButtonType} from '../type/toggleButtonType';
+import {moderateScale} from 'react-native-size-matters';
+
+const ICON_SIZE = moderateScale(20);
 
 export const ToggleButton = (props: ToggleButtonType) => {
     const {
         title,
-        isActive = false, 
+        isActive = false,
         activeColor = Colors.toggleButton.active,
         inactiveColor = Colors.toggleButton.inActive,
         textActiveColor = Colors.toggleButton.textActive,
         textInActiveColor = Colors.toggleButton.textInActive,
+        Icon,
         style,
-        callback,
+        onPress,
         ...res
     } = props;
 
@@ -24,10 +28,9 @@ export const ToggleButton = (props: ToggleButtonType) => {
         setInternalIsActive(isActive);
     }, [isActive]);
 
-    const handlePress = () => {
+    const handlePress = (event: GestureResponderEvent) => {
         setInternalIsActive(!internalIsActive);
-
-        if (callback) callback();
+        if (onPress) onPress(event);
     };
 
     return (
@@ -43,17 +46,26 @@ export const ToggleButton = (props: ToggleButtonType) => {
                         : inactiveColor,
                 },
             ]}>
-            <CustomText
-                style={[
-                    styles.content,
-                    {
-                        color: internalIsActive
-                            ? textActiveColor
-                            : textInActiveColor,
-                    },
-                ]}>
-                {title}
-            </CustomText>
+            {title && (
+                <CustomText
+                    style={[
+                        styles.content,
+                        {
+                            color: internalIsActive
+                                ? textActiveColor
+                                : textInActiveColor,
+                        },
+                    ]}>
+                    {title}
+                </CustomText>
+            )}
+            {Icon && (
+                <Icon
+                    width={ICON_SIZE}
+                    height={ICON_SIZE}
+                    fill={internalIsActive ? activeColor : inactiveColor}
+                />
+            )}
         </TouchableOpacity>
     );
 };

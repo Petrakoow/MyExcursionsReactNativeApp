@@ -15,7 +15,12 @@ export const AuthContext = createContext<AuthContextType>({
     getSessionState: async () => null,
 });
 
-export const RoleProvider = ({children}: {children: ReactNode}) => {
+type RoleProviderType = {
+    children: ReactNode;
+}
+
+export const RoleProvider = (props: RoleProviderType) => {
+    const {children} = props;
     try {
         const {loading, reloadState, getSessionState} = useAuthStateListener();
         useEffect(() => {
@@ -24,7 +29,7 @@ export const RoleProvider = ({children}: {children: ReactNode}) => {
 
         if (loading) {
             return (
-                <SplashScreen titleIndicator="Welcome to the tourism app, wait a minute..." />
+                <SplashScreen titleIndicator="Добро пожаловать, загружаем вашего личного гида..." />
             );
         }
 

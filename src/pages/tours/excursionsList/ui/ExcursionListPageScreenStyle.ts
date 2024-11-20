@@ -1,6 +1,7 @@
 import {
     CONTENT_PADDING_HORIZONTAL,
     CONTENT_PADDING_VERTICAL,
+    GAP_BASE,
     moderateScale,
 } from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
         paddingTop: CONTENT_PADDING_VERTICAL,
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
         flex: 1,
-        gap: moderateScale(5),
+        gap: GAP_BASE,
     },
     pagination: {
         flex: 0,

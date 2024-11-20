@@ -4,6 +4,8 @@ import {GuestStack} from '@/app/providers';
 import {RolesEnum} from '@/entities/user/model';
 import {useAuth} from '@/features/auth/role';
 import {SplashScreen} from '@/shared/ui/splashScreen';
+import {CustomIndicator} from '@/shared/ui/customIndicator';
+import {styles} from './NavigationStyle';
 
 export const AppNavigator = () => {
     const {getSessionState} = useAuth();
@@ -19,7 +21,7 @@ export const AppNavigator = () => {
     }, [getSessionState]);
 
     if (role === null) {
-        return <SplashScreen titleIndicator="Choose a route..." />;
+        return <CustomIndicator style={styles.indicator} />;
     }
 
     switch (role) {

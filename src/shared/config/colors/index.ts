@@ -56,6 +56,9 @@ export const Colors = {
             content: '#',
             date: '#',
         },
+        filterExcursionPanel: {
+            title: '#3D4BDB',
+        },
     },
     headerStack: {
         backgroundColor: '#3D4BDB',
@@ -70,8 +73,10 @@ export const Colors = {
         textInActive: '#000',
     },
     searchFilter: {
+        selectedItem: '#3D4BDB',
         flatList: {
             backgroundColor: '#3D4BDB',
+            borderColor: '#8B8B8B',
         },
     },
 };

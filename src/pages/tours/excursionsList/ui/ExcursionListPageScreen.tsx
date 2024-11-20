@@ -1,5 +1,5 @@
 import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {SplashScreen} from '@/shared/ui/splashScreen';
 import {useNavigation} from '@react-navigation/native';
@@ -54,12 +54,12 @@ export const ToursPageScreen = () => {
             filters: selectedFilters,
         });
     }, [page, selectedFilters]);
-
+    
     console.log(selectedFilters);
 
-    const handleFiltersChange = (props: ExcursionFilterType) => {
-        setSelectedFilters(props);
-    };
+    const handleFiltersChange = useCallback((props: ExcursionFilterType) => {
+        setSelectedFilters(prev => ({...prev, ...props}));
+    }, []);
 
     const renderTourCard = ({item}: {item: TourTypeRequest}) => (
         <PreviewExcursionCard
@@ -76,7 +76,7 @@ export const ToursPageScreen = () => {
         return (
             <SplashScreen
                 showLogotype={false}
-                titleIndicator="We receive information about excursions..."
+                titleIndicator="Получаем информацию об экскурсиях..."
             />
         );
     }

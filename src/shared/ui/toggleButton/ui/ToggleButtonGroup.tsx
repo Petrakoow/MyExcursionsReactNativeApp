@@ -1,11 +1,11 @@
 import React, {createContext, useContext, useState, ReactNode} from 'react';
 import {ToggleButtonType} from '../type/toggleButtonType';
 import {ToggleButton} from '../ui/ToggleButton';
-import {View, ViewStyle} from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 
 type ToggleButtonGroupContextType =
     | {
-          activeButton: string | null;
+          activeButton: string | undefined;
           onToggle: (name: string, group: string) => void;
           group: string;
       }
@@ -17,11 +17,12 @@ const ToggleButtonGroupContext =
 type ToggleButtonGroupProps = {
     children: ReactNode;
     group: string;
+    state: string | undefined;
 };
 
 export const ToggleButtonGroup = (props: ToggleButtonGroupProps) => {
-    const {children, group} = props;
-    const [activeButton, setActiveButton] = useState<string | null>(null);
+    const {children, group, state} = props;
+    const [activeButton, setActiveButton] = useState<string | undefined>(state);
 
     const onToggle = (name: string, buttonGroup: string) => {
         if (buttonGroup === group) {
@@ -54,19 +55,20 @@ type ToggleButtonContextWrapperType = ToggleButtonType & {
 ToggleButtonGroup.ToggleButtonContextWrapper = (
     props: ToggleButtonContextWrapperType,
 ) => {
-    const {name, callback, ...res} = props;
+    const {name, onPress, ...res} = props;
     const {activeButton, onToggle, group} = useToggleButtonGroup();
 
-    const handlePress = () => {
+    const handlePress = (event: GestureResponderEvent) => {
         onToggle(name, group);
-        if (callback) callback();
+
+        if (onPress) onPress(event);
     };
 
     return (
         <ToggleButton
             {...res}
             isActive={activeButton === name}
-            callback={handlePress}
+            onPress={handlePress}
         />
     );
 };

@@ -1,4 +1,5 @@
 import { ColorValue, TouchableOpacityProps } from "react-native";
+import { SvgProps } from "react-native-svg";
 
 export type ToggleButtonType = TouchableOpacityProps & {
     title?: string;
@@ -8,4 +9,5 @@ export type ToggleButtonType = TouchableOpacityProps & {
     textActiveColor?: ColorValue;
     textInActiveColor?: ColorValue;
     callback?: () => void;
+    Icon?: React.FC<SvgProps>;
 };

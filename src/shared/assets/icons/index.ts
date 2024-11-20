@@ -15,3 +15,8 @@ export {default as BookingExcursionAction} from './excursion/BookingAction.svg';
 export {default as AddFilterAction} from './filter/Add.svg';
 export {default as DeleteFilterAction} from './filter/Delete.svg';
 export {default as DropdownAction} from './filter/ArrowDown.svg';
+
+export {default as Asc} from './filter/Asc.svg';
+export {default as Desc} from './filter/Desc.svg';
+export {default as Product} from './filter/Product.svg';
+export {default as Rating} from './filter/Rating.svg';

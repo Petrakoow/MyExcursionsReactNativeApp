@@ -2,4 +2,4 @@ import {FavoriteExcursion} from './models';
 
 export const SCHEMAS = [FavoriteExcursion];
 
-export const SCHEM_VERSION = 2;
+export const SCHEM_VERSION = 3;

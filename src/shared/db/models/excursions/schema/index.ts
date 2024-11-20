@@ -7,9 +7,11 @@ export class FavoriteExcursion extends Realm.Object {
         properties: {
             excursionId: 'int',
             createdAt: 'date',
+            userId: 'string',
         },
     };
 
     excursionId!: number;
     createdAt!: Date;
+    userId!: string;
 }
