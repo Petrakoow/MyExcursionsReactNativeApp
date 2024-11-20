@@ -7,17 +7,17 @@ export class Review extends Realm.Object {
         properties: {
             userId: 'string',
             excursionId: 'int',
-            userInitials: 'string',
+            name: 'string',
             rating: 'int',
-            reviewText: 'string',
-            reviewDate: 'date',
+            content: 'string',
+            date: 'string',
         },
     };
 
     userId!: string;
     excursionId!: number;
-    userInitials!: string;
+    name!: string;
     rating!: number;
-    reviewText!: string;
-    reviewDate!: Date;
+    content!: string;
+    date!: string;
 }

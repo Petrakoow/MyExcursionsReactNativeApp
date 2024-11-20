@@ -5,14 +5,12 @@ import {styleButton} from '@/shared/ui/customButton';
 import {LineSeparator} from '@/shared/ui/customSeparator';
 import {Logotype} from '@/shared/ui/customLogo';
 import {LinkScreenNavigate} from '@/shared/ui/linkScreen';
-import {
-    AppNavigation,
-} from '@/shared/config/navigation/types';
+import {AppNavigation} from '@/shared/config/navigation/types';
 import {CustomText} from '@/shared/ui/customText';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {styles} from './SignInScreenStyle';
 import {SignInForm} from '@/features/auth/signIn';
-import { palette } from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 
 export const AuthScreen = () => {
     return (
@@ -33,7 +31,7 @@ export const AuthScreen = () => {
                         <CustomButton
                             textButton="Продолжить как гость"
                             style={[
-                                styleButton.secondTypeButton,
+                                styleButton.secondaryTypeButton,
                                 styles.heightButton,
                             ]}
                             textColor={palette.light.textPrimary}

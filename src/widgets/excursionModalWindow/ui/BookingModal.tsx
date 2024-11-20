@@ -22,7 +22,7 @@ export const BookingModal = (props: BookingModalProps) => {
                             textButton="Закрыть"
                             onPress={onClose}
                             style={[
-                                styleButton.firstTypeButton,
+                                styleButton.primaryTypeButton,
                                 styles.closeButton,
                             ]}
                             textSize={TextSize.S_BASE}
@@ -85,7 +85,7 @@ export const BookingModal = (props: BookingModalProps) => {
                                         </CustomText>
                                         <CustomButton
                                             style={[
-                                                styleButton.firstTypeButton,
+                                                styleButton.primaryTypeButton,
                                                 styles.buttonBooking,
                                             ]}
                                             textSize={TextSize.S_XL}

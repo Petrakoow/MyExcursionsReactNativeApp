@@ -28,13 +28,13 @@ export const styles = StyleSheet.create({
     },
     header: {
         color: palette.light.primary,
-        marginBottom: moderateScale(12),
+        marginBottom: moderateScale(3),
     },
     ratingTitle: {
         color: palette.light.primary,
+        marginBottom: moderateScale(4),
     },
     rating: {
-        marginBottom: moderateScale(4),
         color: palette.light.warning,
     },
     summary: {
@@ -54,5 +54,8 @@ export const styles = StyleSheet.create({
     },
     contentDatabaseReviews: {
         paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
+    },
+    userReview: {
+        backgroundColor: palette.light.primary
     }
 });

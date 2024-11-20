@@ -1,11 +1,11 @@
 import Realm from 'realm';
 import {FavoriteExcursion} from '@/shared/db/models';
 
-export async function removeFromFavorites(
+export const removeFromFavorites = (
     realm: Realm,
     excursionId: number,
     userId: string,
-) {
+) => {
     realm.write(() => {
         const excursion = realm
             .objects(FavoriteExcursion.schema.name)
@@ -16,13 +16,6 @@ export async function removeFromFavorites(
             )[0];
         if (excursion) {
             realm.delete(excursion);
-            console.log(
-                `Excursion ${excursionId} removed from favorites for user ${userId}.`,
-            );
-        } else {
-            console.log(
-                `Excursion ${excursionId} not found in favorites for user ${userId}.`,
-            );
         }
     });
-}
+};

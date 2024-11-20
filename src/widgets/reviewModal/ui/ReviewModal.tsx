@@ -1,74 +1,57 @@
-import React, {useEffect, useState} from 'react';
-import {Modal, ModalProps, StyleSheet, TextInput, View} from 'react-native';
+import React from 'react';
+import {Modal, ModalProps, StyleSheet, View} from 'react-native';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 import {TextWeight, TextSize} from '@/shared/config/font';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {CustomText} from '@/shared/ui/customText';
 import {palette} from '@/shared/config/colors';
-import {MODAL_WIDTH, moderateScale} from '@/shared/config/dimensions';
-import {Review} from '@/shared/db/models';
+import {
+    CONTENT_RADIUS,
+    GAP_BASE,
+    MODAL_WIDTH,
+    moderateScale,
+} from '@/shared/config/dimensions';
+import {CustomInput} from '@/shared/ui/customInput';
 
-type ReviewModalType = ModalProps & {
-    userId: string;
-    excursionId: number;
+type ReviewModalType =  ModalProps & {
     userInitials: string;
-    existingReview?: Review; // Passing existingReview as a prop
+    existingReview?: {
+        rating: number;
+        content: string;
+    };
+    visible: boolean;
     onClose: () => void;
     onReviewSubmit: (rating: number, reviewText: string) => void;
     onReviewDelete: () => void;
 };
 
+const validationSchema = Yup.object().shape({
+    rating: Yup.number()
+        .required('Рейтинг обязателен')
+        .min(1, 'Рейтинг должен быть не менее 1')
+        .max(5, 'Рейтинг должен быть не более 5'),
+    reviewText: Yup.string()
+        .trim()
+        .min(10, 'Текст отзыва слишком короткий (мин. 10 символов)')
+        .max(500, 'Текст отзыва слишком длинный (макс. 500 символов)')
+        .optional(),
+});
+
 export const ReviewModal = (props: ReviewModalType) => {
     const {
-        userId,
-        excursionId,
         userInitials,
         visible,
+        existingReview,
         onClose,
         onReviewSubmit,
         onReviewDelete,
-        existingReview, // Use existingReview directly as a prop
         ...res
     } = props;
 
-    // Form state
-    const [rating, setRating] = useState<string>('');
-    const [reviewText, setReviewText] = useState<string>('');
-    const [error, setError] = useState<string>(''); // State for error messages
-
-    // Update form state when `existingReview` changes
-    useEffect(() => {
-        if (existingReview) {
-            setRating(existingReview.rating.toString());
-            setReviewText(existingReview.reviewText);
-        } else {
-            setRating('');
-            setReviewText('');
-        }
-        setError(''); // Clear errors when modal resets
-    }, [existingReview]);
-
-    const validateForm = (): boolean => {
-        const parsedRating = parseInt(rating, 10);
-        if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
-            setError('Рейтинг должен быть числом от 1 до 5.');
-            return false;
-        }
-        if (reviewText.trim().length === 0) {
-            setError('Текст отзыва не может быть пустым.');
-            return false;
-        }
-        setError('');
-        return true;
-    };
-
-    const handleSubmit = () => {
-        if (validateForm()) {
-            onReviewSubmit(parseInt(rating, 10), reviewText.trim());
-        }
-    };
-
-    const handleDelete = () => {
-        onReviewDelete(); // Call the parent's delete handler
+    const initialValues = {
+        rating: existingReview?.rating.toString() || '',
+        reviewText: existingReview?.content || '',
     };
 
     return (
@@ -83,67 +66,81 @@ export const ReviewModal = (props: ReviewModalType) => {
                             ? 'Редактировать отзыв'
                             : 'Оставить отзыв'}
                     </CustomText>
-                    <View>
-                        <CustomText
-                            size={TextSize.S_BASE}
-                            weight={TextWeight.BOLD}>
-                            Рейтинг:
-                        </CustomText>
-                        <TextInput
-                            style={styles.input}
-                            keyboardType="numeric"
-                            placeholder="Оценка (1-5)"
-                            value={rating}
-                            onChangeText={value => {
-                                const numericValue = value.replace(
-                                    /[^0-9]/g,
-                                    '',
-                                );
-                                setRating(numericValue.slice(0, 1));
-                            }}
-                        />
-                    </View>
-                    <View>
-                        <CustomText
-                            size={TextSize.S_BASE}
-                            weight={TextWeight.BOLD}>
-                            Текст отзыва:
-                        </CustomText>
-                        <TextInput
-                            style={[styles.input, styles.textArea]}
-                            multiline
-                            placeholder="Текст отзыва"
-                            value={reviewText}
-                            onChangeText={setReviewText}
-                        />
-                    </View>
-                    {error ? (
-                        <CustomText
-                            size={TextSize.S_BASE}
-                            style={styles.errorText}>
-                            {error}
-                        </CustomText>
-                    ) : null}
-                    <View style={styles.buttonContainer}>
-                        {existingReview && (
-                            <CustomButton
-                                textButton="Удалить"
-                                onPress={handleDelete}
-                                style={styleButton.firstTypeButton}
-                            />
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => {
+                            console.log(values);
+                            onReviewSubmit(Number(values.rating), values.reviewText);
+                        }}>
+                        {({
+                            handleChange,
+                            handleSubmit,
+                            errors,
+                            values,
+                            touched,
+                        }) => (
+                            <>
+                                <CustomInput
+                                    label="Рейтинг"
+                                    labelSize={TextSize.S_BASE}
+                                    style={styles.input}
+                                    keyboardType="numeric"
+                                    placeholder="Оценка (1-5)"
+                                    value={values.rating}
+                                    onChangeText={handleChange('rating')}
+                                />
+                                {touched.rating && errors.rating && (
+                                    <CustomText
+                                        size={TextSize.S_BASE}
+                                        style={styles.errorText}>
+                                        {errors.rating}
+                                    </CustomText>
+                                )}
+
+                                <CustomInput
+                                    label="Текст отзыва"
+                                    labelSize={TextSize.S_BASE}
+                                    style={[styles.input, styles.textArea]}
+                                    multiline
+                                    placeholder="Очень понравилась поездка..."
+                                    value={values.reviewText}
+                                    onChangeText={handleChange('reviewText')}
+                                />
+                                {touched.reviewText && errors.reviewText && (
+                                    <CustomText
+                                        size={TextSize.S_BASE}
+                                        style={styles.errorText}>
+                                        {errors.reviewText}
+                                    </CustomText>
+                                )}
+
+                                <View style={styles.buttonContainer}>
+                                    <CustomButton
+                                        textButton="Сохранить"
+                                        textSize={TextSize.S_BASE}
+                                        onPress={() => handleSubmit()}
+                                        style={styleButton.primaryTypeButton}
+                                    />
+                                    {existingReview && (
+                                        <CustomButton
+                                            textButton="Удалить"
+                                            textSize={TextSize.S_BASE}
+                                            onPress={onReviewDelete}
+                                            style={styleButton.warningTypeButton}
+                                        />
+                                    )}
+                                    <CustomButton
+                                        textButton="Отменить"
+                                        textSize={TextSize.S_BASE}
+                                        onPress={onClose}
+                                        style={styleButton.secondaryTypeButton}
+                                        textColor={palette.light.textPrimary}
+                                    />
+                                </View>
+                            </>
                         )}
-                        <CustomButton
-                            textButton="Сохранить"
-                            onPress={handleSubmit}
-                            style={styleButton.firstTypeButton}
-                        />
-                        <CustomButton
-                            textButton="Отменить"
-                            onPress={onClose}
-                            style={styleButton.secondTypeButton}
-                            textColor={palette.light.textPrimary}
-                        />
-                    </View>
+                    </Formik>
                 </View>
             </View>
         </Modal>
@@ -162,20 +159,19 @@ const styles = StyleSheet.create({
         padding: moderateScale(20),
         backgroundColor: palette.light.background,
         borderRadius: moderateScale(10),
+        gap: GAP_BASE,
     },
     title: {
         marginBottom: moderateScale(10),
     },
     input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
+        paddingVertical: 3,
+        paddingHorizontal: moderateScale(12),
     },
     textArea: {
         height: 100,
         textAlignVertical: 'top',
+        borderRadius: CONTENT_RADIUS - 20,
     },
     errorText: {
         color: palette.light.warning,

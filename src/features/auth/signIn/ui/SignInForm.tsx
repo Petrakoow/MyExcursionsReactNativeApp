@@ -58,7 +58,7 @@ export const SignInForm = () => {
                                 onPress={() => handleSubmit()}
                                 textButton="Продолжить"
                                 style={[
-                                    styleButton.firstTypeButton,
+                                    styleButton.primaryTypeButton,
                                     styles.heightButton,
                                 ]}
                                 disabled={loading}

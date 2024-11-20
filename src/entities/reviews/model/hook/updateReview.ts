@@ -6,16 +6,17 @@ export const updateReview = (
     userId: string,
     excursionId: number,
     rating: number,
-    reviewText: string,
+    content: string,
 ) => {
     const existingReview = realm.objectForPrimaryKey<Review>(
         Review.schema.name,
         userId,
     );
     if (existingReview && existingReview.excursionId === excursionId) {
+
         realm.write(() => {
             existingReview.rating = rating;
-            existingReview.reviewText = reviewText;
+            existingReview.content = content;
         });
     }
 };

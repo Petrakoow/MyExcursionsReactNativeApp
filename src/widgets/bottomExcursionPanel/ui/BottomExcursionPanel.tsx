@@ -20,6 +20,8 @@ type BottomExcursionPanelProps = {
     excursionId: number;
 };
 
+// переписать
+
 export const BottomExcursionPanel = ({
     orderOptions,
     onToggleReviews,

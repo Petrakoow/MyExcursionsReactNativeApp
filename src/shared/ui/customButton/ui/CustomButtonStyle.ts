@@ -20,12 +20,16 @@ export const styles = StyleSheet.create({
 });
 
 export const styleButton = StyleSheet.create({
-    firstTypeButton: {
+    primaryTypeButton: {
         backgroundColor: palette.light.primary,
         color: palette.light.textPrimaryInv,
     },
-    secondTypeButton: {
+    secondaryTypeButton: {
         borderWidth: 1,
         backgroundColor: palette.light.background,
+    },
+    warningTypeButton: {
+        backgroundColor: palette.light.error,
+        color: palette.light.textPrimaryInv,
     },
 });

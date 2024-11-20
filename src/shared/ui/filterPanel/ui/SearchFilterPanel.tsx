@@ -10,7 +10,7 @@ import {moderateScale} from 'react-native-size-matters';
 import {ToggleButton} from '../../toggleButton';
 import {FilterItem} from '@/features/excursions';
 import {useDropdownFilter} from '../hook/useDropdownFilter';
-import { palette } from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 
 type SearchFilterComponentType<T = {}> = {
     title?: string;
@@ -62,7 +62,7 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
             )}
             <View style={stylesSearchFilter.containerSearchFilter}>
                 <CustomInput
-                    style={stylesSearchFilter.inputSearchFilter}
+                    style={[stylesSearchFilter.inputSearchFilter]}
                     value={inputValue}
                     onChangeText={setInputValue}
                     placeholder="Поиск..."
@@ -70,7 +70,7 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
                 {hasDropdownList && (
                     <CustomButton
                         style={[
-                            styleButton.firstTypeButton,
+                            styleButton.primaryTypeButton,
                             stylesSearchFilter.buttonSearchFilter,
                         ]}
                         Icon={IconLabelDropdownList}
@@ -82,7 +82,7 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
                     <CustomButton
                         textButton={isItemInSelected ? labelRemove : labelAdd}
                         style={[
-                            styleButton.firstTypeButton,
+                            styleButton.primaryTypeButton,
                             stylesSearchFilter.buttonSearchFilter,
                         ]}
                         Icon={

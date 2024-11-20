@@ -59,7 +59,7 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
                 textButton="Открыть фильтры"
                 textSize={TextSize.S_BASE}
                 onPress={toggleModal}
-                style={[styleButton.firstTypeButton, styles.buttonPadding]}
+                style={[styleButton.primaryTypeButton, styles.buttonPadding]}
             />
 
             <Modal
@@ -145,7 +145,7 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
                             textSize={TextSize.S_BASE}
                             onPress={toggleModal}
                             style={[
-                                styleButton.firstTypeButton,
+                                styleButton.primaryTypeButton,
                                 styles.buttonPadding,
                             ]}
                         />

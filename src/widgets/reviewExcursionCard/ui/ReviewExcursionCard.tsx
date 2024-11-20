@@ -3,8 +3,9 @@ import React from 'react';
 import {CustomText} from '@/shared/ui/customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {styles} from './ReviewExcursionCardStyle';
+import {ViewProps} from 'react-native-svg/lib/typescript/fabric/utils';
 
-type ReviewExcursionCardType = {
+type ReviewExcursionCardType = ViewProps & {
     item: {
         name: string;
         date: string;
@@ -12,12 +13,13 @@ type ReviewExcursionCardType = {
         content: string;
     };
     ratingTitle?: string;
+    isPrimary?: boolean;
 };
 
 export const ReviewExcursionCard = (props: ReviewExcursionCardType) => {
-    const {item, ratingTitle = 'Оценка'} = props;
+    const {item, ratingTitle = 'Оценка', style, isPrimary = false, ...res} = props;
     return (
-        <View style={styles.reviewItem}>
+        <View {...res} style={[style, styles.reviewItem, isPrimary && styles.primaryCard]}>
             <CustomText
                 size={TextSize.S_LG}
                 weight={TextWeight.BOLD}

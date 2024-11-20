@@ -1,4 +1,4 @@
-import { palette } from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 
@@ -23,5 +23,9 @@ export const styles = StyleSheet.create({
     },
     reviewContent: {
         color: '#333',
+    },
+    primaryCard: {
+        borderWidth: 2,
+        borderColor: palette.light.primary,
     },
 });

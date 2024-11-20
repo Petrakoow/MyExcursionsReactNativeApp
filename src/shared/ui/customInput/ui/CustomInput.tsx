@@ -7,16 +7,26 @@ import {Trailing} from './Trailing';
 type CustomTextType = TextInputProps & {
     label?: string;
     isSwitching?: boolean;
+    labelSize?: TextSize;
 };
 
 export const CustomInput = (props: CustomTextType) => {
-    const {label, secureTextEntry, isSwitching, style, ...res} = props;
+    const {
+        label,
+        secureTextEntry,
+        isSwitching,
+        style,
+        multiline = false,
+        labelSize,
+        numberOfLines = 1,
+        ...res
+    } = props;
     const [isSecure, setIsSecure] = useState<boolean>(secureTextEntry || false);
 
     return (
         <View style={styles.container}>
             {label && (
-                <CustomText size={TextSize.S_XL} weight={TextWeight.NORMAL}>
+                <CustomText size={labelSize? labelSize : TextSize.S_XL} weight={TextWeight.NORMAL}>
                     {label}
                 </CustomText>
             )}
@@ -31,9 +41,9 @@ export const CustomInput = (props: CustomTextType) => {
                         secureTextEntry && styles.paddingInput,
                         style,
                     ]}
-                    numberOfLines={1}
+                    numberOfLines={numberOfLines}
                     secureTextEntry={isSecure}
-                    multiline={false}
+                    multiline={multiline}
                 />
                 {secureTextEntry && (
                     <Trailing show={isSecure} setShow={setIsSecure} />

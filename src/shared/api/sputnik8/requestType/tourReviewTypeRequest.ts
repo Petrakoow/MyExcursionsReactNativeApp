@@ -4,6 +4,7 @@ export type TourReviewTypeRequest = {
         rating: number;
         name: string;
         date: string;
+        userId?: string;
     }[];
     pagination: {
         next_page_token: string;

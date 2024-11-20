@@ -15,31 +15,20 @@ import {
     addReview,
     deleteReview,
     getReviews,
+    getReviewUser,
     updateReview,
 } from '@/entities/reviews';
 import {useDatabase} from '@/app/providers';
-import { TourReviewTypeRequest } from '@/shared/api/sputnik8';
 
 type InformationReviewsType = {
     uid: number;
     customersReviewRating: number;
-    reviews: number;
-    reviewsWithText: number;
 };
-
-const convertToTourReviewRequest = (review: Review) : TourReviewTypeRequest['reviews'][number] => {
-    return review && {
-        content: review?.reviewText,
-        name: review?.userInitials || '',
-        date: review?.reviewDate.toDateString(),
-        rating: review?.rating,
-    }
-}
 
 export const InformationExcursionReviewsCard = (
     props: InformationReviewsType,
 ) => {
-    const {customersReviewRating, reviews, reviewsWithText, uid} = props;
+    const {customersReviewRating, uid} = props;
     const flatListRef = useRef<FlatList>(null);
 
     const {
@@ -55,8 +44,11 @@ export const InformationExcursionReviewsCard = (
     } = useGetReviewsByTokenString();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [userId, setUserId] = useState<string>(''); // State for userId
+    const [userId, setUserId] = useState<string>('');
     const [existingReview, setExistingReview] = useState<Review | undefined>(
+        undefined,
+    );
+    const [allReviews, setAllReviews] = useState<Review[] | undefined>(
         undefined,
     );
 
@@ -66,42 +58,42 @@ export const InformationExcursionReviewsCard = (
         const fetchUserSession = async () => {
             const session = await getUserSession();
             if (session) {
-                setUserId(session.userId); // Set userId from session
+                setUserId(session.userId);
             }
         };
 
-        fetchUserSession(); // Fetch user session on component mount
+        fetchUserSession();
         getToursByExcursionId(currentToken, uid);
 
         if (userId) {
-            const reviews = getReviews(database, uid);
-            const userReview = reviews.find(review => review.userId === userId);
+            const userReview = getReviewUser(database, uid, userId);
             if (userReview) setExistingReview(userReview);
         }
+        console.log(allReviews);
+        setAllReviews(getReviews(database, uid));
     }, [currentToken, uid, userId]);
 
     const handleAddOrUpdateReview = (rating: number, text: string) => {
+        console.log(rating, text, existingReview);
         if (existingReview) {
-            updateReview(database, userId, uid, rating, text); // Update review if it exists
+            updateReview(database, userId, uid, rating, text);
         } else {
-            addReview(database, userId, uid, 'AA', rating, text); // Add new review
+            addReview(database, userId, uid, 'AA', rating, text);
         }
-        const updatedReviews = getReviews(database, uid);
-        const userReview = updatedReviews.find(
-            review => review.userId === userId,
-        );
-        setExistingReview(userReview);
+        const userReview = getReviewUser(database, uid, userId);
+        if (userReview) {
+            setExistingReview(userReview);
+            setAllReviews(getReviews(database, uid));
+        }
+
         setModalVisible(false);
     };
 
     const handleDeleteReview = async () => {
         if (existingReview) {
-            try {
-                await deleteReview(database, userId);
-                setExistingReview(undefined);
-            } catch (error) {
-                console.error('Ошибка при удалении отзыва:', error);
-            }
+            deleteReview(database, userId);
+            setExistingReview(undefined);
+            setAllReviews(getReviews(database, uid));
         }
         setModalVisible(false);
     };
@@ -133,38 +125,33 @@ export const InformationExcursionReviewsCard = (
                         {customersReviewRating.toFixed(1)} / 5
                     </CustomText>
                 </CustomText>
-                <CustomText size={TextSize.S_XL} style={styles.summary}>
-                    Всего отзывов: {reviews} ({reviewsWithText} с текстом)
-                </CustomText>
                 <CustomButton
-                    style={[styleButton.firstTypeButton, styles.reviewButton]}
-                    textButton={existingReview ? "Изменить отзыв" : "Оставить отзыв"}
+                    style={[styleButton.primaryTypeButton, styles.reviewButton]}
+                    textButton={
+                        existingReview ? 'Изменить отзыв' : 'Оставить отзыв'
+                    }
                     textSize={TextSize.S_BASE}
                     onPress={() => setModalVisible(true)}
                 />
             </View>
 
             <View style={styles.contentReview}>
-                {/* {existingReview && (
-                    <View style={styles.contentDatabaseReviews}>
-                        <ReviewExcursionCard
-                            item={{
-                                name: existingReview?.userInitials,
-                                date: existingReview?.reviewDate.toDateString(),
-                                rating: existingReview?.rating,
-                                content: existingReview?.reviewText,
-                            }}
-                        />
-                    </View>
-                )} */}
                 {reviewsList.length > 0 ? (
                     <FlatList
                         ref={flatListRef}
                         data={[
-                            ...(existingReview ? [convertToTourReviewRequest(existingReview)] : []),
+                            ...(existingReview
+                                ? [{...existingReview, userId: userId}]
+                                : []),
                             ...reviewsList,
+                            ...(allReviews || []),
                         ]}
-                        renderItem={ReviewExcursionCard}
+                        renderItem={({item}) => (
+                            <ReviewExcursionCard
+                                item={item}
+                                isPrimary={item?.userId}
+                            />
+                        )}
                         keyExtractor={(item, index) => `${item.date}-${index}`}
                         style={styles.contentBottom}
                     />
@@ -200,14 +187,12 @@ export const InformationExcursionReviewsCard = (
             </View>
 
             <ReviewModal
-                userId={userId}
-                excursionId={uid}
                 userInitials={'AA'}
                 visible={isModalVisible}
                 existingReview={existingReview}
                 onClose={() => setModalVisible(false)}
                 onReviewSubmit={handleAddOrUpdateReview}
-                onReviewDelete={handleDeleteReview} // Add function for deleting review
+                onReviewDelete={handleDeleteReview}
                 animationType="fade"
             />
         </View>

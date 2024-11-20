@@ -49,7 +49,7 @@ export const PaginationPanel = (props: PaginationPanelType) => {
     return (
         <View style={[styles.pagination]}>
             <CustomButton
-                style={[styleButton.firstTypeButton, styles.pageButton]}
+                style={[styleButton.primaryTypeButton, styles.pageButton]}
                 onPress={handleLoadPreviousPage}
                 disabled={page === 1 || fetching}
                 textButton={titleLeftButton}
@@ -59,7 +59,7 @@ export const PaginationPanel = (props: PaginationPanelType) => {
                 size={TextSize.S_BASE}
                 weight={TextWeight.LIGHT}>{`${titlePage} ${page}`}</CustomText>
             <CustomButton
-                style={[styleButton.firstTypeButton, styles.pageButton]}
+                style={[styleButton.primaryTypeButton, styles.pageButton]}
                 onPress={handleLoadNextPage}
                 disabled={!hasMore || fetching}
                 textButton={titleRightButton}
