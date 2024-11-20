@@ -6,17 +6,12 @@ import {SplashScreen} from '@/shared/ui/splashScreen';
 import {ErrorText} from '@/shared/ui/errorText';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
-import {
-    CONTENT_PADDING_HORIZONTAL,
-    CONTENT_PADDING_VERTICAL,
-    GAP_BASE,
-    moderateScale,
-} from '@/shared/config/dimensions';
-import {useFavoriteExcursions} from '../hook/useFavoriteExcursions';
+import {useFavoriteExcursions} from '../../../../features/excursions/hook/useFavoriteExcursions';
 import {NavigationStackList} from '@/shared/config/navigation';
 import {AppNavigation} from '@/shared/config/navigation';
 import {TextSize} from '@/shared/config/font';
 import {TourTypeRequest} from '@/shared/api/sputnik8';
+import { styles } from './ExcursionFavoritesListPageScreenStyle';
 
 export const ExcursionFavoritesListPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
@@ -66,14 +61,3 @@ export const ExcursionFavoritesListPageScreen = () => {
         </ScreenContent>
     );
 };
-
-const styles = StyleSheet.create({
-    content: {
-        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
-        paddingVertical: CONTENT_PADDING_VERTICAL,
-        gap: GAP_BASE,
-    },
-    buttonPadding: {
-        padding: moderateScale(4),
-    },
-});

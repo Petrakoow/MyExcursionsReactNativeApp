@@ -1,5 +1,4 @@
 import {TourReviewTypeRequest, fetchTourReview} from '@/shared/api/sputnik8';
-import {useQuery} from '@tanstack/react-query';
 import {useState, useRef} from 'react';
 
 export const useGetReviewsByTokenString = () => {

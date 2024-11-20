@@ -6,19 +6,10 @@ import {SplashScreen} from '@/shared/ui/splashScreen';
 import {ReviewExcursionCard} from '@/widgets/reviewExcursionCard';
 import {styles} from './InformationExcursionReviewsCardStyle';
 import {PaginationPanel} from '@/widgets/paginationPanel';
-import {useGetReviewsByTokenString} from '@/features/excursions';
+import {useGetReviewsByTokenString, useReviews} from '@/features/reviews';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {ReviewModal} from '@/widgets/reviewModal';
 import {getUserSession} from '@/shared/db/models/user';
-import {Review} from '@/shared/db/models';
-import {
-    addReview,
-    deleteReview,
-    getReviews,
-    getReviewUser,
-    updateReview,
-} from '@/entities/reviews';
-import {useDatabase} from '@/app/providers';
 
 type InformationReviewsType = {
     uid: number;
@@ -45,14 +36,10 @@ export const InformationExcursionReviewsCard = (
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [userId, setUserId] = useState<string>('');
-    const [existingReview, setExistingReview] = useState<Review | undefined>(
-        undefined,
+    const {reviews, existingReview, addOrUpdate, remove} = useReviews(
+        uid,
+        userId,
     );
-    const [allReviews, setAllReviews] = useState<Review[] | undefined>(
-        undefined,
-    );
-
-    const database = useDatabase();
 
     useEffect(() => {
         const fetchUserSession = async () => {
@@ -64,39 +51,7 @@ export const InformationExcursionReviewsCard = (
 
         fetchUserSession();
         getToursByExcursionId(currentToken, uid);
-
-        if (userId) {
-            const userReview = getReviewUser(database, uid, userId);
-            if (userReview) setExistingReview(userReview);
-        }
-        console.log(allReviews);
-        setAllReviews(getReviews(database, uid));
     }, [currentToken, uid, userId]);
-
-    const handleAddOrUpdateReview = (rating: number, text: string) => {
-        console.log(rating, text, existingReview);
-        if (existingReview) {
-            updateReview(database, userId, uid, rating, text);
-        } else {
-            addReview(database, userId, uid, 'AA', rating, text);
-        }
-        const userReview = getReviewUser(database, uid, userId);
-        if (userReview) {
-            setExistingReview(userReview);
-            setAllReviews(getReviews(database, uid));
-        }
-
-        setModalVisible(false);
-    };
-
-    const handleDeleteReview = async () => {
-        if (existingReview) {
-            deleteReview(database, userId);
-            setExistingReview(undefined);
-            setAllReviews(getReviews(database, uid));
-        }
-        setModalVisible(false);
-    };
 
     if (isLoading || userId === null) {
         return (
@@ -140,18 +95,19 @@ export const InformationExcursionReviewsCard = (
                     <FlatList
                         ref={flatListRef}
                         data={[
-                            ...(existingReview
-                                ? [{...existingReview, userId: userId}]
-                                : []),
+                            ...(existingReview ? [existingReview] : []),
                             ...reviewsList,
-                            ...(allReviews || []),
+                            ...(reviews || []),
                         ]}
-                        renderItem={({item}) => (
-                            <ReviewExcursionCard
-                                item={item}
-                                isPrimary={item?.userId}
-                            />
-                        )}
+                        renderItem={({item}) => {
+                            if (!item) return null;
+                            return (
+                                <ReviewExcursionCard
+                                    item={item}
+                                    isPrimary={item.userId === userId}
+                                />
+                            );
+                        }}
                         keyExtractor={(item, index) => `${item.date}-${index}`}
                         style={styles.contentBottom}
                     />
@@ -191,8 +147,14 @@ export const InformationExcursionReviewsCard = (
                 visible={isModalVisible}
                 existingReview={existingReview}
                 onClose={() => setModalVisible(false)}
-                onReviewSubmit={handleAddOrUpdateReview}
-                onReviewDelete={handleDeleteReview}
+                onReviewSubmit={(rating, text) => {
+                    addOrUpdate(rating, text);
+                    setModalVisible(false);
+                }}
+                onReviewDelete={() => {
+                    remove();
+                    setModalVisible(false);
+                }}
                 animationType="fade"
             />
         </View>
