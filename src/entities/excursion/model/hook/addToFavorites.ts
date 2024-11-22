@@ -7,9 +7,10 @@ export const addToFavorites = (
     userId: string,
 ) => {
     realm.write(() => {
+        const id = `${userId}-${excursionId}`;
         realm.create(FavoriteExcursion.schema.name, {
+            id,
             excursionId,
-            createdAt: new Date(),
             userId,
         });
     });

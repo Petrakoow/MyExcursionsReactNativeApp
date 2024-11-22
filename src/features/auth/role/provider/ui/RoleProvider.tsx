@@ -5,24 +5,18 @@ import {useAuthStateListener} from '../../hook/useAuthStateListener';
 import {UserSessionType} from '@/shared/db/models/user';
 import {ErrorText} from '@/shared/ui/errorText';
 
-type AuthContextType = {
-    reloadState: () => Promise<void>;
-    getSessionState: () => Promise<UserSessionType | null>;
-};
-
-export const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext({
     reloadState: async () => {},
-    getSessionState: async () => null,
 });
 
 type RoleProviderType = {
     children: ReactNode;
-}
+};
 
 export const RoleProvider = (props: RoleProviderType) => {
     const {children} = props;
     try {
-        const {loading, reloadState, getSessionState} = useAuthStateListener();
+        const {loading, reloadState} = useAuthStateListener();
         useEffect(() => {
             reloadState();
         }, [reloadState]);
@@ -34,7 +28,7 @@ export const RoleProvider = (props: RoleProviderType) => {
         }
 
         return (
-            <AuthContext.Provider value={{reloadState, getSessionState}}>
+            <AuthContext.Provider value={{reloadState}}>
                 {children}
             </AuthContext.Provider>
         );

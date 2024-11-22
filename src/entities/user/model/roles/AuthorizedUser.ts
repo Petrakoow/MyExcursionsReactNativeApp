@@ -1,3 +1,4 @@
+import { generateRandomString } from '@/shared/utils';
 import {User, RolesEnum} from './User';
 
 export class AuthorizedUser extends User {
@@ -30,5 +31,12 @@ export class AuthorizedUser extends User {
         } else {
             throw new Error('UID cannot be empty for authenticated users');
         }
+    }
+
+    public createName(length: number) {
+        const rolePrefix = RolesEnum[this.role].toString().toLowerCase();
+        const randomId = generateRandomString(length); 
+
+        return `${rolePrefix}_${randomId}`;
     }
 }

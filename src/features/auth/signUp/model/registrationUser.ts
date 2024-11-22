@@ -8,13 +8,15 @@ import {
     setDoc,
     doc,
 } from '@/shared/api/firebase';
-import {AuthorizedUser} from '@/entities/user/model';
-import {useAuth} from '@/features/auth/role';
-
+import {addUser, AuthorizedUser} from '@/entities/user/model';
+import {useDatabase} from '@/app/providers';
+import {LENGTH_DEFAULT_PROFILE_PREFIX} from '@/shared/config/constants';
+import Realm from 'realm';
 export const registerUser = async (
     email: string,
     password: string,
     username: string,
+    database: Realm,
 ) => {
     const usersRef = collection(firestore(), 'users');
     const usernameQuery = query(usersRef, where('username', '==', username));
@@ -37,6 +39,15 @@ export const registerUser = async (
         username: newUser.username,
         role: newUser.role,
     });
+
+    addUser(
+        database,
+        uid,
+        newUser.username,
+        newUser.createName(LENGTH_DEFAULT_PROFILE_PREFIX),
+        newUser.email,
+        newUser.role,
+    );
 
     await auth().signInWithEmailAndPassword(email, password);
 };

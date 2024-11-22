@@ -35,31 +35,17 @@ export const InformationExcursionReviewsCard = (
     } = useGetReviewsByTokenString();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [userSession, setUserSession] = useState<UserBasicFieldType>({
-        userId: '',
-        username: '',
-    });
+    const userId = getUserSession()?.userId || '';
     const {reviews, existingReview, addOrUpdate, remove} = useReviews(
         uid,
-        userSession,
+        {userId: userId},
     );
 
     useEffect(() => {
-        const fetchUserSession = async () => {
-            const session = await getUserSession();
-            if (session) {
-                setUserSession({
-                    userId: session.userId,
-                    username: session.username,
-                });
-            }
-        };
-
-        fetchUserSession();
         getToursByExcursionId(currentToken, uid);
     }, [currentToken, uid]);
 
-    if (isLoading || !userSession) {
+    if (isLoading) {
         return (
             <SplashScreen
                 showLogotype={false}
@@ -111,7 +97,7 @@ export const InformationExcursionReviewsCard = (
                                 <ReviewExcursionCard
                                     item={item}
                                     isPrimary={
-                                        item.userId === userSession.userId
+                                        item.userId === userId
                                     }
                                 />
                             );

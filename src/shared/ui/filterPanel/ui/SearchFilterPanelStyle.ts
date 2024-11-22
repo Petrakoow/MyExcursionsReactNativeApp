@@ -1,4 +1,4 @@
-import { palette } from '@/shared/config/colors';
+import {palette} from '@/shared/config/colors';
 import {CONTENT_RADIUS} from '@/shared/config/dimensions';
 import {TextSize, styles} from '@/shared/config/font';
 import {StyleSheet} from 'react-native';
@@ -7,7 +7,6 @@ import {moderateScale} from 'react-native-size-matters';
 const SIZE_SEARCH_FILTER_BUTTONS = moderateScale(25);
 
 export const stylesFilterPanel = StyleSheet.create({
-
     contentFilter: {
         maxHeight: moderateScale(100),
         overflow: 'hidden',

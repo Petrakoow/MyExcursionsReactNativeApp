@@ -1,4 +1,4 @@
-import {View, Text, Image, ImageSourcePropType} from 'react-native';
+import {View, Image, ImageSourcePropType} from 'react-native';
 import { styles } from './CustomLogoStyle';
 import {Logo} from '@/shared/assets/images';
 import {CustomText} from '@/shared/ui/customText';

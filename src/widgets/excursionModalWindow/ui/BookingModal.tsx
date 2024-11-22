@@ -82,6 +82,10 @@ export const BookingModal = (props: BookingModalProps) => {
                                             )}
                                         <CustomText style={styles.marginText}>
                                             Цена рассчитывается {line.price_per}
+                                            {
+                                                // сделать сначала данные о пользователе при бронировании
+                                            }
+                                            {new Date(parseInt(line.start_date) * 1000).toDateString()}
                                         </CustomText>
                                         <CustomButton
                                             style={[
@@ -89,7 +93,7 @@ export const BookingModal = (props: BookingModalProps) => {
                                                 styles.buttonBooking,
                                             ]}
                                             textSize={TextSize.S_XL}
-                                            textButton="Забронировать"
+                                            textButton="Добавить в лист ожидания"
                                         />
                                     </View>
                                 ))}

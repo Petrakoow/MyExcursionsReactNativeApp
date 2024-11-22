@@ -15,7 +15,7 @@ export const ToggleButton = (props: ToggleButtonType) => {
         activeColor = palette.light.warning,
         inactiveColor = palette.light.background,
         textActiveColor = palette.light.textPrimaryInv,
-        textInActiveColor = palette.light.textPrimaryInv,
+        textInActiveColor = palette.light.textPrimary,
         Icon,
         style,
         onPress,

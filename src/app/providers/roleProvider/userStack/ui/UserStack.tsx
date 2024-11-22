@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationStackList} from '@/shared/config/navigation/types';
 import {ExcursionInfoPageScreen} from '@/pages/tours';
 import {AppNavigation} from '@/shared/config/navigation/types';
-import {BottomTabNavigation} from '@/widgets/tabNavigation';
+import {BottomTabNavigation} from '@/pages/tabs';
 import {HeaderStackNavigationStyleOptions} from '@/shared/config/navigation';
 
 import {getEnumTranslation} from '@/shared/config/navigation';

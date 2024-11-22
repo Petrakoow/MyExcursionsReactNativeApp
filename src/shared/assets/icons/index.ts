@@ -20,3 +20,5 @@ export {default as Asc} from './filter/Asc.svg';
 export {default as Desc} from './filter/Desc.svg';
 export {default as Product} from './filter/Product.svg';
 export {default as Rating} from './filter/Rating.svg';
+
+export {default as Camera} from './profile/camera.svg';

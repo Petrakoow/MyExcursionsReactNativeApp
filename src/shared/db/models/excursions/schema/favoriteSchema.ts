@@ -3,15 +3,15 @@ import Realm from 'realm';
 export class FavoriteExcursion extends Realm.Object {
     static schema = {
         name: 'FavoriteExcursion',
-        primaryKey: 'excursionId',
+        primaryKey: 'id', 
         properties: {
+            id: 'string',
             excursionId: 'int',
-            createdAt: 'date',
             userId: 'string',
         },
     };
 
+    id!: string;
     excursionId!: number;
-    createdAt!: Date;
     userId!: string;
 }

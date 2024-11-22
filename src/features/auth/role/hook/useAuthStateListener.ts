@@ -1,69 +1,47 @@
 import {useCallback, useState} from 'react';
 import {auth, firestore, doc, getDoc} from '@/shared/api/firebase';
 import {RolesEnum} from '@/entities/user/model';
-import {UserSessionType} from '@/shared/db/models/user';
-
-import {
-    getUserSession,
-    saveUserSession,
-    clearUserSession,
-} from '@/shared/db/models/user';
-import {UNAUTHORIZED_USER} from '@/shared/config/constants';
+import {saveUserSession} from '@/shared/db/models/user';
+import {FIRESTORE_AUTH_DB, UNAUTHORIZED_USER} from '@/shared/config/constants';
 
 type AuthState = {
     loading: boolean;
-    getSessionState: () => Promise<UserSessionType | null>;
     reloadState: () => Promise<void>;
 };
 
 export const useAuthStateListener = (): AuthState => {
     const [loading, setLoading] = useState(true);
-    
     const reloadState = useCallback(async () => {
         try {
             setLoading(true);
             const authUser = auth().currentUser;
             if (authUser) {
                 const userDoc = await getDoc(
-                    doc(firestore(), 'users', authUser.uid),
+                    doc(firestore(), FIRESTORE_AUTH_DB, authUser.uid),
                 );
                 const userData = userDoc.data();
                 if (userData) {
-                    console.log(userData);
-                    await saveSessionState(
-                        authUser.uid,
-                        userData.username,
-                        userData.role as RolesEnum,
-                    );
-                    console.log('User session saved:', await getSessionState());
+                    saveUserSession({
+                        userId: authUser.uid,
+                        username: userData.username,
+                        role: userData.role as RolesEnum,
+                    });
                 }
             } else {
-                await saveSessionState(UNAUTHORIZED_USER, UNAUTHORIZED_USER, RolesEnum.GUEST);
+                saveUserSession({
+                    userId: UNAUTHORIZED_USER,
+                    username: UNAUTHORIZED_USER,
+                    role: RolesEnum.GUEST,
+                });
             }
         } catch (error) {
-            throw new Error(`Error in reloadState: ${(error as Error).message}`)
+            throw new Error(
+                `Error in reloadState: ${(error as Error).message}`,
+            );
         } finally {
             setLoading(false);
         }
     }, []);
 
-    const saveSessionState = async (userId: string, username: string, role: RolesEnum) => {
-        await saveUserSession({userId, username, role});
-    };
-
-    const getSessionState = async () => {
-        const session = await getUserSession();
-        return session || null;
-    };
-
-    const clearSessionState = async () => {
-        try {
-            await clearUserSession();
-            console.log('Session state cleared');
-        } catch (error) {
-            console.error('Error clearing session state:', error);
-        }
-    };
-
-    return {loading, reloadState, getSessionState};
+    return {loading, reloadState};
 };

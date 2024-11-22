@@ -28,52 +28,25 @@ export const BottomExcursionPanel = ({
     isReviewsVisible,
     excursionId,
 }: BottomExcursionPanelProps) => {
-    const [userId, setUserId] = useState<string | null>(null);
     const [isBookingModalVisible, setBookingModalVisible] = useState(false);
     const [isFavoriteExcursion, setIsFavoriteExcursion] = useState(false);
 
     const database = useDatabase();
-
-    useEffect(() => {
-        const fetchUserSession = async () => {
-            try {
-                const session = await getUserSession();
-                if (session?.userId) {
-                    setUserId(session.userId);
-                } else {
-                    console.error('User session not found.');
-                }
-            } catch (error) {
-                console.error('Error retrieving user session:', error);
-            }
-        };
-        fetchUserSession();
-    }, []);
+    const userId = getUserSession()?.userId;
 
     useEffect(() => {
         if (!userId) return;
 
-        const fetchFavoriteStatus = async () => {
-            const favoriteStatus = await isFavorite(
-                database,
-                excursionId,
-                userId,
-            );
-            setIsFavoriteExcursion(favoriteStatus);
-        };
-        fetchFavoriteStatus();
+        const favoriteStatus = isFavorite(database, excursionId, userId);
+        setIsFavoriteExcursion(favoriteStatus);
     }, [excursionId, userId]);
 
-    const handleFavoriteToggle = async () => {
-        if (!userId) {
-            console.error('Cannot toggle favorite: userId is not available.');
-            return;
-        }
-
+    const handleFavoriteToggle = () => {
+        if (!userId) return;
         if (isFavoriteExcursion) {
-            await removeFromFavorites(database, excursionId, userId);
+            removeFromFavorites(database, excursionId, userId);
         } else {
-            await addToFavorites(database, excursionId, userId);
+            addToFavorites(database, excursionId, userId);
         }
         setIsFavoriteExcursion(!isFavoriteExcursion);
     };

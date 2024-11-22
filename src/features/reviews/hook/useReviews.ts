@@ -9,18 +9,23 @@ import {
     getReviewUser,
     updateReview,
 } from '@/entities/reviews';
-import { UserBasicFieldType } from '@/shared/db/models/user';
+import {UserBasicFieldType} from '@/shared/db/models/user';
+import {getUser} from '@/entities/user/model';
+import {UNAUTHORIZED_USER} from '@/shared/config/constants';
 
 export const useReviews = (uid: number, user: UserBasicFieldType) => {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [existingReview, setExistingReview] = useState<Review | undefined>(
         undefined,
     );
+    const [initials, setInitials] = useState('');
     const database = useDatabase();
 
     useEffect(() => {
         const allReviews = getReviews(database, uid) || [];
-        const userReview = getReviewUser(database, uid, user.userId) || undefined;
+        const userReview =
+            getReviewUser(database, uid, user.userId) || undefined;
+        setInitials(getUser(database, user.userId)?.name || '');
         setReviews(allReviews);
         setExistingReview(userReview);
     }, [uid, user.userId]);
@@ -30,7 +35,14 @@ export const useReviews = (uid: number, user: UserBasicFieldType) => {
             if (existingReview) {
                 updateReview(database, user.userId, uid, rating, text);
             } else {
-                addReview(database, user.userId, uid, user.username, rating, text);
+                addReview(
+                    database,
+                    user.userId,
+                    uid,
+                    initials ? initials : user.username || UNAUTHORIZED_USER,
+                    rating,
+                    text,
+                );
             }
             const userReview = getReviewUser(database, uid, user.userId);
             if (userReview) {

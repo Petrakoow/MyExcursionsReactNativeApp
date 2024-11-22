@@ -3,13 +3,14 @@ import {TabBarIcon} from './TabBarIcon';
 import React from 'react';
 import {NavigationTabList} from '@/shared/config/navigation/types';
 import {AppTabNavigation} from '@/shared/config/navigation/types';
-import {HomePage} from '@/pages/home/main';
+import {HomePage} from '@/pages/home';
 import {ToursPageScreen} from '@/pages/tours';
 import * as Icons from '@/shared/assets/icons';
 import {screenOptions} from './BottomTabNavigationStyle';
 import {getEnumTranslation} from '@/shared/config/navigation';
 import {ExcursionFavoritesListPageScreen} from '@/pages/favorites/excursionList';
 import {palette} from '@/shared/config/colors';
+import { ProfilePageScreen } from '@/pages/profile';
 
 const Tab = createBottomTabNavigator<NavigationTabList>();
 
@@ -82,7 +83,7 @@ export const BottomTabNavigation = () => {
             />
             <Tab.Screen
                 name={AppTabNavigation.USER}
-                component={HomePage}
+                component={ProfilePageScreen}
                 options={{
                     title: getEnumTranslation(AppTabNavigation.USER),
                     headerTransparent: true,

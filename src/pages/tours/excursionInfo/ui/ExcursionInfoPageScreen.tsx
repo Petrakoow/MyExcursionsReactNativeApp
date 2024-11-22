@@ -32,8 +32,6 @@ export const ExcursionInfoPageScreen = () => {
                         customersReviewRating={
                             excursion.customers_review_rating
                         }
-                        reviews={excursion.reviews}
-                        reviewsWithText={excursion.reviews_with_text}
                         uid={excursion.id}
                     />
                 ) : (

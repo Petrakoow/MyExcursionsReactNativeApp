@@ -1,4 +1,4 @@
-import {FavoriteExcursion, Review} from './models';
-export const SCHEMAS = [FavoriteExcursion, Review];
+import {FavoriteExcursion, Review, User} from './models';
+export const SCHEMAS = [FavoriteExcursion, Review, User];
 
-export const SCHEM_VERSION = 7;
+export const SCHEM_VERSION = 12;

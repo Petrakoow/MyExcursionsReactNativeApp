@@ -15,6 +15,8 @@ export const CONTENT_PADDING_HORIZONTAL = moderateScale(20);
 export const CONTENT_PADDING_VERTICAL = moderateScale(20);
 
 // MARGIN
+export const CONTENT_MARGIN_HORIZONTAL = moderateScale(20);
+export const CONTENT_MARGIN_VERTICAL = moderateScale(20);
 
 // RADIUS
 export const CONTENT_RADIUS = moderateScale(30);

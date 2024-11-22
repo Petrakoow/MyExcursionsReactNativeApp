@@ -1,5 +1,6 @@
 import {palette} from '@/shared/config/colors';
 import {
+    CONTENT_MARGIN_HORIZONTAL,
     CONTENT_PADDING_HORIZONTAL,
     CONTENT_PADDING_VERTICAL,
     CONTENT_RADIUS,
@@ -13,12 +14,13 @@ export const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: "center",
         backgroundColor: palette.light.modalBackground,
     },
     modalContent: {
-        margin: CONTENT_PADDING_HORIZONTAL,
-        borderRadius: 15,
+        marginHorizontal: CONTENT_MARGIN_HORIZONTAL,
         maxHeight: MODAL_HEIGHT,
+        borderRadius: CONTENT_RADIUS - 15,
         backgroundColor: palette.light.background,
     },
     closeContent: {
