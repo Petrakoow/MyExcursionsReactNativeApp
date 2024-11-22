@@ -6,7 +6,6 @@ import {styles} from './ReviewModalStyle';
 import {ReviewForm} from '@/features/reviews';
 
 type ReviewModalType = ModalProps & {
-    userInitials: string;
     existingReview?: {
         rating: number;
         content: string;
@@ -19,7 +18,6 @@ type ReviewModalType = ModalProps & {
 
 export const ReviewModal = (props: ReviewModalType) => {
     const {
-        userInitials,
         visible,
         existingReview,
         onClose,

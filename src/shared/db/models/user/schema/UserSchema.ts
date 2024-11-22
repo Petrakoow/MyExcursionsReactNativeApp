@@ -8,7 +8,7 @@ export class User extends Realm.Object {
             userId: 'string',
             username: 'string',
             email: 'string', 
-            role: 'string', 
+            role: 'int', 
             name: 'string?', 
             profileIcon: 'string?', 
             country: 'string?',
@@ -21,7 +21,7 @@ export class User extends Realm.Object {
     username!: string;
     email!: string;
     name?: string;
-    role!: string;
+    role!: number;
     profileIcon?: string;
     country?: string;
     phoneNumber?: string;

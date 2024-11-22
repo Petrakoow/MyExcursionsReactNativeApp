@@ -6,16 +6,13 @@ export const removeFromFavorites = (
     excursionId: number,
     userId: string,
 ) => {
+    const id = `${userId}-${excursionId}`; 
     realm.write(() => {
         const excursion = realm
             .objects(FavoriteExcursion.schema.name)
-            .filtered(
-                'excursionId = $0 AND userId = $1',
-                excursionId,
-                userId,
-            )[0];
+            .filtered('id = $0', id)[0]; 
         if (excursion) {
-            realm.delete(excursion);
+            realm.delete(excursion); 
         }
     });
 };

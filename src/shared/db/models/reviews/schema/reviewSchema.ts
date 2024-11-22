@@ -3,20 +3,20 @@ import Realm from 'realm';
 export class Review extends Realm.Object {
     static schema = {
         name: 'Review',
-        primaryKey: 'userId',
+        primaryKey: 'id',
         properties: {
+            id: 'string', 
             userId: 'string',
             excursionId: 'int',
-            name: 'string',
             rating: 'int',
             content: 'string',
             date: 'string',
         },
     };
 
+    id!: string; 
     userId!: string;
     excursionId!: number;
-    name!: string;
     rating!: number;
     content!: string;
     date!: string;

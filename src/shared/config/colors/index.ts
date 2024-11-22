@@ -5,10 +5,10 @@ export const palette = {
         background: '#FFFFFF', // Фоновые элементы
         surface: '#F9F9F9', // Поверхности (например, карточки, модальные окна)
         textPrimary: '#000000', // Основной цвет текста
-        textPrimaryInv: "#FFFFFF",
+        textPrimaryInv: '#FFFFFF',
         textSecondary: '#8B8B8B', // Второстепенный текст (описания)
-        success: '#06D001', // Успешные состояния
-        successSecondary: '#9BEC00',
+        success: '#0D7C66', // Успешные состояния
+        successSecondary: '#41B3A2',
         error: '#F44336', // Ошибки
         errorSecondary: '#E57373',
         warning: '#FDCC0D', // Предупреждения или индикаторы
@@ -17,4 +17,3 @@ export const palette = {
         modalBackground: 'rgba(0, 0, 0, 0.5)',
     },
 };
-

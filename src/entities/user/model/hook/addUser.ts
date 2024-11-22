@@ -1,27 +1,19 @@
 import Realm from 'realm';
 import {RolesEnum} from '@/entities/user/model';
-import { User } from '@/shared/db/models';
+import {User} from '@/shared/db/models';
 
-export const addUser = async (
-    realm: Realm,
-    userId: string,
-    username: string,
-    name: string,
-    email: string,
-    role: RolesEnum,
-) => {
-    const convertedRole = role.toString();
+export const addUser = async (realm: Realm, userData: Partial<User>) => {
     realm.write(() => {
         realm.create(User.schema.name, {
-            userId,
-            username,
-            email,
-            name,
-            role: convertedRole,
-            profileIcon: null,
-            country: null,
-            phoneNumber: null,
-            profileSignature: null,
+            userId: userData.userId,
+            username: userData.username,
+            email: userData.email,
+            name: userData.name,
+            role: userData.role,
+            profileIcon: userData.profileIcon || null,
+            country: userData.country || null,
+            phoneNumber: userData.phoneNumber || null,
+            profileSignature: userData.profileSignature || null,
         });
     });
 };

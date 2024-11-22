@@ -137,7 +137,6 @@ export const InformationExcursionReviewsCard = (
             </View>
 
             <ReviewModal
-                userInitials={'AA'}
                 visible={isModalVisible}
                 existingReview={existingReview}
                 onClose={() => setModalVisible(false)}

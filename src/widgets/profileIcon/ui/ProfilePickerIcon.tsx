@@ -1,11 +1,6 @@
 import {palette} from '@/shared/config/colors';
 import React, {FC} from 'react';
-import {
-    View,
-    Image,
-    Modal,
-    ImageSourcePropType,
-} from 'react-native';
+import {View, Image, Modal, ImageSourcePropType} from 'react-native';
 import * as Images from '@/shared/assets/images';
 import {SvgProps} from 'react-native-svg';
 import * as Icons from '@/shared/assets/icons';
@@ -13,8 +8,9 @@ import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {TextSize} from '@/shared/config/font';
 import Realm from 'realm';
 import {useProfilePicker} from '../hook/useProfilePicker';
-import { styles } from './ProfilePickerIconStyle';
-import { Avatar } from '@/shared/ui/avatar';
+import {styles} from './ProfilePickerIconStyle';
+import {Avatar} from '@/shared/ui/avatar';
+import {moderateScale} from 'react-native-size-matters';
 
 type ProfilePickerIconType = {
     Icon?: FC<SvgProps>;
@@ -23,7 +19,10 @@ type ProfilePickerIconType = {
     realm: Realm;
     transparent?: boolean;
     animationType?: 'none' | 'fade' | 'slide';
+    iconSize?: number;
 };
+
+const ICON_SIZE = moderateScale(30);
 
 export const ProfilePickerIcon = (props: ProfilePickerIconType) => {
     const {
@@ -33,6 +32,7 @@ export const ProfilePickerIcon = (props: ProfilePickerIconType) => {
         transparent = true,
         animationType = 'fade',
         basicImage = Images.ProfileLogo,
+        iconSize = ICON_SIZE,
     } = props;
 
     const {
@@ -47,8 +47,9 @@ export const ProfilePickerIcon = (props: ProfilePickerIconType) => {
     return (
         <View style={styles.container}>
             <View style={styles.pickerContainer}>
-                <Avatar avatarImage={imageUri ? imageUri : basicImage}/>
+                <Avatar avatarImage={imageUri ? imageUri : basicImage} />
                 <CustomButton
+                    iconSize={iconSize}
                     Icon={Icon}
                     style={styles.buttonIconContainer}
                     onPress={() => setModalVisible(true)}

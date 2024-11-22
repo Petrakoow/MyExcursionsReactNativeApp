@@ -6,9 +6,10 @@ export const deleteReview = (
     userId: string,
     excursionId: number,
 ) => {
+    const id = `${userId}-${excursionId}`;
     const existingReview = realm
         .objects<Review>(Review.schema.name)
-        .filtered('userId == $0 AND excursionId == $1', userId, excursionId)[0];
+        .filtered('id == $0', id)[0]; // Ищем по новому ключу
     if (existingReview) {
         realm.write(() => {
             realm.delete(existingReview);

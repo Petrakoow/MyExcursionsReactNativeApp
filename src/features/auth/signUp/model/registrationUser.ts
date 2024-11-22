@@ -40,14 +40,13 @@ export const registerUser = async (
         role: newUser.role,
     });
 
-    addUser(
-        database,
-        uid,
-        newUser.username,
-        newUser.createName(LENGTH_DEFAULT_PROFILE_PREFIX),
-        newUser.email,
-        newUser.role,
-    );
+    addUser(database, {
+        userId: uid,
+        username: newUser.username,
+        name: newUser.createName(LENGTH_DEFAULT_PROFILE_PREFIX),
+        email: newUser.email,
+        role: newUser.role,
+    });
 
     await auth().signInWithEmailAndPassword(email, password);
 };

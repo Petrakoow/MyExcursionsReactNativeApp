@@ -1,22 +1,19 @@
-import { Review } from "@/shared/db/models";
-import Realm from "realm";
+import {Review} from '@/shared/db/models';
+import Realm from 'realm';
 
 export const updateReview = (
     realm: Realm,
     userId: string,
     excursionId: number,
-    rating: number,
-    content: string,
+    updateData: Partial<Review>,
 ) => {
-    const existingReview = realm.objectForPrimaryKey<Review>(
-        Review.schema.name,
-        userId,
-    );
-    if (existingReview && existingReview.excursionId === excursionId) {
-
+    const id = `${userId}-${excursionId}`;
+    const existingReview = realm
+        .objects<Review>(Review.schema.name)
+        .filtered('id == $0', id)[0]; 
+    if (existingReview) {
         realm.write(() => {
-            existingReview.rating = rating;
-            existingReview.content = content;
+            Object.assign(existingReview, updateData);
         });
     }
 };

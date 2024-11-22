@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-
 import {useDatabase} from '@/app/providers';
 import {Review} from '@/shared/db/models';
 import {
@@ -11,43 +10,54 @@ import {
 } from '@/entities/reviews';
 import {UserBasicFieldType} from '@/shared/db/models/user';
 import {getUser} from '@/entities/user/model';
-import {UNAUTHORIZED_USER} from '@/shared/config/constants';
+import {formatDate} from '@/shared/utils';
 
 export const useReviews = (uid: number, user: UserBasicFieldType) => {
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [existingReview, setExistingReview] = useState<Review | undefined>(
-        undefined,
-    );
+    const [reviews, setReviews] = useState<(Review & {name: string})[]>([]);
+    const [existingReview, setExistingReview] = useState<
+        (Review & {name: string}) | null
+    >(null);
     const [initials, setInitials] = useState('');
     const database = useDatabase();
 
     useEffect(() => {
-        const allReviews = getReviews(database, uid) || [];
-        const userReview =
-            getReviewUser(database, uid, user.userId) || undefined;
         setInitials(getUser(database, user.userId)?.name || '');
-        setReviews(allReviews);
-        setExistingReview(userReview);
-    }, [uid, user.userId]);
+
+        const reviewsCollection = database
+            .objects<Review>(Review.schema.name)
+            .filtered('excursionId == $0', uid);
+
+        const handleReviewsChange = () => {
+            
+            const updatedReviews = getReviews(database, uid) || [];
+            setReviews(updatedReviews);
+            console.log('sdfsd');
+            const userReview =
+                getReviewUser(database, uid, user.userId) || null;
+            setExistingReview(userReview);
+        };
+
+        reviewsCollection.addListener(handleReviewsChange);
+        return () => {
+            reviewsCollection.removeListener(handleReviewsChange);
+        };
+    }, [uid, user.userId, database]);
 
     const addOrUpdate = (rating: number, text: string) => {
         try {
             if (existingReview) {
-                updateReview(database, user.userId, uid, rating, text);
+                updateReview(database, user.userId, uid, {
+                    rating: rating,
+                    content: text,
+                    date: formatDate(new Date()),
+                });
             } else {
-                addReview(
-                    database,
-                    user.userId,
-                    uid,
-                    initials ? initials : user.username || UNAUTHORIZED_USER,
-                    rating,
-                    text,
-                );
-            }
-            const userReview = getReviewUser(database, uid, user.userId);
-            if (userReview) {
-                setReviews(getReviews(database, uid));
-                setExistingReview(userReview);
+                addReview(database, {
+                    userId: user.userId,
+                    excursionId: uid,
+                    rating: rating,
+                    content: text,
+                });
             }
         } catch (error) {
             console.error('Error adding/updating review:', error);
@@ -58,8 +68,6 @@ export const useReviews = (uid: number, user: UserBasicFieldType) => {
         try {
             if (existingReview) {
                 deleteReview(database, user.userId, uid);
-                setReviews(getReviews(database, uid));
-                setExistingReview(undefined);
             }
         } catch (error) {
             console.error('Error deleting review:', error);
