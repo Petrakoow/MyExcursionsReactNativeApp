@@ -13,6 +13,7 @@ import {CustomText} from '@/shared/ui/customText';
 import {TextSize} from '@/shared/config/font';
 import {User} from '@/shared/db/models';
 import {getUser} from '@/entities/user/model';
+import {ExpandableComponent} from '@/shared/ui/expandableView';
 
 export const ProfilePageScreen = () => {
     const [user, setUser] = useState<User | undefined>();
@@ -47,6 +48,66 @@ export const ProfilePageScreen = () => {
                         @{user?.username}
                     </CustomText>
                 </View>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
+                <ExpandableComponent title='Контактные данные'>
+                    <CustomText
+                        size={TextSize.S_2XL}
+                        style={styles.profileText}>
+                        {user?.name}
+                    </CustomText>
+                    <CustomText size={TextSize.S_LG} style={styles.profileText}>
+                        @{user?.username}
+                    </CustomText>
+                </ExpandableComponent>
             </View>
         </ScreenContent>
     );

@@ -14,6 +14,7 @@ import {TextSize} from '@/shared/config/font';
 import Realm from 'realm';
 import {useProfilePicker} from '../hook/useProfilePicker';
 import { styles } from './ProfilePickerIconStyle';
+import { Avatar } from '@/shared/ui/avatar';
 
 type ProfilePickerIconType = {
     Icon?: FC<SvgProps>;
@@ -46,12 +47,7 @@ export const ProfilePickerIcon = (props: ProfilePickerIconType) => {
     return (
         <View style={styles.container}>
             <View style={styles.pickerContainer}>
-                <View style={styles.iconContainer}>
-                    <Image
-                        source={imageUri ? {uri: imageUri} : basicImage}
-                        style={styles.avatar}
-                    />
-                </View>
+                <Avatar avatarImage={imageUri ? imageUri : basicImage}/>
                 <CustomButton
                     Icon={Icon}
                     style={styles.buttonIconContainer}
