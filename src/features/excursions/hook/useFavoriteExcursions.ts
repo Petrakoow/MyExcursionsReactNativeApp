@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {fetchTourInfo, TourTypeRequest} from '@/shared/api/sputnik8';
-import {useDatabase} from '@/app/providers';
+import {useDatabase} from '@/features/db/provider';
 import {getUserSession} from '@/shared/db/models/user';
 import {
     deleteAllFavoriteExcursions,
@@ -18,7 +18,7 @@ export const useFavoriteExcursions = () => {
     const realm = useDatabase();
 
     useEffect(() => {
-        setUserId(getUserSession()?.userId)
+        setUserId(getUserSession()?.userId);
     }, []);
 
     useEffect(() => {

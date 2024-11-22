@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useDatabase} from '@/app/providers';
+import {useDatabase} from '@/features/db/provider';
 import {Review} from '@/shared/db/models';
 import {
     addReview,
@@ -15,8 +15,8 @@ import {formatDate} from '@/shared/utils';
 export const useReviews = (uid: number, user: UserBasicFieldType) => {
     const [reviews, setReviews] = useState<(Review & {name: string})[]>([]);
     const [existingReview, setExistingReview] = useState<
-        (Review & {name: string}) | null
-    >(null);
+        (Review & {name: string}) | undefined
+    >(undefined);
     const [initials, setInitials] = useState('');
     const database = useDatabase();
 
@@ -33,7 +33,7 @@ export const useReviews = (uid: number, user: UserBasicFieldType) => {
             setReviews(updatedReviews);
             console.log('sdfsd');
             const userReview =
-                getReviewUser(database, uid, user.userId) || null;
+                getReviewUser(database, uid, user.userId) || undefined;
             setExistingReview(userReview);
         };
 

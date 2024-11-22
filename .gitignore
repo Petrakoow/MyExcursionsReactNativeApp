@@ -81,3 +81,6 @@ android/app/google-services.json
 
 #sputnik8
 src/shared/config/api/sputnik8/
+
+#yandex
+src/shared/config/api/yandex/

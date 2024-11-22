@@ -9,7 +9,7 @@ import {
     isFavorite,
     removeFromFavorites,
 } from '@/entities/excursion';
-import {useDatabase} from '@/app/providers';
+import {useDatabase} from '@/features/db/provider';
 import {getUserSession} from '@/shared/db/models/user';
 import {palette} from '@/shared/config/colors';
 

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {registerUser} from '../model/registrationUser';
 import {useAuth} from '@/features/auth/role';
-import { useDatabase } from '@/app/providers';
+import {useDatabase} from '@/features/db/provider';
 
 export const useSignUp = () => {
     const [loading, setLoading] = useState(false);

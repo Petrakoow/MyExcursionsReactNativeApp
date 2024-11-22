@@ -9,7 +9,6 @@ import {
     doc,
 } from '@/shared/api/firebase';
 import {addUser, AuthorizedUser} from '@/entities/user/model';
-import {useDatabase} from '@/app/providers';
 import {LENGTH_DEFAULT_PROFILE_PREFIX} from '@/shared/config/constants';
 import Realm from 'realm';
 export const registerUser = async (

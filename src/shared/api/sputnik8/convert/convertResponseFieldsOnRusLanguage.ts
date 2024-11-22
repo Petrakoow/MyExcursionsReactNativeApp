@@ -1,4 +1,4 @@
-export const UNKNOWN = 'Данные отсутствуют';
+const UNKNOWN = 'Данные отсутствуют';
 
 export const ActivityTypeLabels = {
     tour: 'Экскурсия',

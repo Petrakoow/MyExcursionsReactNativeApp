@@ -8,7 +8,7 @@ import {
 } from '@/shared/config/dimensions';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {ProfilePickerIcon} from '@/widgets/profileIcon';
-import {useDatabase} from '@/app/providers';
+import {useDatabase} from '@/features/db/provider';
 import {getUserSession} from '@/shared/db/models/user';
 import {CustomText} from '@/shared/ui/customText';
 import {TextSize} from '@/shared/config/font';
@@ -17,11 +17,14 @@ import {getUser} from '@/entities/user/model';
 import {ExpandableComponent} from '@/shared/ui/expandableView';
 import * as Icons from '@/shared/assets/icons';
 import {ContactDataComponent} from '@/widgets/contactData';
+import {useCity} from '@/features/map';
 
 export const ProfilePageScreen = () => {
     const [user, setUser] = useState<User | undefined>();
     const database = useDatabase();
     const session = getUserSession();
+    const city = useCity();
+    console.log(city);
 
     useEffect(() => {
         const userId = session?.userId;
