@@ -70,14 +70,6 @@ export const getLocationDetails = async (
     }
 };
 
-export const loadStoredLocation = () => {
-    return getLocationSession();
-};
-
-export const saveLocation = (props: LocationSessionType) => {
-    saveLocationSession(props);
-};
-
 export const updateGeolocationSettings = (props: LocationSessionType) => {
     const locationSettings: LocationSessionType =
         getLocationSession() || defaultSettings;

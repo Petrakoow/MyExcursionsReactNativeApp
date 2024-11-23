@@ -3,7 +3,7 @@ export const UNKNOWN_USER = 'UNKNOWN_USER';
 
 export const FIRESTORE_AUTH_DB = 'users';
 
-export const PAGE_LANGUAGE = 'RU';
+export const PAGE_LANGUAGE = 'ru';
 export const PAGE_LIMIT = 50;
 
 export const LENGTH_DEFAULT_PROFILE_PREFIX = 12;

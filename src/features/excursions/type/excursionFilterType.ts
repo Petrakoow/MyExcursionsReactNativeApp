@@ -20,6 +20,9 @@ export type FilterAscDesc = OrderType | undefined;
 
 export type FilterByQualityProduct = OrderFieldType | undefined;
 
-export type FilterItem<T = {}> = (FilterByNameAndId & T) | undefined;
-
-export type FilterByName = {name: string} | undefined;
+export type FilterItem<T = {}> =
+    | ({
+          id: string | number;
+          name: string;
+      } & T)
+    | undefined;

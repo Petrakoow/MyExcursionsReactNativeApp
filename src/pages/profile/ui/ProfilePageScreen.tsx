@@ -17,14 +17,12 @@ import {getUser} from '@/entities/user/model';
 import {ExpandableComponent} from '@/shared/ui/expandableView';
 import * as Icons from '@/shared/assets/icons';
 import {ContactDataComponent} from '@/widgets/contactData';
-import {useCity} from '@/features/map';
+import {GeolocationSettingsComponent} from '@/widgets/geolocationSettings';
 
 export const ProfilePageScreen = () => {
     const [user, setUser] = useState<User | undefined>();
     const database = useDatabase();
     const session = getUserSession();
-    const city = useCity();
-    console.log(city);
 
     useEffect(() => {
         const userId = session?.userId;
@@ -82,7 +80,9 @@ export const ProfilePageScreen = () => {
                                 database={database}
                             />
                         </ExpandableComponent>
-                        <ExpandableComponent title="Геопозиция"></ExpandableComponent>
+                        <ExpandableComponent title="Геопозиция">
+                            <GeolocationSettingsComponent />
+                        </ExpandableComponent>
                         <ExpandableComponent title="Уведомления"></ExpandableComponent>
                         <ExpandableComponent title="Комментарии"></ExpandableComponent>
                         <ExpandableComponent title="Избранное"></ExpandableComponent>

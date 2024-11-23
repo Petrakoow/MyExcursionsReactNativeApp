@@ -8,9 +8,9 @@ import {SvgProps} from 'react-native-svg';
 import * as Icons from '@/shared/assets/icons';
 import {moderateScale} from 'react-native-size-matters';
 import {ToggleButton} from '../../toggleButton';
-import {FilterItem} from '@/features/excursions';
 import {useDropdownFilter} from '../hook/useDropdownFilter';
 import {palette} from '@/shared/config/colors';
+import { FilterItem } from '@/features/excursions';
 
 type SearchFilterComponentType<T = {}> = {
     title?: string;
@@ -47,10 +47,11 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
         isItemInSelected,
         selectedItem,
         filteredItems,
-        toggleItemActive,
-        handleAddRemove,
         setDropdownVisible,
         setInputValue,
+        removeItem,
+        addItem,
+        toggleItemActive
     } = useDropdownFilter(itemsList, selectedFilterItem, onSelectionChange);
 
     return (
@@ -91,7 +92,7 @@ export const SearchFilterComponent = (props: SearchFilterComponentType) => {
                                 : IconAdd
                         }
                         iconSize={ICON_SIZE}
-                        onPress={handleAddRemove}
+                        onPress={isItemInSelected ? removeItem : addItem}
                     />
                 }
             </View>

@@ -1,5 +1,7 @@
+import { FilterItem } from '@/features/excursions';
 import {useMemo, useEffect, useState, useCallback} from 'react';
-import {FilterItem} from '@/features/excursions';
+
+
 
 export const useDropdownFilter = <T = {}>(
     itemsList: FilterItem<T>[],
@@ -24,18 +26,22 @@ export const useDropdownFilter = <T = {}>(
             : false;
     }, [selectedItem, filteredItems]);
 
+    const addItem = useCallback(() => {
+        const trimmedInput = inputValue.trim();
+        if (trimmedInput && filteredItems.length > 0) {
+            const firstMatch = filteredItems[0];
+            setSelectedItem(firstMatch); 
+            setInputValue(''); 
+        }
+    }, [inputValue, filteredItems]);
+
     const toggleItemActive = useCallback((item: FilterItem<T>) => {
         setSelectedItem(prev => (prev?.id === item?.id ? undefined : item));
     }, []);
 
-    const handleAddRemove = useCallback(() => {
-        const trimmedInput = inputValue.trim();
-        if (trimmedInput && filteredItems.length > 0) {
-            const firstMatch = filteredItems[0];
-            toggleItemActive(firstMatch);
-            setInputValue('');
-        }
-    }, [inputValue, filteredItems, toggleItemActive]);
+    const removeItem = useCallback(() => {
+        setSelectedItem(undefined);
+    }, []);
 
     useEffect(() => {
         onSelectionChange(selectedItem);
@@ -49,7 +55,8 @@ export const useDropdownFilter = <T = {}>(
         isItemInSelected,
         setInputValue,
         setDropdownVisible,
+        addItem,
+        removeItem,
         toggleItemActive,
-        handleAddRemove,
     };
 };

@@ -6,5 +6,5 @@ export type {
     FilterByNameAndId,
     FilterAscDesc,
     FilterByQualityProduct,
-    FilterItem
+    FilterItem,
 } from './type/excursionFilterType';

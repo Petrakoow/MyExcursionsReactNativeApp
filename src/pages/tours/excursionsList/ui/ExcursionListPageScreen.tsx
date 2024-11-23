@@ -17,49 +17,26 @@ import {
     useGetExcursionsByPageNumber,
 } from '@/features/excursions';
 import {FilterExcursionPanel} from '@/widgets/filterExcursionPanel';
-import {PAGE_LIMIT} from '@/shared/config/constants';
+import {PAGE_LANGUAGE, PAGE_LIMIT} from '@/shared/config/constants';
+import {useFilters} from '@/features/filters';
 
-const PAGE_LANGUAGE = 'ru';
+// переделать позже сохранение через провайдер
 
 export const ToursPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
 
-    const [selectedFilters, setSelectedFilters] = useState<
-        ExcursionFilterType | undefined
-    >(undefined);
-
     const flatListRef = useRef<FlatList>(null);
 
     const {
-        isError,
-        tours,
-        hasMore,
-        isFetching,
         isLoading,
+        tours,
         page,
-        getToursByPage,
+        isFetching,
+        isError,
+        hasMore,
         handleNextPage,
         handlePreviousPage,
-        setPage,
-    } = useGetExcursionsByPageNumber();
-
-    useEffect(() => {
-        setPage(page => (page = 1));
-    }, [selectedFilters]);
-
-    useEffect(() => {
-        getToursByPage({
-            language: PAGE_LANGUAGE,
-            limit: PAGE_LIMIT,
-            filters: selectedFilters,
-        });
-    }, [page, selectedFilters]);
-    
-    console.log(selectedFilters);
-
-    const handleFiltersChange = useCallback((props: ExcursionFilterType) => {
-        setSelectedFilters(prev => ({...prev, ...props}));
-    }, []);
+    } = useFilters();
 
     const renderTourCard = ({item}: {item: TourTypeRequest}) => (
         <PreviewExcursionCard
@@ -85,9 +62,7 @@ export const ToursPageScreen = () => {
         <ScreenContent>
             <View style={styles.content}>
                 <View>
-                    <FilterExcursionPanel
-                        onFiltersChange={handleFiltersChange}
-                    />
+                    <FilterExcursionPanel />
                 </View>
                 {isError && (
                     <ErrorText title="Load Error" description={isError} />

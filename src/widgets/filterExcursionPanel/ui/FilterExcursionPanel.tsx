@@ -1,7 +1,7 @@
 import {View, Modal} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {ExcursionFilterType} from '@/features/excursions';
-import {useGetCities, useGetCountries} from '@/features/filters';
+import {useFilters, useGetCities, useGetCountries} from '@/features/filters';
 import {ErrorText} from '@/shared/ui/errorText';
 import {CustomIndicator} from '@/shared/ui/customIndicator';
 import {ToggleButtonGroup} from '@/shared/ui/toggleButton';
@@ -11,15 +11,16 @@ import {TextSize, TextWeight} from '@/shared/config/font';
 import {CustomText} from '@/shared/ui/customText';
 import * as Icons from '@/shared/assets/icons';
 import {SearchFilterComponent} from '@/shared/ui/filterPanel';
-import {useFilterExcursionPanel} from '../hook/useFilterExcursionPanel';
+import {useExcursionFilters} from '../hook/useExcursionFilters';
+import {useToggleFilters} from '../hook/useToggleFilters';
 
 type FilterExcursionPanelProps = {
-    onFiltersChange: (filters: ExcursionFilterType) => void;
+    animationType?: 'none' | 'fade' | 'slide';
+    transparent?: boolean;
 };
 
 export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
-    const {onFiltersChange} = props;
-
+    const {transparent = true, animationType = 'fade'} = props;
     const {
         countries,
         loading: countriesLoading,
@@ -27,28 +28,28 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
     } = useGetCountries();
     const {cities, loading: citiesLoading, error: citiesError} = useGetCities();
 
+    const {setSelectedFilters} = useFilters();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleFilterChange = (filters: ExcursionFilterType) => {
+        setSelectedFilters(filters);
+    };
+
+    const {filters, setFilter} = useExcursionFilters(handleFilterChange);
     const {
-        selectedCountry,
-        setSelectedCountry,
-        selectedCity,
-        setSelectedCity,
-        sortField,
         sortOrder,
-        modalVisible,
-        toggleModal,
         handleOrderSelectionChange,
+        sortField,
         handleFieldSelectionChange,
-    } = useFilterExcursionPanel(onFiltersChange);
+    } = useToggleFilters(setFilter, filters);
 
-    if (countriesLoading || citiesLoading) {
-        return <CustomIndicator />;
-    }
-
+    if (countriesLoading || citiesLoading) return <CustomIndicator />;
     if (countriesError || citiesError) {
         return (
             <ErrorText
                 title="Error loading filters"
-                description="Failed to load filters or cities that were applied"
+                description="Failed to load countries or cities."
             />
         );
     }
@@ -58,45 +59,42 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
             <CustomButton
                 textButton="Открыть фильтры"
                 textSize={TextSize.S_BASE}
-                onPress={toggleModal}
+                onPress={() => setModalVisible(true)}
                 style={[styleButton.primaryTypeButton, styles.buttonPadding]}
             />
-
             <Modal
-                animationType="fade"
-                transparent={modalVisible}
+                animationType={animationType}
+                transparent={transparent}
                 visible={modalVisible}
-                onRequestClose={toggleModal}>
+                onRequestClose={() => setModalVisible(false)}>
                 <View style={styles.modalBackground}>
                     <View style={styles.modalContainer}>
                         <CustomText
                             style={styles.titleWindow}
                             size={TextSize.S_XL}
                             weight={TextWeight.NORMAL}>
-                            Опции для фильтрации
+                            Фильтры для экскурсий
                         </CustomText>
-
                         <View style={styles.filterSearchContainer}>
                             <SearchFilterComponent
-                                title="Поиск по городу"
-                                hasDropdownList={true}
+                                title="Город"
+                                hasDropdownList
                                 itemsList={cities}
-                                selectedFilterItem={selectedCity}
-                                onSelectionChange={newCity =>
-                                    setSelectedCity(newCity)
+                                selectedFilterItem={filters.city}
+                                onSelectionChange={city =>
+                                    setFilter('city', city)
                                 }
                             />
                             <SearchFilterComponent
-                                title="Поиск по стране"
-                                hasDropdownList={true}
+                                title="Страна"
+                                hasDropdownList
                                 itemsList={countries}
-                                selectedFilterItem={selectedCountry}
-                                onSelectionChange={newCountry =>
-                                    setSelectedCountry(newCountry)
+                                selectedFilterItem={filters.country}
+                                onSelectionChange={country =>
+                                    setFilter('country', country)
                                 }
                             />
                         </View>
-
                         <View style={styles.toggleContainer}>
                             <ToggleButtonGroup
                                 group="sortFields"
@@ -139,11 +137,10 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
                                 />
                             </ToggleButtonGroup>
                         </View>
-
                         <CustomButton
                             textButton="Закрыть"
                             textSize={TextSize.S_BASE}
-                            onPress={toggleModal}
+                            onPress={() => setModalVisible(false)}
                             style={[
                                 styleButton.primaryTypeButton,
                                 styles.buttonPadding,

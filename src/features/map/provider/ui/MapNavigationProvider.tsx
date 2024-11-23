@@ -5,19 +5,16 @@ import React, {
     useContext,
     ReactNode,
 } from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {requestLocationPermission} from '../utils/mapUtils';
 import {
-    requestLocationPermission,
-    getCurrentLocation,
-    getLocationDetails,
-    loadStoredLocation,
-    saveLocation,
-} from '../utils/mapUtils';
-import {
-    clearLocationSession,
     defaultSettings,
+    getLocationSession,
     LocationSessionType,
 } from '@/shared/db/models/map/shared/mapSession';
+import {
+    disableAutomaticGeolocation,
+    enableAutomaticGeolocation,
+} from '../model/mapSettings';
 
 const LocationContext = createContext<{
     city?: string;
@@ -41,54 +38,41 @@ export const MapNavigationProvider = ({
     const [location, setLocation] =
         useState<LocationSessionType>(defaultSettings);
     const [accessAllowed, setAccessAllowed] = useState<boolean>(false);
+
     useEffect(() => {
-        const loadLocation = async () => {
-            const storedLocation = loadStoredLocation();
-            console.log(storedLocation);
-            if (storedLocation) {
-                setLocation(storedLocation);
-                console.log(storedLocation);
-            } else {
-                const permissionGranted = await requestLocationPermission();
-                if (permissionGranted) {
-                    setAccessAllowed(true);
-                    fetchLocation();
-                } else {
-                    setAccessAllowed(false);
+        const initializeLocation = async () => {
+            const storedSettings = getLocationSession() || defaultSettings;
+
+            if (!storedSettings.useNavigation) {
+                console.log('Navigation disabled.');
+                disableAutomaticGeolocation();
+                return;
+            }
+
+            if (storedSettings.geolocation.useOwnGeolocation) {
+                console.log(
+                    'Using user-provided geolocation:',
+                    storedSettings.location,
+                );
+                setLocation(storedSettings);
+                return;
+            }
+
+            const permissionGranted = await requestLocationPermission();
+            if (permissionGranted) {
+                setAccessAllowed(true);
+                await enableAutomaticGeolocation();
+                const updatedLocation = getLocationSession();
+                if (updatedLocation) {
+                    setLocation(updatedLocation);
                 }
+            } else {
+                setAccessAllowed(false);
             }
         };
 
-        loadLocation();
+        initializeLocation();
     }, []);
-
-    const fetchLocation = () => {
-        getCurrentLocation(
-            async (latitude, longitude) => {
-                const {city, country} = await getLocationDetails(
-                    latitude,
-                    longitude,
-                );
-                const updateSettings: LocationSessionType = {
-                    ...defaultSettings,
-                    useNavigation: true,
-                    geolocation: {
-                        useCityForAutoGeolocation: true,
-                        useCountryForAutoGeolocation: true,
-                    },
-                    location: {
-                        city: city,
-                        country: country,
-                    },
-                };
-                setLocation(updateSettings);
-                saveLocation(updateSettings);
-            },
-            error => {
-                console.error('Location fetch error:', error);
-            },
-        );
-    };
 
     return (
         <LocationContext.Provider value={{...location, accessAllowed}}>

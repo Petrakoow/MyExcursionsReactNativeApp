@@ -3,6 +3,7 @@ import {RoleProvider} from '@/features/auth/role';
 import {DatabaseProvider} from '@/features/db/provider';
 import {AppNavigator} from './navigation';
 import {MapNavigationProvider} from '@/features/map';
+import {FilterProvider} from '@/features/filters';
 
 const App = () => {
     return (
@@ -10,7 +11,9 @@ const App = () => {
             <RoleProvider>
                 <NavigationContainer>
                     <MapNavigationProvider>
-                        <AppNavigator />
+                        <FilterProvider>
+                            <AppNavigator />
+                        </FilterProvider>
                     </MapNavigationProvider>
                 </NavigationContainer>
             </RoleProvider>

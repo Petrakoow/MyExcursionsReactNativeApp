@@ -3,10 +3,8 @@ import {saveItem, getItem, removeItem} from '@/shared/db/utils';
 export type LocationSessionType = {
     useNavigation: boolean;
     geolocation: {
-        useGeolocationByCountry?: boolean;
-        useGeolocationAroundCity?: boolean;
-        useCityForAutoGeolocation?: boolean;
-        useCountryForAutoGeolocation?: boolean;
+        useOwnGeolocation?: boolean;
+        useAutoGeolocation?: boolean;
     };
     location: {
         city?: string;
@@ -17,10 +15,8 @@ export type LocationSessionType = {
 export const defaultSettings: LocationSessionType = {
     useNavigation: false,
     geolocation: {
-        useGeolocationByCountry: false,
-        useGeolocationAroundCity: false,
-        useCityForAutoGeolocation: false,
-        useCountryForAutoGeolocation: false,
+        useAutoGeolocation: false,
+        useOwnGeolocation: false,
     },
     location: {
         city: undefined,
