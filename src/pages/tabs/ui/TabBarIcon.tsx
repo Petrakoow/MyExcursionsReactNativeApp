@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {SvgProps} from 'react-native-svg';
 import {moderateScale} from 'react-native-size-matters';
 import {ColorValue} from 'react-native';

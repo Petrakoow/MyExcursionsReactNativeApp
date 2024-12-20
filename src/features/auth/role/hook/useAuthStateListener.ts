@@ -6,11 +6,13 @@ import {FIRESTORE_AUTH_DB, UNAUTHORIZED_USER} from '@/shared/config/constants';
 
 type AuthState = {
     loading: boolean;
+    error: Error | null;
     reloadState: () => Promise<void>;
 };
 
 export const useAuthStateListener = (): AuthState => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
     const reloadState = useCallback(async () => {
         try {
             setLoading(true);
@@ -34,14 +36,12 @@ export const useAuthStateListener = (): AuthState => {
                     role: RolesEnum.GUEST,
                 });
             }
-        } catch (error) {
-            throw new Error(
-                `Error in reloadState: ${(error as Error).message}`,
-            );
+        } catch (err) {
+            setError(err as Error);
         } finally {
             setLoading(false);
         }
     }, []);
 
-    return {loading, reloadState};
+    return {loading, error, reloadState};
 };

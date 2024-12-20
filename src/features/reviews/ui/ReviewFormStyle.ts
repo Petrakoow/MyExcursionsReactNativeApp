@@ -1,7 +1,7 @@
-import { palette } from "@/shared/config/colors";
-import { CONTENT_RADIUS } from "@/shared/config/dimensions";
-import { StyleSheet } from "react-native";
-import { moderateScale } from "react-native-size-matters";
+import {palette} from '@/shared/config/colors';
+import {CONTENT_RADIUS} from '@/shared/config/dimensions';
+import {StyleSheet} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
     input: {
@@ -22,4 +22,4 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: moderateScale(10),
     },
-})
+});

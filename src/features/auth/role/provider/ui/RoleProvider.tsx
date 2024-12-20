@@ -1,9 +1,7 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {RolesEnum, User} from '@/entities/user/model';
-import {SplashScreen} from '@/shared/ui/splashScreen';
-import {useAuthStateListener} from '../../hook/useAuthStateListener';
-import {UserSessionType} from '@/shared/db/models/user';
-import {ErrorText} from '@/shared/ui/errorText';
+import React, { createContext, ReactNode, useEffect } from 'react';
+import { SplashScreen } from '@/shared/ui/splashScreen';
+import { useAuthStateListener } from '../../hook/useAuthStateListener';
+import { ErrorText } from '@/shared/ui/errorText';
 
 export const AuthContext = createContext({
     reloadState: async () => {},
@@ -14,28 +12,32 @@ type RoleProviderType = {
 };
 
 export const RoleProvider = (props: RoleProviderType) => {
-    const {children} = props;
-    try {
-        const {loading, reloadState} = useAuthStateListener();
-        useEffect(() => {
-            reloadState();
-        }, [reloadState]);
+    const { children } = props;
 
-        if (loading) {
-            return (
-                <SplashScreen titleIndicator="Добро пожаловать, загружаем вашего личного гида..." />
-            );
-        }
+    const { loading, reloadState, error } = useAuthStateListener();
 
+    useEffect(() => {
+        reloadState();
+    }, [reloadState]);
+
+    if (error) {
         return (
-            <AuthContext.Provider value={{reloadState}}>
-                {children}
-            </AuthContext.Provider>
+            <ErrorText
+                title="RoleProvider Error"
+                description={(error as Error).message}
+            />
         );
-    } catch (error) {
-        <ErrorText
-            title="RoleProvider Error"
-            description={(error as Error).message}
-        />;
     }
+
+    if (loading) {
+        return (
+            <SplashScreen titleIndicator="Добро пожаловать, загружаем вашего личного гида..." />
+        );
+    }
+
+    return (
+        <AuthContext.Provider value={{ reloadState }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

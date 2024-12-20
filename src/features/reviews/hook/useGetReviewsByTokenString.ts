@@ -46,7 +46,7 @@ export const useGetReviewsByTokenString = () => {
         setIsFetching(true);
         if (nextPageToken) {
             setCurrentToken(nextPageToken);
-            setPage(page => page + 1);
+            setPage(currentPage => currentPage + 1);
         }
     };
 
@@ -57,7 +57,7 @@ export const useGetReviewsByTokenString = () => {
             setCurrentToken(
                 stackPageToken.current[stackPageToken.current.length - 2],
             );
-            setPage(page => page - 1);
+            setPage(currentPage => currentPage - 1);
         }
     };
 

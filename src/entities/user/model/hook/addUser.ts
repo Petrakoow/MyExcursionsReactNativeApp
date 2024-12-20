@@ -1,5 +1,4 @@
 import Realm from 'realm';
-import {RolesEnum} from '@/entities/user/model';
 import {User} from '@/shared/db/models';
 
 export const addUser = async (realm: Realm, userData: Partial<User>) => {

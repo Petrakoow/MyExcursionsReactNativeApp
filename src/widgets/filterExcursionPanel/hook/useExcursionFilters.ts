@@ -1,5 +1,5 @@
 import {useState, useEffect, useCallback, useMemo} from 'react';
-import {ExcursionFilterType, FilterByNameAndId} from '@/features/excursions';
+import {ExcursionFilterType} from '@/features/excursions';
 import {getFilterSession, saveFilterSession} from '@/shared/db/models/filters';
 
 export const useExcursionFilters = (

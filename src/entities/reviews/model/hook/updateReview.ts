@@ -10,7 +10,7 @@ export const updateReview = (
     const id = `${userId}-${excursionId}`;
     const existingReview = realm
         .objects<Review>(Review.schema.name)
-        .filtered('id == $0', id)[0]; 
+        .filtered('id == $0', id)[0];
     if (existingReview) {
         realm.write(() => {
             Object.assign(existingReview, updateData);

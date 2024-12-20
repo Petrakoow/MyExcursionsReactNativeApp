@@ -1,3 +1,4 @@
+import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {CustomButton} from '@/shared/ui/customButton';
 import {AnonymousIcon} from '@/shared/assets/icons';

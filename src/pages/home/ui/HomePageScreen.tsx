@@ -11,7 +11,7 @@ export const HomePage = () => {
         <ScreenContent>
             <View style={styles.content}>
                 <View>
-                    
+                    <Text>a</Text>
                 </View>
             </View>
         </ScreenContent>

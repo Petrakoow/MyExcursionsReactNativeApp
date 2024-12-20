@@ -9,6 +9,6 @@ export const isFavorite = (
     const id = `${userId}-${excursionId}`;
     const record = realm
         .objects(FavoriteExcursion.schema.name)
-        .filtered('id = $0', id)[0]; 
-    return !!record; 
+        .filtered('id = $0', id)[0];
+    return !!record;
 };

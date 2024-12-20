@@ -1,4 +1,4 @@
-import { generateRandomString } from '@/shared/utils';
+import {generateRandomString} from '@/shared/utils';
 import {User, RolesEnum} from './User';
 
 export class AuthorizedUser extends User {
@@ -35,7 +35,7 @@ export class AuthorizedUser extends User {
 
     public createName(length: number) {
         const rolePrefix = RolesEnum[this.role].toString().toLowerCase();
-        const randomId = generateRandomString(length); 
+        const randomId = generateRandomString(length);
 
         return `${rolePrefix}_${randomId}`;
     }

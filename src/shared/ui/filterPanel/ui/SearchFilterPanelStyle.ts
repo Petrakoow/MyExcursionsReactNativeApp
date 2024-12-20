@@ -13,7 +13,6 @@ export const stylesFilterPanel = StyleSheet.create({
         borderWidth: 1,
         borderRadius: CONTENT_RADIUS - 20,
         borderColor: palette.light.border,
-        padding: moderateScale(4),
     },
     contentFilterList: {
         gap: moderateScale(3),

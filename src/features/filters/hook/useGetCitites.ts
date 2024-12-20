@@ -11,9 +11,9 @@ export const useGetCities = () => {
             try {
                 const fetchedCities = await fetchCities();
                 setCities(fetchedCities);
-            } catch (error) {
+            } catch (err) {
                 setError('Error fetching cities');
-                console.error(error);
+                console.error(err);
             } finally {
                 setLoading(false);
             }

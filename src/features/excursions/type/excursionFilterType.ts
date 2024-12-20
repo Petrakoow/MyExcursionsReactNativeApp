@@ -10,15 +10,11 @@ export type ExcursionSettingsType = {
 export type ExcursionFilterType = {
     country?: FilterByNameAndId;
     city?: FilterByNameAndId;
-    product?: FilterByQualityProduct;
-    ascDesc?: FilterAscDesc;
+    product?: OrderFieldType;
+    ascDesc?: OrderType;
 };
 
-export type FilterByNameAndId = {id: number; name: string} | undefined;
-
-export type FilterAscDesc = OrderType | undefined;
-
-export type FilterByQualityProduct = OrderFieldType | undefined;
+export type FilterByNameAndId = {id: number; name: string};
 
 export type FilterItem<T = {}> =
     | ({

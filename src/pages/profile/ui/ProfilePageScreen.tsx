@@ -26,28 +26,28 @@ export const ProfilePageScreen = () => {
 
     useEffect(() => {
         const userId = session?.userId;
-        if (!userId) return;
+        if (!userId) {
+            return;
+        }
 
-        // Получаем коллекцию с фильтром
         const userCollection = database
             .objects<User>(User.schema.name)
             .filtered('userId == $0', userId);
 
-        // Функция слушателя
         const handleChange = () => {
-            const user = getUser(database, userId);
-            setUser(user);
+            setUser(getUser(database, userId));
         };
 
         userCollection.addListener(handleChange);
 
-        // Убираем слушатель при размонтировании компонента
         return () => {
             userCollection.removeListener(handleChange);
         };
     }, [database, session?.userId]);
 
-    if (!session?.userId) return null;
+    if (!session?.userId) {
+        return null;
+    }
     return (
         <ScreenContent>
             <ScrollView>

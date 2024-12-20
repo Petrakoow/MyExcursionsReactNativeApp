@@ -1,18 +1,20 @@
 import Realm from 'realm';
-import { Review, User } from '@/shared/db/models';
-import { UNKNOWN_USER } from '@/shared/config/constants';
+import {Review, User} from '@/shared/db/models';
+import {UNKNOWN_USER} from '@/shared/config/constants';
 
 export const getReviewUser = (
     realm: Realm,
     excursionId: number,
     userId: string,
-): (Review & { name: string }) | null => {
-    const id = `${userId}-${excursionId}`; 
+): (Review & {name: string}) | null => {
+    const id = `${userId}-${excursionId}`;
     const review = realm
         .objects<Review>(Review.schema.name)
-        .filtered('id == $0', id)[0]; 
+        .filtered('id == $0', id)[0];
 
-    if (!review?.userId) return null;
+    if (!review?.userId) {
+        return null;
+    }
 
     const plainReview = {
         userId: review.userId,
@@ -26,5 +28,5 @@ export const getReviewUser = (
     return {
         ...plainReview,
         name: user?.name || UNKNOWN_USER,
-    } as Review & { name: string };
+    } as Review & {name: string};
 };

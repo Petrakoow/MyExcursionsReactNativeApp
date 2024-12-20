@@ -10,10 +10,10 @@ export const createUserByRole = (
 ): User => {
     switch (role) {
         case RolesEnum.ADMIN:
-            return new Admin(uid, email, username);
+            return new Admin(uid, username);
         case RolesEnum.USER:
             return new AuthorizedUser(uid, email, username);
         default:
-            return new User(uid, role, username, email);
+            return new User(username, role);
     }
 };

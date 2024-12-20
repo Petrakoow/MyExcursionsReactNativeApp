@@ -3,7 +3,7 @@ import React, {
     ReactNode,
     useContext,
     useEffect,
-    useState,
+    useRef,
 } from 'react';
 import Realm from 'realm';
 import {SCHEMAS, SCHEM_VERSION} from '@/shared/db';
@@ -18,29 +18,29 @@ export const useDatabase = () => {
 };
 
 export const DatabaseProvider = ({children}: {children: ReactNode}) => {
-    const [realm, setRealm] = useState<Realm | null>(null);
+    const realmRef = useRef<Realm | null>(null);
     useEffect(() => {
         const initializeRealm = async () => {
             const realmInstance = await Realm.open({
                 schema: SCHEMAS,
                 schemaVersion: SCHEM_VERSION,
             });
-            setRealm(realmInstance);
+            realmRef.current = realmInstance;
         };
 
         initializeRealm();
 
         return () => {
-            realm?.close();
+            realmRef.current?.close();
         };
     }, []);
 
-    if (!realm) {
+    if (!realmRef.current) {
         return null;
     }
 
     return (
-        <DatabaseContext.Provider value={realm}>
+        <DatabaseContext.Provider value={realmRef.current}>
             {children}
         </DatabaseContext.Provider>
     );

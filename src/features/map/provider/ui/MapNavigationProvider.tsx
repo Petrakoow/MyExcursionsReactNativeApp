@@ -19,12 +19,8 @@ import {
 const LocationContext = createContext<{
     city?: string;
     country?: string;
-    accessAllowed?: boolean;
-}>({
-    city: undefined,
-    country: undefined,
-    accessAllowed: false,
-});
+    useAutoGeolocation: boolean;
+}>(defaultSettings);
 
 export const useLocation = () => useContext(LocationContext);
 
@@ -37,37 +33,31 @@ export const MapNavigationProvider = ({
 }: MapNavigationProviderType) => {
     const [location, setLocation] =
         useState<LocationSessionType>(defaultSettings);
-    const [accessAllowed, setAccessAllowed] = useState<boolean>(false);
 
     useEffect(() => {
         const initializeLocation = async () => {
             const storedSettings = getLocationSession() || defaultSettings;
 
-            if (!storedSettings.useNavigation) {
-                console.log('Navigation disabled.');
+            if (!storedSettings.useAutoGeolocation) {
+                console.log('Automatic geolocation disabled.');
                 disableAutomaticGeolocation();
-                return;
-            }
-
-            if (storedSettings.geolocation.useOwnGeolocation) {
-                console.log(
-                    'Using user-provided geolocation:',
-                    storedSettings.location,
-                );
                 setLocation(storedSettings);
                 return;
             }
 
             const permissionGranted = await requestLocationPermission();
             if (permissionGranted) {
-                setAccessAllowed(true);
-                await enableAutomaticGeolocation();
-                const updatedLocation = getLocationSession();
-                if (updatedLocation) {
-                    setLocation(updatedLocation);
-                }
+                await enableAutomaticGeolocation((city, country) => {
+                    setLocation({
+                        useAutoGeolocation: true,
+                        location: {city, country},
+                    });
+                });
             } else {
-                setAccessAllowed(false);
+                setLocation({
+                    useAutoGeolocation: false,
+                    location: {city: undefined, country: undefined},
+                });
             }
         };
 
@@ -75,7 +65,7 @@ export const MapNavigationProvider = ({
     }, []);
 
     return (
-        <LocationContext.Provider value={{...location, accessAllowed}}>
+        <LocationContext.Provider value={location}>
             {children}
         </LocationContext.Provider>
     );

@@ -1,5 +1,5 @@
-import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import {FlatList, View} from 'react-native';
+import React, {useRef} from 'react';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {SplashScreen} from '@/shared/ui/splashScreen';
 import {useNavigation} from '@react-navigation/native';
@@ -12,12 +12,7 @@ import {TourTypeRequest} from '@/shared/api/sputnik8';
 import {styles} from './ExcursionListPageScreenStyle';
 import {ErrorText} from '@/shared/ui/errorText';
 import {PaginationPanel} from '@/widgets/paginationPanel';
-import {
-    ExcursionFilterType,
-    useGetExcursionsByPageNumber,
-} from '@/features/excursions';
 import {FilterExcursionPanel} from '@/widgets/filterExcursionPanel';
-import {PAGE_LANGUAGE, PAGE_LIMIT} from '@/shared/config/constants';
 import {useFilters} from '@/features/filters';
 
 // переделать позже сохранение через провайдер

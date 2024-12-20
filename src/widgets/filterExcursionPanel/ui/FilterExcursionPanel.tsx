@@ -44,7 +44,9 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
         handleFieldSelectionChange,
     } = useToggleFilters(setFilter, filters);
 
-    if (countriesLoading || citiesLoading) return <CustomIndicator />;
+    if (countriesLoading || citiesLoading) {
+        return <CustomIndicator />;
+    }
     if (countriesError || citiesError) {
         return (
             <ErrorText

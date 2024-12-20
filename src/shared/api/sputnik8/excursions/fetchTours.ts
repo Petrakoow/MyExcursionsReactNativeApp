@@ -9,6 +9,12 @@ import {
     OrderType,
 } from '../fetchType/fetchParamsType';
 
+// TODO создать собственный HTTP client задуматься о переносе часть в entities 
+// MyHTTP CLient axios - базовый URL API KEY Общие конфигурации
+// Yandex HTTP Client
+// Sputnik 8 Client
+// shared класс базовые
+
 export const fetchTours = async (
     lang: LanguageType = 'ru',
     page = 1,

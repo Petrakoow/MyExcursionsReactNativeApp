@@ -1,6 +1,5 @@
 import React, {createContext, useState, useContext, ReactNode, useEffect} from 'react';
 import {
-    ExcursionSettingsType,
     useGetExcursionsByPageNumber,
 } from '@/features/excursions';
 import {ExcursionFilterType} from '@/features/excursions';
@@ -47,7 +46,7 @@ export const FilterProvider = (props: FilterProviderType) => {
     } = useGetExcursionsByPageNumber();
 
     const getToursByPageContext = async () => {
-        getToursByPage({
+        await getToursByPage({
             language: PAGE_LANGUAGE,
             limit: PAGE_LIMIT,
             filters: selectedFilters,
@@ -77,6 +76,7 @@ export const FilterProvider = (props: FilterProviderType) => {
 
     useEffect(() => {
         getToursByPageContext();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, selectedFilters]);
 
     return (

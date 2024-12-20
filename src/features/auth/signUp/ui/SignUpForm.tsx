@@ -32,7 +32,9 @@ export const SignUpForm = () => {
                 if (!error) {
                     resetForm();
                     setSuccess(true);
-                } else setSuccess(false);
+                } else{
+                    setSuccess(false);
+                }
             }}>
             {({handleChange, handleSubmit, values, errors}) => {
                 const errorsLine = createCommonLine(errors);

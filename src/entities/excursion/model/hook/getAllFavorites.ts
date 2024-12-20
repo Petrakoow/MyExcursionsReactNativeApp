@@ -7,6 +7,6 @@ export const getAllFavoriteExcursions = (
 ): FavoriteExcursion[] => {
     return realm
         .objects<FavoriteExcursion>(FavoriteExcursion.schema.name)
-        .filtered(`userId == $0`, userId)
+        .filtered('userId == $0', userId)
         .slice();
 };

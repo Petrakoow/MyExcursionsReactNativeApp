@@ -10,7 +10,7 @@ export const useGetExcursionsByPageNumber = () => {
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
     const getToursByPage = async (props: ExcursionSettingsType) => {
         const {language, filters, limit} = props;
-        
+
         try {
             setIsFetching(true);
             const toursData = await fetchTours(

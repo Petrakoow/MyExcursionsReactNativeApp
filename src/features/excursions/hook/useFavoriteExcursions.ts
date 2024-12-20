@@ -22,7 +22,9 @@ export const useFavoriteExcursions = () => {
     }, []);
 
     useEffect(() => {
-        if (!userId) return;
+        if (!userId) {
+            return;
+        }
 
         const favoriteExcursions = realm.objects<FavoriteExcursion>(
             FavoriteExcursion.schema.name,

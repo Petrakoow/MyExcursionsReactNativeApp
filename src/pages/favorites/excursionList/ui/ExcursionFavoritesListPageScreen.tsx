@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {PreviewExcursionCard} from '@/widgets/previewExcursionCard';
 import {SplashScreen} from '@/shared/ui/splashScreen';

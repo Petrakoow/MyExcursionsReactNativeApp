@@ -1,10 +1,9 @@
+import React from 'react';
 import {useEffect, useState} from 'react';
 import {UserStack} from '@/app/providers';
 import {GuestStack} from '@/app/providers';
 import {RolesEnum} from '@/entities/user/model';
 import {getUserSession} from '@/shared/db/models/user';
-import {CustomIndicator} from '@/shared/ui/customIndicator';
-import {styles} from './NavigationStyle';
 
 export const AppNavigator = () => {
     const [role, setRole] = useState<RolesEnum | undefined>(undefined);

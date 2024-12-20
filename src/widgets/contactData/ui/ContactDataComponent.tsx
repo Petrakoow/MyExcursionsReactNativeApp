@@ -81,7 +81,6 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                 return (
                     <View style={styles.container}>
                         <CustomText
-                            size={TextSize.S_LG}
                             weight={TextWeight.BOLD}
                             style={styles.textInformation}>
                             Перед бронированием вам необходимо заполнить
@@ -93,7 +92,7 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                             value={values.name}
                             onChangeText={handleChange('name')}
                             onBlur={() => setFieldTouched('name')}
-                            labelSize={TextSize.S_LG}
+                            labelSize={TextSize.S_BASE}
                             style={styles.input}
                         />
                         <CustomInput
@@ -102,7 +101,7 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                             value={values.phone}
                             onChangeText={handleChange('phone')}
                             onBlur={() => setFieldTouched('phone')}
-                            labelSize={TextSize.S_LG}
+                            labelSize={TextSize.S_BASE}
                             style={[styles.input, styles.inputEnd]}
                         />
                         <CustomButton
@@ -112,7 +111,7 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                                 styleButton.warningTypeButton,
                                 styles.button,
                             ]}
-                            textSize={TextSize.S_LG}
+                            textSize={TextSize.S_BASE}
                         />
                         {Object.values(errors).length > 0 && (
                             <ErrorText
