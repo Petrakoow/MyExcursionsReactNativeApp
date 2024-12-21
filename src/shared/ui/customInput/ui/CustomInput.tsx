@@ -6,7 +6,6 @@ import {styles} from './CustomInputStyle';
 import {Trailing} from './Trailing';
 type CustomTextType = TextInputProps & {
     label?: string;
-    isSwitching?: boolean;
     labelSize?: TextSize;
 };
 
@@ -14,7 +13,6 @@ export const CustomInput = (props: CustomTextType) => {
     const {
         label,
         secureTextEntry,
-        isSwitching,
         style,
         multiline = false,
         labelSize,
@@ -26,7 +24,9 @@ export const CustomInput = (props: CustomTextType) => {
     return (
         <View style={styles.container}>
             {label && (
-                <CustomText size={labelSize? labelSize : TextSize.S_XL} weight={TextWeight.NORMAL}>
+                <CustomText
+                    size={labelSize ? labelSize : TextSize.S_XL}
+                    weight={TextWeight.NORMAL}>
                     {label}
                 </CustomText>
             )}

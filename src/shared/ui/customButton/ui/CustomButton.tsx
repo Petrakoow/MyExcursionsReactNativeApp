@@ -3,6 +3,7 @@ import {
     TouchableOpacityProps,
     ColorValue,
 } from 'react-native';
+import React from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {CustomText} from '@/shared/ui/customText';
 import {SvgProps} from 'react-native-svg';

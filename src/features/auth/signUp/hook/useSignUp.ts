@@ -1,12 +1,11 @@
 import {useState} from 'react';
 import {registerUser} from '../model/registrationUser';
-import {useAuth} from '@/features/auth/role';
-import {useDatabase} from '@/features/db/provider';
+import { useAuth, useDatabase } from '@/provider';
 
 export const useSignUp = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const {reloadState} = useAuth();
+    const {reloadState, updateRole} = useAuth();
     const database = useDatabase();
     const signUp = async (
         email: string,
@@ -18,6 +17,7 @@ export const useSignUp = () => {
         try {
             await registerUser(email, password, username, database);
             await reloadState();
+            await updateRole();
         } catch (err) {
             setError((err as Error).message);
         } finally {

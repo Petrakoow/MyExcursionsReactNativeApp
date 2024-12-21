@@ -4,7 +4,5 @@ export type {
     ExcursionFilterType,
     ExcursionSettingsType,
     FilterByNameAndId,
-    FilterAscDesc,
-    FilterByQualityProduct,
     FilterItem,
 } from './type/excursionFilterType';

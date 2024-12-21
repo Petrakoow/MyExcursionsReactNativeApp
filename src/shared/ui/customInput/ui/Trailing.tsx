@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet} from 'react-native';
-import {SvgProps} from 'react-native-svg';
+import React from 'react';
 import {useCallback} from 'react';
 import * as Icons from '@/shared/assets/icons';
 import {moderateScale} from 'react-native-size-matters';

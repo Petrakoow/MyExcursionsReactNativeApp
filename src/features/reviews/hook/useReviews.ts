@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import {useDatabase} from '@/features/db/provider';
 import {Review} from '@/shared/db/models';
 import {
     addReview,
@@ -10,6 +9,7 @@ import {
 } from '@/entities/reviews';
 import {UserBasicFieldType} from '@/shared/db/models/user';
 import {formatDate} from '@/shared/utils';
+import { useDatabase } from '@/provider';
 
 export const useReviews = (uid: number, user: UserBasicFieldType) => {
     const [reviews, setReviews] = useState<(Review & {name: string})[]>([]);

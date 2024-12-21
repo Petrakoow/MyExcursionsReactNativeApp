@@ -1,27 +1,22 @@
 import {useEffect, useState} from 'react';
-import {fetchTourInfo, TourTypeRequest} from '@/shared/api/sputnik8';
-import {useDatabase} from '@/features/db/provider';
+import {TourTypeRequest} from '@/shared/api';
+import {useDatabase} from '@/provider';
 import {getUserSession} from '@/shared/db/models/user';
-import {
-    deleteAllFavoriteExcursions,
-    getAllFavoriteExcursions,
-} from '@/entities/excursion';
+import {getAllFavoriteExcursions} from '@/entities/excursion';
 import {FavoriteExcursion} from '@/shared/db/models';
+import {fetchTourInfo} from '@/entities/api';
 
 export const useFavoriteExcursions = () => {
     const [favorites, setFavorites] = useState<FavoriteExcursion[]>([]);
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | undefined>(undefined);
 
     const realm = useDatabase();
 
     useEffect(() => {
-        setUserId(getUserSession()?.userId);
-    }, []);
+        const userId = getUserSession()?.userId;
 
-    useEffect(() => {
         if (!userId) {
             return;
         }
@@ -40,7 +35,7 @@ export const useFavoriteExcursions = () => {
         return () => {
             favoriteExcursions.removeListener(handleChange);
         };
-    }, [realm, userId]);
+    }, [realm]);
 
     useEffect(() => {
         const fetchTours = async () => {
@@ -69,20 +64,10 @@ export const useFavoriteExcursions = () => {
         fetchTours();
     }, [favorites]);
 
-    // убрать отсюда (вынести в отдельный виджет)
-    const clearFavorites = () => {
-        if (userId) {
-            deleteAllFavoriteExcursions(realm, userId);
-            setFavorites([]);
-            setTours([]);
-        }
-    };
-
     return {
         favorites,
         tours,
         isLoading,
         isError,
-        clearFavorites,
     };
 };

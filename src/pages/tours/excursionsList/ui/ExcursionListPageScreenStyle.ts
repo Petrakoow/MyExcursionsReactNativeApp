@@ -18,4 +18,12 @@ export const styles = StyleSheet.create({
         paddingTop: moderateScale(5),
         paddingBottom: moderateScale(5),
     },
+    errorContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonRepeatLoad: {
+        width: '100%',
+        paddingVertical: moderateScale(3),
+    },
 });

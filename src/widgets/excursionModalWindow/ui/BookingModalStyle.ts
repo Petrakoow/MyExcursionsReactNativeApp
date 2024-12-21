@@ -5,7 +5,6 @@ import {
     CONTENT_PADDING_VERTICAL,
     CONTENT_RADIUS,
     MODAL_HEIGHT,
-    MODAL_WIDTH,
 } from '@/shared/config/dimensions';
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';

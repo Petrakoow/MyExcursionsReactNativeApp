@@ -20,7 +20,7 @@ export const useDropdownFilter = <T = {}>(
 
     const isItemInSelected = useMemo(() => {
         return selectedItem
-            ? filteredItems.some(item => item?.name === selectedItem.name)
+            ? filteredItems.some(item => item?.id === selectedItem.id)
             : false;
     }, [selectedItem, filteredItems]);
 
@@ -34,7 +34,7 @@ export const useDropdownFilter = <T = {}>(
     }, [inputValue, filteredItems]);
 
     const toggleItemActive = useCallback((item: FilterItem<T>) => {
-        setSelectedItem(prev => (prev?.name === item?.name ? undefined : item));
+        setSelectedItem(prev => (prev?.id === item?.id ? undefined : item));
     }, []);
 
     const removeItem = useCallback(() => {

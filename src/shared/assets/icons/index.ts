@@ -22,3 +22,5 @@ export {default as Product} from './filter/Product.svg';
 export {default as Rating} from './filter/Rating.svg';
 
 export {default as Camera} from './profile/camera.svg';
+
+export {default as NotFound} from './notfound.svg';

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {BottomPanel} from '@/shared/ui/bottomPanel';
 import * as Icons from '@/shared/assets/icons';
-import {TourTypeRequest} from '@/shared/api/sputnik8';
+import {TourTypeRequest} from '@/shared/api';
 import {BookingModal} from '@/widgets/excursionModalWindow';
 import {View} from 'react-native';
 import {
@@ -9,9 +9,9 @@ import {
     isFavorite,
     removeFromFavorites,
 } from '@/entities/excursion';
-import {useDatabase} from '@/features/db/provider';
 import {getUserSession} from '@/shared/db/models/user';
 import {palette} from '@/shared/config/colors';
+import {useDatabase} from '@/provider';
 
 type BottomExcursionPanelProps = {
     orderOptions: TourTypeRequest['order_options'];

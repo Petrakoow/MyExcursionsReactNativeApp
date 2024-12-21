@@ -1,20 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
+import React from 'react';
+import {Formik} from 'formik';
 import {CustomText} from '@/shared/ui/customText';
 import {CustomInput} from '@/shared/ui/customInput';
-import {TextSize, TextWeight} from '@/shared/config/font';
-import {GAP_BASE, moderateScale} from '@/shared/config/dimensions';
-import {palette} from '@/shared/config/colors';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {ErrorText} from '@/shared/ui/errorText';
-import {Formik} from 'formik';
-import {validationSchemaContact} from '../model/validationSchema';
-import {formatPhoneNumber} from '@/shared/utils';
-import {UserSessionType} from '@/shared/db/models/user';
-import {getUser, updateUser} from '@/entities/user/model';
 import {SuccessText} from '@/shared/ui/successText';
+import {validationSchemaContact} from '../model/validationSchema';
+import {styles} from './ContactDataComponentStyle';
+import {useContactData} from '../hook/useContactData';
+import {TextSize, TextWeight} from '@/shared/config/font';
+import {UserSessionType} from '@/shared/db/models/user';
 import Realm from 'realm';
-
 type ContactDataComponentType = {
     session: UserSessionType;
     database: Realm;
@@ -22,42 +19,8 @@ type ContactDataComponentType = {
 
 export const ContactDataComponent = (props: ContactDataComponentType) => {
     const {session, database} = props;
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        phone: '',
-    });
-    const [isSuccess, setIsSuccess] = useState(false);
-
-    useEffect(() => {
-        const userId = session?.userId;
-        if (userId) {
-            const user = getUser(database, userId);
-            if (user) {
-                setInitialValues({
-                    name: user.name || '',
-                    phone: user.phoneNumber || '',
-                });
-            }
-        }
-    }, [database, session?.userId]);
-
-    const handleSubmit = (values: typeof initialValues) => {
-        const formattedPhone = formatPhoneNumber(values.phone);
-        console.log('Сохраненные данные:', {
-            name: values.name,
-            phone: formattedPhone,
-        });
-
-        const userId = session?.userId;
-
-        if (userId) {
-            updateUser(database, userId, {
-                name: values.name,
-                phoneNumber: formattedPhone,
-            });
-            setIsSuccess(true);
-        }
-    };
+    const {initialValues, isSuccess, setIsSuccess, handleSubmit} =
+        useContactData({session, database});
 
     return (
         <Formik
@@ -72,16 +35,14 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                 errors,
                 setFieldTouched,
             }) => {
-                useEffect(() => {
-                    if (Object.keys(errors).length > 0) {
-                        setIsSuccess(false);
-                    }
-                }, [errors]);
-
+                if (Object.keys(errors).length > 0) {
+                    setIsSuccess(false);
+                }
                 return (
                     <View style={styles.container}>
                         <CustomText
                             weight={TextWeight.BOLD}
+                            size={TextSize.S_LG}
                             style={styles.textInformation}>
                             Перед бронированием вам необходимо заполнить
                             контактные данные
@@ -107,11 +68,11 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
                         <CustomButton
                             onPress={() => handleSubmit()}
                             textButton="Сохранить контактные данные"
+                            textSize={TextSize.S_BASE}
                             style={[
                                 styleButton.warningTypeButton,
                                 styles.button,
                             ]}
-                            textSize={TextSize.S_BASE}
                         />
                         {Object.values(errors).length > 0 && (
                             <ErrorText
@@ -131,21 +92,3 @@ export const ContactDataComponent = (props: ContactDataComponentType) => {
         </Formik>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        gap: GAP_BASE + 5,
-    },
-    textInformation: {
-        color: palette.light.error,
-    },
-    input: {
-        paddingVertical: moderateScale(5),
-    },
-    inputEnd: {
-        marginBottom: moderateScale(10),
-    },
-    button: {
-        paddingVertical: moderateScale(5),
-    },
-});

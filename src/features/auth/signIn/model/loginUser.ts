@@ -7,7 +7,7 @@ import {
     getDocs,
     getDoc,
     doc,
-} from '@/shared/api/firebase';
+} from '@/shared/api/firebase/firebase';
 
 export const loginUser = async (emailOrUsername: string, password: string) => {
     let userCredential;

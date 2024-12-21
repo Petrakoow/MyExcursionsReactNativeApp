@@ -1,4 +1,4 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
     CONTENT_PADDING_HORIZONTAL,
@@ -8,7 +8,6 @@ import {
 } from '@/shared/config/dimensions';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {ProfilePickerIcon} from '@/widgets/profileIcon';
-import {useDatabase} from '@/features/db/provider';
 import {getUserSession} from '@/shared/db/models/user';
 import {CustomText} from '@/shared/ui/customText';
 import {TextSize} from '@/shared/config/font';
@@ -17,7 +16,10 @@ import {getUser} from '@/entities/user/model';
 import {ExpandableComponent} from '@/shared/ui/expandableView';
 import * as Icons from '@/shared/assets/icons';
 import {ContactDataComponent} from '@/widgets/contactData';
-import {GeolocationSettingsComponent} from '@/widgets/geolocationSettings';
+import {FavoriteSettings} from '@/widgets/favoriteSettingsData';
+import {useDatabase} from '@/provider';
+import {CommentSettingsData} from '@/widgets/commentSettingsData';
+import {AccountSettingsData} from '@/widgets/accountSettingsData/ui/AccountSettingsData';
 
 export const ProfilePageScreen = () => {
     const [user, setUser] = useState<User | undefined>();
@@ -80,13 +82,16 @@ export const ProfilePageScreen = () => {
                                 database={database}
                             />
                         </ExpandableComponent>
-                        <ExpandableComponent title="Геопозиция">
-                            <GeolocationSettingsComponent />
-                        </ExpandableComponent>
                         <ExpandableComponent title="Уведомления"></ExpandableComponent>
-                        <ExpandableComponent title="Комментарии"></ExpandableComponent>
-                        <ExpandableComponent title="Избранное"></ExpandableComponent>
-                        <ExpandableComponent title="Настройки аккаунта"></ExpandableComponent>
+                        <ExpandableComponent title="Комментарии">
+                            <CommentSettingsData />
+                        </ExpandableComponent>
+                        <ExpandableComponent title="Избранное">
+                            <FavoriteSettings />
+                        </ExpandableComponent>
+                        <ExpandableComponent title="Настройки аккаунта">
+                            <AccountSettingsData />
+                        </ExpandableComponent>
                     </View>
                 </View>
             </ScrollView>

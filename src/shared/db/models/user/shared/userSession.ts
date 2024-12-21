@@ -19,7 +19,3 @@ export const saveUserSession = (session: UserSessionType): void => {
 export const getUserSession = (): UserSessionType | null => {
     return getItem<UserSessionType>(USER_SESSION_KEY);
 };
-
-// export const clearUserSession = (): void => {
-//     removeItem(USER_SESSION_KEY);
-// };

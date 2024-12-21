@@ -5,7 +5,7 @@ export class Review extends Realm.Object {
         name: 'Review',
         primaryKey: 'id',
         properties: {
-            id: 'string', 
+            id: 'string',
             userId: 'string',
             excursionId: 'int',
             rating: 'int',
@@ -14,7 +14,7 @@ export class Review extends Realm.Object {
         },
     };
 
-    id!: string; 
+    id!: string;
     userId!: string;
     excursionId!: number;
     rating!: number;

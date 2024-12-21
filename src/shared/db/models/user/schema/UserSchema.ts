@@ -7,12 +7,12 @@ export class User extends Realm.Object {
         properties: {
             userId: 'string',
             username: 'string',
-            email: 'string', 
-            role: 'int', 
-            name: 'string?', 
-            profileIcon: 'string?', 
+            email: 'string',
+            role: 'int',
+            name: 'string?',
+            profileIcon: 'string?',
             country: 'string?',
-            phoneNumber: 'string?', 
+            phoneNumber: 'string?',
             profileSignature: 'string?',
         },
     };

@@ -1,4 +1,5 @@
-import {TourReviewTypeRequest, fetchTourReview} from '@/shared/api/sputnik8';
+import {fetchTourReview} from '@/entities/api';
+import {TourReviewTypeRequest} from '@/shared/api';
 import {useState, useRef} from 'react';
 
 export const useGetReviewsByTokenString = () => {

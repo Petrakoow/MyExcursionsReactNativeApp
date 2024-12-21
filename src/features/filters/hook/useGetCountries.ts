@@ -1,26 +1,29 @@
-import {useState, useEffect} from 'react';
-import {CountryTypeRequest, fetchCountries} from '@/shared/api/sputnik8';
+import {useState, useEffect, useCallback} from 'react';
+import {CountryTypeRequest} from '@/shared/api';
+import {fetchCountries} from '@/entities/api';
 
 export const useGetCountries = () => {
     const [countries, setCountries] = useState<CountryTypeRequest[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const getCountries = async () => {
-            try {
-                const fetchedCountries = await fetchCountries();
-                setCountries(fetchedCountries);
-            } catch (err) {
-                setError('Error fetching countries');
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getCountries();
+    const getCountries = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const fetchedCountries = await fetchCountries();
+            setCountries(fetchedCountries);
+        } catch (err) {
+            setError('Error fetching countries');
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
     }, []);
 
-    return {countries, loading, error};
+    useEffect(() => {
+        getCountries();
+    }, [getCountries]);
+
+    return {countries, loading, error, refetch: getCountries};
 };

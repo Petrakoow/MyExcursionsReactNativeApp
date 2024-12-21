@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
         overflow: 'hidden',
         shadowOpacity: 0.6,
         shadowColor: '#333',
+        height: 200,
         shadowRadius: 4,
         elevation: 3,
     },

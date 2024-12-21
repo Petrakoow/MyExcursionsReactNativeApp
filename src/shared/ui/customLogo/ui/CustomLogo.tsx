@@ -1,17 +1,17 @@
+import React from 'react';
 import {View, Image, ImageSourcePropType} from 'react-native';
-import { styles } from './CustomLogoStyle';
+import {styles} from './CustomLogoStyle';
 import {Logo} from '@/shared/assets/images';
 import {CustomText} from '@/shared/ui/customText';
-import { TextSize, TextWeight } from '@/shared/config/font';
-
+import {TextSize, TextWeight} from '@/shared/config/font';
 
 type LogotypeType = {
-    title?: string,
-    href?: ImageSourcePropType
-}
+    title?: string;
+    href?: ImageSourcePropType;
+};
 
-export const Logotype = (props : LogotypeType) => {
-    const {href=Logo, title = "Logotype"} = props;
+export const Logotype = (props: LogotypeType) => {
+    const {href = Logo, title = 'Logotype'} = props;
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -21,7 +21,9 @@ export const Logotype = (props : LogotypeType) => {
                     resizeMode="contain"
                 />
             </View>
-            <CustomText size={TextSize.S_4XL} weight={TextWeight.BLACK}>{title}</CustomText>
+            <CustomText size={TextSize.S_4XL} weight={TextWeight.BLACK}>
+                {title}
+            </CustomText>
         </View>
     );
 };

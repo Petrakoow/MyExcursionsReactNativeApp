@@ -2,8 +2,8 @@ import {ReactNode} from 'react';
 import {KeyboardAvoidingView, ColorValue, View, FlexStyle} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './ScreenContentStyle';
-import { palette } from '@/shared/config/colors';
-
+import {palette} from '@/shared/config/colors';
+import React from 'react';
 type ScreenProps = {
     children: ReactNode;
     edges?: Edge[];

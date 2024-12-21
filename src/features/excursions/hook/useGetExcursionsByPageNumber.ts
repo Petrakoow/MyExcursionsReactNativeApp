@@ -1,22 +1,27 @@
-import {TourTypeRequest, fetchTours} from '@/shared/api/sputnik8';
-import {useState} from 'react';
+import {TourTypeRequest} from '@/shared/api';
+import {useCallback, useRef, useState} from 'react';
 import {ExcursionSettingsType} from '../type/excursionFilterType';
+import {fetchTours} from '@/entities/api';
 
 export const useGetExcursionsByPageNumber = () => {
-    const [page, setPage] = useState(1);
     const [isFetching, setIsFetching] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [isError, setError] = useState<string | null>(null);
     const [tours, setTours] = useState<TourTypeRequest[]>([]);
-    const getToursByPage = async (props: ExcursionSettingsType) => {
-        const {language, filters, limit} = props;
+    const pageRef = useRef(1);
+    const selectedFiltersRef = useRef<ExcursionSettingsType | undefined>();
+
+    const getToursByPage = useCallback(async () => {
+        const {language, limit, filters} = selectedFiltersRef.current || {};
+        setLoading(true);
+        setError(null);
 
         try {
             setIsFetching(true);
             const toursData = await fetchTours(
-                language,
-                page,
-                limit,
+                language!,
+                pageRef.current,
+                limit!,
                 filters?.city?.id,
                 filters?.country?.id,
                 filters?.product,
@@ -34,16 +39,31 @@ export const useGetExcursionsByPageNumber = () => {
             setIsFetching(false);
             setLoading(false);
         }
-    };
+    }, []);
 
     const handleNextPage = () => {
-        setIsFetching(true);
-        setPage(prevPage => prevPage + 1);
+        if (!isFetching) {
+            pageRef.current += 1;
+            getToursByPage();
+        }
     };
 
     const handlePreviousPage = () => {
-        setIsFetching(true);
-        setPage(prevPage => prevPage - 1);
+        if (!isFetching && pageRef.current > 1) {
+            pageRef.current -= 1;
+            getToursByPage();
+        }
+    };
+
+    const updateFiltersAndFetch = (filters: ExcursionSettingsType) => {
+        if (
+            JSON.stringify(filters) !==
+            JSON.stringify(selectedFiltersRef.current)
+        ) {
+            selectedFiltersRef.current = filters;
+            pageRef.current = 1;
+            getToursByPage();
+        }
     };
 
     return {
@@ -52,10 +72,10 @@ export const useGetExcursionsByPageNumber = () => {
         hasMore: tours.length > 0,
         isError,
         tours,
-        page,
+        page: pageRef.current,
         getToursByPage,
         handleNextPage,
         handlePreviousPage,
-        setPage,
+        updateFiltersAndFetch,
     };
 };

@@ -1,8 +1,7 @@
 import {View, Modal} from 'react-native';
 import React, {useState} from 'react';
 import {ExcursionFilterType} from '@/features/excursions';
-import {useFilters, useGetCities, useGetCountries} from '@/features/filters';
-import {ErrorText} from '@/shared/ui/errorText';
+import {useGetCities, useGetCountries} from '@/features/filters';
 import {CustomIndicator} from '@/shared/ui/customIndicator';
 import {ToggleButtonGroup} from '@/shared/ui/toggleButton';
 import {styles} from './FilterExcursionPanelStyle';
@@ -13,6 +12,7 @@ import * as Icons from '@/shared/assets/icons';
 import {SearchFilterComponent} from '@/shared/ui/filterPanel';
 import {useExcursionFilters} from '../hook/useExcursionFilters';
 import {useToggleFilters} from '../hook/useToggleFilters';
+import {useFilters} from '@/provider';
 
 type FilterExcursionPanelProps = {
     animationType?: 'none' | 'fade' | 'slide';
@@ -47,14 +47,6 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
     if (countriesLoading || citiesLoading) {
         return <CustomIndicator />;
     }
-    if (countriesError || citiesError) {
-        return (
-            <ErrorText
-                title="Error loading filters"
-                description="Failed to load countries or cities."
-            />
-        );
-    }
 
     return (
         <View>
@@ -62,7 +54,12 @@ export const FilterExcursionPanel = (props: FilterExcursionPanelProps) => {
                 textButton="Открыть фильтры"
                 textSize={TextSize.S_BASE}
                 onPress={() => setModalVisible(true)}
-                style={[styleButton.primaryTypeButton, styles.buttonPadding]}
+                style={[
+                    styles.buttonPadding,
+                    countriesError && citiesError
+                        ? styleButton.warningTypeButton
+                        : styleButton.primaryTypeButton,
+                ]}
             />
             <Modal
                 animationType={animationType}
