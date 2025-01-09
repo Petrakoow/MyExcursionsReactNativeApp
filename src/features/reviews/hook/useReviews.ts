@@ -8,8 +8,7 @@ import {
     updateReview,
 } from '@/entities/reviews';
 import {UserBasicFieldType} from '@/shared/db/models/user';
-import {formatDate} from '@/shared/utils';
-import { useDatabase } from '@/provider';
+import {useDatabase} from '@/provider';
 
 export const useReviews = (uid: number, user: UserBasicFieldType) => {
     const [reviews, setReviews] = useState<(Review & {name: string})[]>([]);
@@ -43,7 +42,7 @@ export const useReviews = (uid: number, user: UserBasicFieldType) => {
                 updateReview(database, user.userId, uid, {
                     rating: rating,
                     content: text,
-                    date: formatDate(new Date()),
+                    date: new Date(),
                 });
             } else {
                 addReview(database, {

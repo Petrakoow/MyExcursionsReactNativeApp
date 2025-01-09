@@ -15,10 +15,11 @@ type PreviewExcursionCardType = {
     tour: TourTypeRequest;
     onPress: () => void;
     style?: StyleProp<ViewStyle>;
+    extensionCard?: React.ReactNode;
 };
 
 export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
-    const {tour, style, onPress} = props;
+    const {tour, style, onPress, extensionCard} = props;
     return (
         <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
             <Image
@@ -64,6 +65,11 @@ export const PreviewExcursionCard = (props: PreviewExcursionCardType) => {
                 <CustomText weight={TextWeight.LIGHT} style={styles.price}>
                     Цена: {tour?.netto_price || 'Не указано'}
                 </CustomText>
+                {extensionCard && (
+                    <View>
+                        {extensionCard}
+                    </View>
+                )}
             </View>
         </TouchableOpacity>
     );

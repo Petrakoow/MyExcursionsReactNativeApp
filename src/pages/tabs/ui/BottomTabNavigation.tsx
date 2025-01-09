@@ -11,6 +11,7 @@ import {getEnumTranslation} from '@/shared/config/navigation';
 import {ExcursionFavoritesListPageScreen} from '@/pages/favorites/excursionList';
 import {palette} from '@/shared/config/colors';
 import { ProfilePageScreen } from '@/pages/profile';
+import { BookingPageScreen } from '@/pages/booking';
 
 const Tab = createBottomTabNavigator<NavigationTabList>();
 
@@ -67,7 +68,7 @@ export const BottomTabNavigation = () => {
             />
             <Tab.Screen
                 name={AppTabNavigation.BOOKING}
-                component={HomePage}
+                component={BookingPageScreen}
                 options={{
                     title: getEnumTranslation(AppTabNavigation.BOOKING),
                     headerTransparent: true,

@@ -20,6 +20,7 @@ import {FavoriteSettings} from '@/widgets/favoriteSettingsData';
 import {useDatabase} from '@/provider';
 import {CommentSettingsData} from '@/widgets/commentSettingsData';
 import {AccountSettingsData} from '@/widgets/accountSettingsData/ui/AccountSettingsData';
+import { NotificationSettingsData } from '@/widgets/notificationSettingsData';
 
 export const ProfilePageScreen = () => {
     const [user, setUser] = useState<User | undefined>();
@@ -82,7 +83,9 @@ export const ProfilePageScreen = () => {
                                 database={database}
                             />
                         </ExpandableComponent>
-                        <ExpandableComponent title="Уведомления"></ExpandableComponent>
+                        <ExpandableComponent title="Уведомления">
+                            <NotificationSettingsData/>
+                        </ExpandableComponent>
                         <ExpandableComponent title="Комментарии">
                             <CommentSettingsData />
                         </ExpandableComponent>

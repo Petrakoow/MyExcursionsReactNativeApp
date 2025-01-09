@@ -1,7 +1,6 @@
-import {HttpClientSputnik} from '@/shared/api';
+import {httpClient} from '@/shared/api';
 import {LanguageType, TourReviewTypeRequest} from '@/shared/api';
 import {WithEmptyContent} from '@/shared/api/sputnik8/fetchType/fetchParamsType';
-import {PRODUCT_URL} from '@/shared/config/api/sputnik8';
 
 export const fetchTourReview = async (
     productId: number,
@@ -11,10 +10,8 @@ export const fetchTourReview = async (
     withEmptyContent: WithEmptyContent = true,
 ): Promise<TourReviewTypeRequest> => {
     try {
-        const httpClient = new HttpClientSputnik(PRODUCT_URL);
-
         const response = await httpClient.request<TourReviewTypeRequest>({
-            url: `/${productId}/reviews`,
+            url: `/products/${productId}/reviews`,
             method: 'GET',
             params: {
                 lang,

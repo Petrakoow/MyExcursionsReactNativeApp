@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, FlatList, ScrollView} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {CustomText} from '@/shared/ui/customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {SplashScreen} from '@/shared/ui/splashScreen';
@@ -9,7 +9,7 @@ import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetReviewsByTokenString, useReviews} from '@/features/reviews';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {ReviewModal} from '@/widgets/reviewModal';
-import {getUserSession, UserBasicFieldType} from '@/shared/db/models/user';
+import {getUserSession} from '@/shared/db/models/user';
 
 type InformationReviewsType = {
     uid: number;

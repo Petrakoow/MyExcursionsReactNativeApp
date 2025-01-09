@@ -1,4 +1,4 @@
-import { API_KEY, USERNAME } from '@/shared/config/api/sputnik8';
+import {API_KEY, BASE_URL, USERNAME} from '@/shared/config/api/sputnik8';
 import {HttpClient, HttpRequestParams} from '../http/httpClient';
 
 export class HttpClientSputnik extends HttpClient {
@@ -35,3 +35,5 @@ export class HttpClientSputnik extends HttpClient {
         });
     }
 }
+
+export const httpClient = new HttpClientSputnik(BASE_URL);

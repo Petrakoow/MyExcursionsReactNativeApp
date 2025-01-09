@@ -5,12 +5,13 @@ import {PreviewExcursionCard} from '@/widgets/previewExcursionCard';
 import {SplashScreen} from '@/shared/ui/splashScreen';
 import {ErrorText} from '@/shared/ui/errorText';
 import {ScreenContent} from '@/shared/ui/screenContent';
-import {useFavoriteExcursions} from '../../../../features/excursions/hook/useFavoriteExcursions';
+
 import {NavigationStackList} from '@/shared/config/navigation';
 import {AppNavigation} from '@/shared/config/navigation';
 import {TourTypeRequest} from '@/shared/api';
 import {styles} from './ExcursionFavoritesListPageScreenStyle';
 import {ExcursionNotFoundCard} from './ExcursionNotFoundCard';
+import {useFavoriteExcursions} from '@/features/excursions';
 
 export const ExcursionFavoritesListPageScreen = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();

@@ -1,10 +1,12 @@
-export {HttpClientSputnik} from './sputnik8/httpClientSputnik';
+export {httpClient} from './sputnik8/httpClientSputnik';
 
 export type {TourTypeRequest} from './sputnik8/requestType/tourTypeRequest';
 export type {TourReviewTypeRequest} from './sputnik8/requestType/tourReviewTypeRequest';
 export type {CountryTypeRequest} from './sputnik8/requestType/countryTypeRequest';
 
 export type {CityTypeRequest} from './sputnik8/requestType/cityTypeRequest';
+
+export type {CategoryType} from './sputnik8/requestType/categoriesTypeRequest';
 
 export type {
     CurrencyType,

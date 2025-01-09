@@ -3,6 +3,7 @@ import {formatPhoneNumber} from '@/shared/utils';
 import {getUser, updateUser} from '@/entities/user/model';
 import Realm from 'realm';
 import {UserSessionType} from '@/shared/db/models/user';
+import { userStatus } from '@/entities/status';
 
 type InitialValuesType = {
     name: string;
@@ -49,6 +50,7 @@ export const useContactData = ({session, database}: UseContactDataType) => {
                 phoneNumber: formattedPhone,
             });
             setIsSuccess(true);
+            userStatus(database, userId);
         }
     };
 

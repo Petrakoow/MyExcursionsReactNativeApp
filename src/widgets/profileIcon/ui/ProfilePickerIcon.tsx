@@ -1,6 +1,6 @@
 import {palette} from '@/shared/config/colors';
 import React, {FC} from 'react';
-import {View, Image, Modal, ImageSourcePropType} from 'react-native';
+import {View, Modal, ImageSourcePropType} from 'react-native';
 import * as Images from '@/shared/assets/images';
 import {SvgProps} from 'react-native-svg';
 import * as Icons from '@/shared/assets/icons';

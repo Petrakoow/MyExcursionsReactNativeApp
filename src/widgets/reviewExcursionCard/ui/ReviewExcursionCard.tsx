@@ -4,11 +4,12 @@ import {CustomText} from '@/shared/ui/customText';
 import {TextSize, TextWeight} from '@/shared/config/font';
 import {styles} from './ReviewExcursionCardStyle';
 import {ViewProps} from 'react-native-svg/lib/typescript/fabric/utils';
+import { DateHelper } from '@/shared/utils';
 
 type ReviewExcursionCardType = ViewProps & {
     item: {
         name: string;
-        date: string;
+        date: string | Date;
         rating: number;
         content: string;
     };
@@ -18,6 +19,11 @@ type ReviewExcursionCardType = ViewProps & {
 
 export const ReviewExcursionCard = (props: ReviewExcursionCardType) => {
     const {item, ratingTitle = 'Оценка', style, isPrimary = false, ...res} = props;
+
+    const getFormattedDate = (date: string | Date): string => {
+        const parsedDate = typeof date === 'string' ? new Date(date) : date;
+        return DateHelper.format(parsedDate);
+    };
     return (
         <View {...res} style={[style, styles.reviewItem, isPrimary && styles.primaryCard]}>
             <CustomText
@@ -27,7 +33,7 @@ export const ReviewExcursionCard = (props: ReviewExcursionCardType) => {
                 {item.name}
             </CustomText>
             <CustomText style={styles.reviewDate} size={TextSize.S_SM}>
-                {item.date}
+                {DateHelper.format(DateHelper.parse(item.date))}
             </CustomText>
             <CustomText
                 weight={TextWeight.BOLD}

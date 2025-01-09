@@ -10,7 +10,7 @@ export class Review extends Realm.Object {
             excursionId: 'int',
             rating: 'int',
             content: 'string',
-            date: 'string',
+            date: 'date',
         },
     };
 
@@ -19,5 +19,5 @@ export class Review extends Realm.Object {
     excursionId!: number;
     rating!: number;
     content!: string;
-    date!: string;
+    date!: Date;
 }

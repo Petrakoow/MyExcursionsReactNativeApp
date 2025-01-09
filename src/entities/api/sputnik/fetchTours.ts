@@ -1,12 +1,11 @@
-import {HttpClientSputnik} from '@/shared/api';
 import {
     LanguageType,
     OrderFieldType,
     OrderType,
     CurrencyType,
     TourTypeRequest,
+    httpClient,
 } from '@/shared/api';
-import {PRODUCT_URL} from '@/shared/config/api/sputnik8';
 
 export const fetchTours = async (
     lang: LanguageType = 'ru',
@@ -25,10 +24,8 @@ export const fetchTours = async (
             throw new Error('The limit must be between 1 and 100.');
         }
 
-        const httpClient = new HttpClientSputnik(PRODUCT_URL);
-
         const response = await httpClient.request<TourTypeRequest[]>({
-            url: '',
+            url: '/products',
             method: 'GET',
             params: {
                 lang,

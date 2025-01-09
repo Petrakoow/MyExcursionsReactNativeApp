@@ -1,6 +1,5 @@
 import {CountryTypeRequest, LanguageType} from '@/shared/api';
-import {COUNTRIES_URL} from '@/shared/config/api/sputnik8';
-import {HttpClientSputnik} from '@/shared/api';
+import {httpClient} from '@/shared/api';
 
 export const fetchCountries = async (
     lang: LanguageType = 'ru',
@@ -12,10 +11,8 @@ export const fetchCountries = async (
             throw new Error('The limit can be set in the range from 1 to 100.');
         }
 
-        const httpClient = new HttpClientSputnik(COUNTRIES_URL);
-
         const response = await httpClient.request<CountryTypeRequest[]>({
-            url: '',
+            url: '/countries',
             method: 'GET',
             params: {
                 lang,

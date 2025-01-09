@@ -6,6 +6,7 @@ export enum AppNavigation {
     FORGOT_PASSWORD = 'Forgot password',
     MAIN = 'Main',
     EXCURSION_INFO = 'Information about excursion',
+    BOOKING = 'Booking',
 }
 
 export enum AppTabNavigation {
@@ -24,6 +25,7 @@ export type NavigationStackList<F = any> = {
     [AppNavigation.EXCURSION_INFO]: {
         excursion: TourTypeRequest;
     };
+    [AppNavigation.BOOKING]: undefined;
 };
 
 export type NavigationTabList = {

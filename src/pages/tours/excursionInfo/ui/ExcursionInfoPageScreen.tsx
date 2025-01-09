@@ -39,7 +39,7 @@ export const ExcursionInfoPageScreen = () => {
                 )}
 
                 <BottomExcursionPanel
-                    orderOptions={excursion.order_options}
+                    options={excursion}
                     onToggleReviews={toggleReviews}
                     isReviewsVisible={showReviews}
                     excursionId={excursion.id}

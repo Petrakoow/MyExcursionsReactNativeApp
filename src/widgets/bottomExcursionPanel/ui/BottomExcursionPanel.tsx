@@ -14,7 +14,7 @@ import {palette} from '@/shared/config/colors';
 import {useDatabase} from '@/provider';
 
 type BottomExcursionPanelProps = {
-    orderOptions: TourTypeRequest['order_options'];
+    options: TourTypeRequest;
     onToggleReviews: () => void;
     isReviewsVisible: boolean;
     excursionId: number;
@@ -23,7 +23,7 @@ type BottomExcursionPanelProps = {
 // переписать
 
 export const BottomExcursionPanel = ({
-    orderOptions,
+    options,
     onToggleReviews,
     isReviewsVisible,
     excursionId,
@@ -76,7 +76,7 @@ export const BottomExcursionPanel = ({
                 />
             </BottomPanel>
             <BookingModal
-                orderOptions={orderOptions}
+                options={options}
                 visible={isBookingModalVisible}
                 onClose={() => setBookingModalVisible(false)}
                 animationType="fade"

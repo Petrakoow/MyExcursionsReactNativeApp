@@ -2,16 +2,17 @@ import React from 'react';
 import {View} from 'react-native';
 import {CustomText} from '@/shared/ui/customText';
 import {getTicketTypeLabel, TourTypeRequest} from '@/shared/api';
-import {OrderLine} from './OrderLine';
+import {OrderLine} from './AddBookingOrder';
 import {styles} from './BookingModalStyle';
 import {TextSize, TextWeight} from '@/shared/config/font';
 
 type OrderOptionProps = {
     orderOption: TourTypeRequest['order_options'][0];
+    excursionId: number;
 };
 
 export const OrderOption = (props: OrderOptionProps) => {
-    const {orderOption} = props;
+    const {orderOption, excursionId} = props;
     return (
         <View style={styles.optionContainer}>
             <CustomText
@@ -31,7 +32,7 @@ export const OrderOption = (props: OrderOptionProps) => {
                 {orderOption.duration.name}
             </CustomText>
             {orderOption.order_lines.map((line, lineIndex) => (
-                <OrderLine key={lineIndex} line={line} />
+                <OrderLine key={lineIndex} line={line} excursionId={excursionId} type={orderOption.title}/>
             ))}
         </View>
     );

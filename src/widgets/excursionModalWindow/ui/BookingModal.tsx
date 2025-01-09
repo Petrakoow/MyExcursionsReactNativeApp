@@ -8,14 +8,14 @@ import { CustomText } from '@/shared/ui/customText';
 import { CloseButton } from './CloseButton';
 
 type BookingModalProps = ModalProps & {
-    orderOptions: TourTypeRequest['order_options'];
+    options: TourTypeRequest;
     onClose: () => void;
 };
 
 export const BookingModal = ({
     visible,
     onClose,
-    orderOptions = [],
+    options,
     ...res
 }: BookingModalProps) => {
     return (
@@ -24,9 +24,9 @@ export const BookingModal = ({
                 <View style={styles.modalContent}>
                     <CloseButton onClose={onClose} />
                     <ScrollView style={[styles.content, styles.contentScroll]}>
-                        {orderOptions.length > 0 ? (
-                            orderOptions.map((orderOption, index) => (
-                                <OrderOption key={index} orderOption={orderOption} />
+                        {options.order_options.length > 0 ? (
+                            options.order_options.map((orderOption, index) => (
+                                <OrderOption key={index} orderOption={orderOption} excursionId={options.id} />
                             ))
                         ) : (
                             <CustomText>Нет доступных опций для бронирования</CustomText>

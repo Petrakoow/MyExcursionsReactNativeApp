@@ -1,4 +1,5 @@
 export {createCommonLine} from './concatenationObjects/commonLine';
 export {generateRandomString} from './generation/generateRandomString';
-export {formatDate, formatPhoneNumber} from './convert/converter';
+export {formatPhoneNumber} from './convert/converter';
 export {confirmAction} from './confirmAction/confirmAction';
+export {DateHelper} from './date/DateHelper';

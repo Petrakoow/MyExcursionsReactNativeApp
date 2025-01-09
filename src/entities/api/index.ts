@@ -3,3 +3,4 @@ export {fetchCountries} from './sputnik/fetchCountries';
 export {fetchTourInfo} from './sputnik/fetchTourInfo';
 export {fetchTourReview} from './sputnik/fetchTourReview';
 export {fetchTours} from './sputnik/fetchTours';
+export {fetchCategories} from './sputnik/fetchCategories';
