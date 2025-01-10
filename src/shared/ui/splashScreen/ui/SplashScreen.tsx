@@ -19,7 +19,7 @@ type SplashScreenType = {
 export const SplashScreen = (props: SplashScreenType) => {
     const {
         titleIndicator = 'Hello!',
-        titleLogotype = 'TourismApp',
+        titleLogotype = 'ExcursionApp',
         showLogotype = true,
         color = palette.light.primary,
         size = 'large',

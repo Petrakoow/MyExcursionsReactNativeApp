@@ -33,7 +33,7 @@ export const BookingPageScreen = () => {
                             style={styles.notVerifiedText}
                             size={TextSize.S_LG}>
                             Пожалуйста, заполните контактные данные для доступа
-                            к бронированиям.
+                            к бронированиям
                         </CustomText>
                     </View>
                 ) : bookings.length === 0 ? (
@@ -41,7 +41,7 @@ export const BookingPageScreen = () => {
                         <CustomText
                             style={[styles.noBookings]}
                             size={TextSize.S_LG}>
-                            Бронирований на данный момент нету.
+                            Бронирований на данный момент нету
                         </CustomText>
                     </View>
                 ) : (

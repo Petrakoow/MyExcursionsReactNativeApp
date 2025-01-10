@@ -1,50 +1,47 @@
-import {ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import {ScreenContent} from '@/shared/ui/screenContent';
 import {
-    CONTENT_PADDING_HORIZONTAL,
-    CONTENT_PADDING_VERTICAL,
-} from '@/shared/config/dimensions';
-import { fetchCategories } from '@/entities/api';
-import { CategoryType } from '@/shared/api';
-import { ProductType, SubCategoryType } from '@/shared/api/sputnik8/requestType/categoriesTypeRequest';
+    FlatList,
+    View,
+} from 'react-native';
+import React from 'react';
+import {ScreenContent} from '@/shared/ui/screenContent';
+import {SearchFilterComponent} from '@/shared/ui/filterPanel';
+import {CustomText} from '@/shared/ui/customText';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {CustomIndicator} from '@/shared/ui/customIndicator';
+import {ErrorText} from '@/shared/ui/errorText';
+import {useHomePage} from '@/features/home';
+import {CategoryType, ProductType, SubCategoryType} from '@/shared/api';
+import {CardExcursionByCategory} from '@/widgets/cardExcursionByCategory';
+import { TextSize, TextWeight } from '@/shared/config/font';
+import { NavigationStackList } from '@/shared/config/navigation';
+import { styles } from './HomePageScreenStyle';
 
 export const HomePage = () => {
-    const [categories, setCategories] = useState<CategoryType[]>([]);
-    const [loading, setLoading] = useState(true);
+    const {categories, cities, selectedCity, loading, error, handleCityChange} =
+        useHomePage();
 
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const data = await fetchCategories(1); // Replace 1 with the desired city ID
-                setCategories(data);
-            } catch (error) {
-                Alert.alert('Error', 'Failed to load categories.');
-            } finally {
-                setLoading(false);
-            }
-        };
+    const navigation = useNavigation<NavigationProp<NavigationStackList>>();
 
-        loadCategories();
-    }, []);
-
-    const renderProduct = ({item}: {item: ProductType}) => (
-        <TouchableOpacity
-            onPress={() =>
-                Alert.alert('Excursion Selected', `You selected: ${item.name}`)
-            }>
-            <Text style={styles.product}>{item.name}</Text>
-        </TouchableOpacity>
+    const renderExcursion = ({item}: {item: ProductType}) => (
+        <CardExcursionByCategory item={item} navigation={navigation}/>
     );
 
     const renderSubCategory = ({item}: {item: SubCategoryType}) => (
         <View style={styles.subCategoryContainer}>
-            <Text style={styles.subCategoryTitle}>{item.name}</Text>
-            <Text style={styles.subCategoryDescription}>{item.description}</Text>
+            {item.products.length > 0 && (
+                <CustomText
+                    weight={TextWeight.BOLD}
+                    size={TextSize.S_XL}
+                    style={styles.subCategoryTitle}>
+                    {item.name}
+                </CustomText>
+            )}
             <FlatList
                 data={item.products}
-                renderItem={renderProduct}
+                renderItem={renderExcursion}
                 keyExtractor={product => product.id.toString()}
+                numColumns={2}
+                columnWrapperStyle={styles.gridRow}
             />
         </View>
     );
@@ -60,49 +57,35 @@ export const HomePage = () => {
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text>Loading...</Text>
+                <CustomIndicator />
+                <CustomText>Загрузка...</CustomText>
             </View>
         );
     }
 
+    if (error) {
+        return <ErrorText title="Ошибка" description={error} />;
+    }
+
     return (
         <ScreenContent>
-            <View style={styles.content}>
+            <View>
+                <View style={styles.filterContent}>
+                    <SearchFilterComponent
+                        title="Выберите город"
+                        itemsList={cities}
+                        selectedFilterItem={selectedCity}
+                        onSelectionChange={handleCityChange as any}
+                        hasDropdownList={true}
+                    />
+                </View>
                 <FlatList
                     data={categories}
                     renderItem={renderCategory}
                     keyExtractor={(category, index) => index.toString()}
+                    contentContainerStyle={styles.flatlistContent}
                 />
             </View>
         </ScreenContent>
     );
 };
-
-const styles = StyleSheet.create({
-    content: {
-        paddingHorizontal: CONTENT_PADDING_HORIZONTAL,
-        paddingVertical: CONTENT_PADDING_VERTICAL,
-    },
-    loaderContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    subCategoryContainer: {
-        marginBottom: 16,
-    },
-    subCategoryTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    subCategoryDescription: {
-        fontSize: 14,
-        marginBottom: 8,
-    },
-    product: {
-        fontSize: 16,
-        paddingVertical: 4,
-    },
-});

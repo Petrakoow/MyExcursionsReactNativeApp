@@ -1,5 +1,4 @@
-import {LanguageType, OrderFieldType} from '@/shared/api/sputnik8';
-import {OrderType} from '@/shared/api/sputnik8';
+import {LanguageType, OrderFieldType, OrderType} from '@/shared/api';
 
 export type ExcursionSettingsType = {
     language: LanguageType;

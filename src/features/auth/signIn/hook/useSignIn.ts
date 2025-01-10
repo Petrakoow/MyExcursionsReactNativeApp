@@ -5,7 +5,7 @@ import {useAuth} from '@/provider';
 export const useSignIn = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const {reloadState, updateRole} = useAuth(); // Access updateRole here
+    const {reloadState, updateRole} = useAuth();
 
     const signIn = async (emailOrUsername: string, password: string) => {
         setLoading(true);

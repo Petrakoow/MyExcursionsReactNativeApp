@@ -1,20 +1,20 @@
 import {useState, useCallback} from 'react';
 import {
-    FilterAscDesc,
-    FilterByQualityProduct,
     ExcursionFilterType,
 } from '@/features/excursions';
+
+import {OrderFieldType, OrderType} from '@/shared/api';
 
 export const useToggleFilters = (
     updateFilters: (key: keyof ExcursionFilterType, value: any) => void,
     filters: ExcursionFilterType,
 ) => {
-    const [sortOrder, setSortOrder] = useState<FilterAscDesc>(filters.ascDesc);
+    const [sortOrder, setSortOrder] = useState<OrderType | undefined>(filters.ascDesc);
     const [sortField, setSortField] =
-        useState<FilterByQualityProduct>(filters.product);
+        useState<OrderFieldType | undefined>(filters.product);
 
     const handleOrderSelectionChange = useCallback(
-        (name: FilterAscDesc) => {
+        (name: OrderType) => {
             const newSortOrder = sortOrder === name ? undefined : name;
             setSortOrder(newSortOrder);
             updateFilters('ascDesc', newSortOrder);
@@ -23,7 +23,7 @@ export const useToggleFilters = (
     );
 
     const handleFieldSelectionChange = useCallback(
-        (name: FilterByQualityProduct) => {
+        (name: OrderFieldType) => {
             const newSortField = sortField === name ? undefined : name;
             setSortField(newSortField);
             updateFilters('product', newSortField);

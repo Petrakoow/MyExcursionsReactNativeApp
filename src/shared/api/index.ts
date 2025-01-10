@@ -6,8 +6,6 @@ export type {CountryTypeRequest} from './sputnik8/requestType/countryTypeRequest
 
 export type {CityTypeRequest} from './sputnik8/requestType/cityTypeRequest';
 
-export type {CategoryType} from './sputnik8/requestType/categoriesTypeRequest';
-
 export type {
     CurrencyType,
     LanguageType,
@@ -21,3 +19,9 @@ export {
     getProductTypeLabel,
     getTicketTypeLabel,
 } from './sputnik8/convert/convertResponseFieldsOnRusLanguage';
+
+export type {
+    CategoryType,
+    SubCategoryType,
+    ProductType,
+} from './sputnik8/requestType/categoriesTypeRequest';
