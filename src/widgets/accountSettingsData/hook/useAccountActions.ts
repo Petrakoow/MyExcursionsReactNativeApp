@@ -1,19 +1,25 @@
 import {auth, firestore, doc, deleteDoc} from '@/shared/api/firebase/firebase';
 import {confirmAction} from '@/shared/utils';
 import {Alert} from 'react-native';
-import {useAuth} from '@/provider'; // Import useAuth to access updateRole
-import {saveUserSession} from '@/shared/db/models/user';
-import {UNAUTHORIZED_USER} from '@/shared/config/constants';
-import {RolesEnum} from '@/entities/user/model';
+import {useAuth, useDatabase} from '@/provider';
+import {clearFilterSession} from '@/shared/db/models/filters';
+import {deleteAllFavoriteExcursions} from '@/entities/excursion';
+import {deleteUserBookings} from '@/entities/booking';
+import {deleteAllReviews} from '@/entities/reviews';
+import {deleteUserStatus} from '@/entities/status';
+import notifee from '@notifee/react-native';
+import { resetNotificationSettings } from '@/shared/db/notifications';
 
 export const useAccountActions = () => {
-    const {reloadState, updateRole} = useAuth(); // Destructure updateRole from useAuth
+    const {reloadState, updateRole} = useAuth();
+    const database = useDatabase();
 
     const logoutUser = async () => {
         try {
+            clearFilterSession();
             await auth().signOut();
             await reloadState();
-            updateRole(); // Call updateRole after logout
+            updateRole();
         } catch (err) {
             throw new Error('Failed to log out: ' + (err as Error).message);
         }
@@ -26,15 +32,21 @@ export const useAccountActions = () => {
         const userDocRef = doc(firestore(), 'users', user.uid);
 
         try {
+            console.log(user.uid);
+            deleteAllReviews(database, user.uid);
+            deleteAllFavoriteExcursions(database, user.uid);
+            deleteUserBookings(database, user.uid);
+            deleteUserStatus(database, user.uid);
+            resetNotificationSettings(user.uid);
             await deleteDoc(userDocRef);
+
+            await notifee.cancelAllNotifications();
             await user.delete();
-            saveUserSession({
-                userId: UNAUTHORIZED_USER,
-                username: UNAUTHORIZED_USER,
-                role: RolesEnum.GUEST,
-            });
+
+            await reloadState();
             updateRole();
         } catch (err) {
+            console.log(err);
             throw new Error(
                 'Failed to delete account: ' + (err as Error).message,
             );

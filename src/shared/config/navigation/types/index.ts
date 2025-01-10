@@ -1,8 +1,8 @@
-import {TourTypeRequest} from '@/shared/api/sputnik8';
+import {TourTypeRequest} from '@/shared/api';
 
 export enum AppNavigation {
     SIGN_UP = 'Sign Up',
-    SIGN_IN = 'Sing In',
+    SIGN_IN = 'Sign In',
     FORGOT_PASSWORD = 'Forgot password',
     MAIN = 'Main',
     EXCURSION_INFO = 'Information about excursion',
@@ -34,6 +34,7 @@ export type NavigationTabList = {
     [AppTabNavigation.BOOKING]: undefined;
     [AppTabNavigation.USER]: undefined;
     [AppTabNavigation.EXCURSIONS]: undefined;
+    [AppNavigation.SIGN_IN]: undefined;
 };
 
 export type RootStackParamList = NavigationStackList & NavigationTabList; // Расширяемый тип

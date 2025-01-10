@@ -1,1 +1,1 @@
-export {userStatus, checkStatus} from './model/hook/status';
+export {userStatus, checkStatus, deleteUserStatus} from './model/hook/status';

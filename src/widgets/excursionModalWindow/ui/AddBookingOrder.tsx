@@ -16,12 +16,13 @@ type OrderLineProps = {
     line: TourTypeRequest['order_options'][0]['order_lines'][0];
     excursionId: number;
     type: string;
+    isUser: boolean;
 };
 
 export const OrderLine = (props: OrderLineProps) => {
     const realm = useDatabase();
     const userId = getUserSession()?.userId;
-    const {line, excursionId, type} = props;
+    const {line, excursionId, type, isUser} = props;
     const parseDate = DateHelper.parse(parseInt(line.start_date));
     const isEventUpcoming = parseDate > new Date();
 
@@ -65,25 +66,31 @@ export const OrderLine = (props: OrderLineProps) => {
             <CustomText style={styles.marginText}>
                 Дата мероприятия: {DateHelper.format(DateHelper.parse(parseInt(line.start_date)))}
             </CustomText>
-            {!alreadyBooked ? (
-                <CustomButton
-                    style={[
-                        styleButton.primaryTypeButton,
-                        styles.buttonBooking,
-                    ]}
-                    textSize={TextSize.S_BASE}
-                    textButton={
-                        status
-                            ? isEventUpcoming
-                                ? 'Добавить в лист ожидания'
-                                : 'Событие прошло'
-                            : 'Подвердите свои данные'
-                    }
-                    onPress={handleBooking}
-                    disabled={!isEventUpcoming || !status}
-                />
+            {isUser ? (
+                !alreadyBooked ? (
+                    <CustomButton
+                        style={[
+                            styleButton.primaryTypeButton,
+                            styles.buttonBooking,
+                        ]}
+                        textSize={TextSize.S_BASE}
+                        textButton={
+                            status
+                                ? isEventUpcoming
+                                    ? 'Забронировать'
+                                    : 'Событие прошло'
+                                : 'Подтвердите свои данные'
+                        }
+                        onPress={handleBooking}
+                        disabled={!isEventUpcoming || !status}
+                    />
+                ) : (
+                    <CustomText>Вы уже забронировали</CustomText>
+                )
             ) : (
-                <CustomText>Вы уже забронировали</CustomText>
+                <CustomText>
+                    Войдите, чтобы забронировать
+                </CustomText>
             )}
         </View>
     );

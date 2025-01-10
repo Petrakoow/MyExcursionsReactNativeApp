@@ -9,7 +9,7 @@ import {PaginationPanel} from '@/widgets/paginationPanel';
 import {useGetReviewsByTokenString, useReviews} from '@/features/reviews';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {ReviewModal} from '@/widgets/reviewModal';
-import {getUserSession} from '@/shared/db/models/user';
+import {getUserSession, getUserStatus} from '@/shared/db/models/user';
 
 type InformationReviewsType = {
     uid: number;
@@ -36,10 +36,11 @@ export const InformationExcursionReviewsCard = (
 
     const [isModalVisible, setModalVisible] = useState(false);
     const userId = getUserSession()?.userId || '';
-    const {reviews, existingReview, addOrUpdate, remove} = useReviews(
-        uid,
-        {userId: userId},
-    );
+    const {reviews, existingReview, addOrUpdate, remove} = useReviews(uid, {
+        userId: userId,
+    });
+
+    const isUser = getUserStatus();
 
     useEffect(() => {
         getToursByExcursionId(currentToken, uid);
@@ -72,14 +73,19 @@ export const InformationExcursionReviewsCard = (
                         {customersReviewRating.toFixed(1)} / 5
                     </CustomText>
                 </CustomText>
-                <CustomButton
-                    style={[styleButton.primaryTypeButton, styles.reviewButton]}
-                    textButton={
-                        existingReview ? 'Изменить отзыв' : 'Оставить отзыв'
-                    }
-                    textSize={TextSize.S_BASE}
-                    onPress={() => setModalVisible(true)}
-                />
+                {isUser && (
+                    <CustomButton
+                        style={[
+                            styleButton.primaryTypeButton,
+                            styles.reviewButton,
+                        ]}
+                        textButton={
+                            existingReview ? 'Изменить отзыв' : 'Оставить отзыв'
+                        }
+                        textSize={TextSize.S_BASE}
+                        onPress={() => setModalVisible(true)}
+                    />
+                )}
             </View>
 
             <View style={styles.contentReview}>
@@ -96,9 +102,7 @@ export const InformationExcursionReviewsCard = (
                             return (
                                 <ReviewExcursionCard
                                     item={item}
-                                    isPrimary={
-                                        item.userId === userId
-                                    }
+                                    isPrimary={item.userId === userId}
                                 />
                             );
                         }}

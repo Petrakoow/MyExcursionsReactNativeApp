@@ -6,6 +6,7 @@ import { styles } from './BookingModalStyle';
 import { OrderOption } from './OrderOption';
 import { CustomText } from '@/shared/ui/customText';
 import { CloseButton } from './CloseButton';
+import { getUserStatus } from '@/shared/db/models/user';
 
 type BookingModalProps = ModalProps & {
     options: TourTypeRequest;
@@ -18,6 +19,7 @@ export const BookingModal = ({
     options,
     ...res
 }: BookingModalProps) => {
+    const isUser = getUserStatus();
     return (
         <Modal transparent visible={visible} onRequestClose={onClose} {...res}>
             <View style={styles.modalContainer}>
@@ -26,7 +28,7 @@ export const BookingModal = ({
                     <ScrollView style={[styles.content, styles.contentScroll]}>
                         {options.order_options.length > 0 ? (
                             options.order_options.map((orderOption, index) => (
-                                <OrderOption key={index} orderOption={orderOption} excursionId={options.id} />
+                                <OrderOption key={index} orderOption={orderOption} excursionId={options.id} isUser={isUser}/>
                             ))
                         ) : (
                             <CustomText>Нет доступных опций для бронирования</CustomText>

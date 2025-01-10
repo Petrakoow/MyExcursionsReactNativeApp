@@ -7,6 +7,7 @@ import {LinkScreenNavigate} from '@/shared/ui/linkScreen';
 import {AppNavigation} from '@/shared/config/navigation/types';
 import {SignUpForm} from '@/features/auth/signUp';
 import {styles} from './SignUpScreenStyle';
+import {getUnkownStatus} from '@/shared/db/models/user';
 
 export const RegistrationScreen = () => {
     return (
@@ -16,14 +17,18 @@ export const RegistrationScreen = () => {
                     <Logotype title="TourismApp" />
                     <SignUpForm />
                     <View style={styles.accountContainer}>
-                        <CustomText style={styles.textAccount}>
-                            У вас уже есть аккаунт?
-                        </CustomText>
-                        <LinkScreenNavigate
-                            title="Авторизация"
-                            screenName={AppNavigation.SIGN_IN}
-                            mustReplace={true}
-                        />
+                        {getUnkownStatus() && (
+                            <>
+                                <CustomText style={styles.textAccount}>
+                                    У вас уже есть аккаунт?
+                                </CustomText>
+                                <LinkScreenNavigate
+                                    title="Авторизация"
+                                    screenName={AppNavigation.SIGN_IN}
+                                    mustReplace={true}
+                                />
+                            </>
+                        )}
                     </View>
                 </View>
             </ScrollView>

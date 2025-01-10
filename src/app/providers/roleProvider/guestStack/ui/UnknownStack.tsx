@@ -6,7 +6,7 @@ import {RegistrationScreen} from '@/pages/auth/signUp';
 import {AppNavigation} from '@/shared/config/navigation/types';
 const Stack = createNativeStackNavigator<NavigationStackList>();
 
-export const GuestStack = () => (
+export const UnknownStack = () => (
     <Stack.Navigator>
         <Stack.Screen
             name={AppNavigation.SIGN_IN}

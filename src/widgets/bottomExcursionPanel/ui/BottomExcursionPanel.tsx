@@ -9,7 +9,7 @@ import {
     isFavorite,
     removeFromFavorites,
 } from '@/entities/excursion';
-import {getUserSession} from '@/shared/db/models/user';
+import {getUserSession, getUserStatus} from '@/shared/db/models/user';
 import {palette} from '@/shared/config/colors';
 import {useDatabase} from '@/provider';
 
@@ -19,8 +19,6 @@ type BottomExcursionPanelProps = {
     isReviewsVisible: boolean;
     excursionId: number;
 };
-
-// переписать
 
 export const BottomExcursionPanel = ({
     options,
@@ -33,6 +31,8 @@ export const BottomExcursionPanel = ({
 
     const database = useDatabase();
     const userId = getUserSession()?.userId;
+
+    const isUser = getUserStatus();
 
     useEffect(() => {
         if (!userId) return;
@@ -54,11 +54,14 @@ export const BottomExcursionPanel = ({
     return (
         <View>
             <BottomPanel>
-                <BottomPanel.Button
-                    title={isFavoriteExcursion ? 'Удалить' : 'Добавить'}
-                    Icon={Icons.FavouriteExcursionAction}
-                    onPress={handleFavoriteToggle}
-                />
+                {isUser && (
+                    <BottomPanel.Button
+                        title={isFavoriteExcursion ? 'Удалить' : 'Добавить'}
+                        Icon={Icons.FavouriteExcursionAction}
+                        onPress={handleFavoriteToggle}
+                    />
+                )}
+
                 <BottomPanel.Button
                     title="Бронь"
                     Icon={Icons.BookingExcursionAction}

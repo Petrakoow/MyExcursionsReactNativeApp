@@ -84,7 +84,7 @@ export const SignUpForm = () => {
                                     description={error}
                                 />
                             )}
-                            {success && (
+                            {success && !error && (
                                 <SuccessText title="Регистрация прошла успешно" />
                             )}
                             <ExplanationText description="Пароль должен быть минимум 8 символов" />

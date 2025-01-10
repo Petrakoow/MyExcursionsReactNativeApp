@@ -1,4 +1,4 @@
-export const UNAUTHORIZED_USER = 'GUEST';
+export const GUEST_USER = 'GUEST';
 export const UNKNOWN_USER = 'UNKNOWN_USER';
 
 export const FIRESTORE_AUTH_DB = 'users';

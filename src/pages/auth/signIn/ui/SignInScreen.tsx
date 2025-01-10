@@ -1,8 +1,5 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import {CustomButton} from '@/shared/ui/customButton';
-import {AnonymousIcon} from '@/shared/assets/icons';
-import {styleButton} from '@/shared/ui/customButton';
 import {LineSeparator} from '@/shared/ui/customSeparator';
 import {Logotype} from '@/shared/ui/customLogo';
 import {LinkScreenNavigate} from '@/shared/ui/linkScreen';
@@ -10,8 +7,8 @@ import {AppNavigation} from '@/shared/config/navigation/types';
 import {CustomText} from '@/shared/ui/customText';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {styles} from './SignInScreenStyle';
-import {SignInForm} from '@/features/auth/signIn';
-import {palette} from '@/shared/config/colors';
+import {GuestLoginButton, SignInForm} from '@/features/auth/signIn';
+import {getUnkownStatus} from '@/shared/db/models/user';
 
 export const AuthScreen = () => {
     return (
@@ -29,25 +26,21 @@ export const AuthScreen = () => {
                         <LineSeparator />
                     </View>
                     <View style={styles.continueAsGuestContainer}>
-                        <CustomButton
-                            textButton="Продолжить как гость"
-                            style={[
-                                styleButton.secondaryTypeButton,
-                                styles.heightButton,
-                            ]}
-                            textColor={palette.light.textPrimary}
-                            Icon={AnonymousIcon}
-                        />
+                        <GuestLoginButton />
                     </View>
                     <View style={styles.accountContainer}>
-                        <CustomText style={styles.textAccount}>
-                            У вас ещё нету аккаунта?
-                        </CustomText>
-                        <LinkScreenNavigate
-                            title="Регистрация"
-                            screenName={AppNavigation.SIGN_UP}
-                            mustReplace={true}
-                        />
+                        {getUnkownStatus() && (
+                            <>
+                                <CustomText style={styles.textAccount}>
+                                    У вас ещё нету аккаунта?
+                                </CustomText>
+                                <LinkScreenNavigate
+                                    title="Регистрация"
+                                    screenName={AppNavigation.SIGN_UP}
+                                    mustReplace={true}
+                                />
+                            </>
+                        )}
                     </View>
                 </View>
             </ScrollView>

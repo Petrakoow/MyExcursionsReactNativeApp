@@ -6,9 +6,12 @@ import {ErrorText} from '@/shared/ui/errorText';
 import {CustomButton, styleButton} from '@/shared/ui/customButton';
 import {useNotificationSettings} from '../hook/useNotificationSettings';
 import {styles} from './NotificationSettingsDataStyle';
+import { getUserSession } from '@/shared/db/models/user';
+import { UNKNOWN_USER } from '@/shared/config/constants';
 export const NotificationSettingsData = () => {
+    const userId = getUserSession()?.userId || UNKNOWN_USER;
     const {settings, hasPermission, requestPermissions, handleToggle} =
-        useNotificationSettings();
+        useNotificationSettings(userId);
 
     if (!settings || hasPermission === null) {
         return <CustomText>Loading...</CustomText>;

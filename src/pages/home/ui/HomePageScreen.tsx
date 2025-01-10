@@ -1,20 +1,17 @@
-import {
-    FlatList,
-    View,
-} from 'react-native';
+import {FlatList, View} from 'react-native';
 import React from 'react';
 import {ScreenContent} from '@/shared/ui/screenContent';
 import {SearchFilterComponent} from '@/shared/ui/filterPanel';
 import {CustomText} from '@/shared/ui/customText';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {CustomIndicator} from '@/shared/ui/customIndicator';
 import {ErrorText} from '@/shared/ui/errorText';
 import {useHomePage} from '@/features/home';
 import {CategoryType, ProductType, SubCategoryType} from '@/shared/api';
 import {CardExcursionByCategory} from '@/widgets/cardExcursionByCategory';
-import { TextSize, TextWeight } from '@/shared/config/font';
-import { NavigationStackList } from '@/shared/config/navigation';
-import { styles } from './HomePageScreenStyle';
+import {TextSize, TextWeight} from '@/shared/config/font';
+import {NavigationStackList} from '@/shared/config/navigation';
+import {styles} from './HomePageScreenStyle';
+import {SplashScreen} from '@/shared/ui/splashScreen';
 
 export const HomePage = () => {
     const {categories, cities, selectedCity, loading, error, handleCityChange} =
@@ -23,7 +20,7 @@ export const HomePage = () => {
     const navigation = useNavigation<NavigationProp<NavigationStackList>>();
 
     const renderExcursion = ({item}: {item: ProductType}) => (
-        <CardExcursionByCategory item={item} navigation={navigation}/>
+        <CardExcursionByCategory item={item} navigation={navigation} />
     );
 
     const renderSubCategory = ({item}: {item: SubCategoryType}) => (
@@ -57,8 +54,10 @@ export const HomePage = () => {
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
-                <CustomIndicator />
-                <CustomText>Загрузка...</CustomText>
+                <SplashScreen
+                    showLogotype={false}
+                    titleIndicator="Получаем информацию по категориям..."
+                />
             </View>
         );
     }

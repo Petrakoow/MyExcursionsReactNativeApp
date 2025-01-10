@@ -1,1 +1,1 @@
-export {getFilterSession, saveFilterSession} from './shared/filterSession';
+export {getFilterSession, saveFilterSession, clearFilterSession} from './shared/filterSession';

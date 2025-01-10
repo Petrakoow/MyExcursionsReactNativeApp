@@ -1,4 +1,5 @@
 export enum RolesEnum {
+    UNKNOWN,
     GUEST,
     USER,
     ADMIN,

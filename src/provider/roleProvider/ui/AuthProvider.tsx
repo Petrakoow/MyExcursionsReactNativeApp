@@ -26,7 +26,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         if (session) {
             setRole(session.role);
         } else {
-            setRole(RolesEnum.GUEST);
+            throw new Error('No session available for the current user');
         }
     };
 

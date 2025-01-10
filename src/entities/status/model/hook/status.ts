@@ -23,3 +23,16 @@ export const checkStatus = (realm: Realm, userId: string): boolean => {
     );
     return status?.isVerified || false;
 };
+
+export const deleteUserStatus = (realm: Realm, userId: string): void => {
+    const status = realm.objectForPrimaryKey<Status>(
+        Status.schema.name,
+        userId,
+    );
+
+    if (status) {
+        realm.write(() => {
+            realm.delete(status); // Delete the status entry for the user
+        });
+    }
+};

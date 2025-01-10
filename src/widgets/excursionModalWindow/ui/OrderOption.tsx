@@ -9,10 +9,11 @@ import {TextSize, TextWeight} from '@/shared/config/font';
 type OrderOptionProps = {
     orderOption: TourTypeRequest['order_options'][0];
     excursionId: number;
+    isUser: boolean;
 };
 
 export const OrderOption = (props: OrderOptionProps) => {
-    const {orderOption, excursionId} = props;
+    const {orderOption, excursionId, isUser} = props;
     return (
         <View style={styles.optionContainer}>
             <CustomText
@@ -32,7 +33,7 @@ export const OrderOption = (props: OrderOptionProps) => {
                 {orderOption.duration.name}
             </CustomText>
             {orderOption.order_lines.map((line, lineIndex) => (
-                <OrderLine key={lineIndex} line={line} excursionId={excursionId} type={orderOption.title}/>
+                <OrderLine key={lineIndex} line={line} excursionId={excursionId} type={orderOption.title} isUser={isUser}/>
             ))}
         </View>
     );

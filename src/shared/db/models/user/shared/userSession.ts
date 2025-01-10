@@ -17,5 +17,14 @@ export const saveUserSession = (session: UserSessionType): void => {
 };
 
 export const getUserSession = (): UserSessionType | null => {
+    console.log(getItem<UserSessionType>(USER_SESSION_KEY));
     return getItem<UserSessionType>(USER_SESSION_KEY);
+};
+
+export const getUserStatus = (): boolean => {
+    return getUserSession()?.role === RolesEnum.USER || false;
+};
+
+export const getUnkownStatus = (): boolean => {
+    return getUserSession()?.role === RolesEnum.UNKNOWN || false;
 };

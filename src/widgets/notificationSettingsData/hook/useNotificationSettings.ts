@@ -7,7 +7,7 @@ import {
     saveNotificationSettings,
 } from '@/shared/db/notifications';
 
-export const useNotificationSettings = () => {
+export const useNotificationSettings = (userId: string) => {
     const [settings, setSettings] = useState<NotificationSettingsType | null>(
         null,
     );
@@ -15,12 +15,12 @@ export const useNotificationSettings = () => {
 
     useEffect(() => {
         const loadSettings = async () => {
-            const storedSettings = getNotificationSettings();
+            const storedSettings = getNotificationSettings(userId);
             if (storedSettings) {
                 setSettings(storedSettings);
             } else {
-                resetNotificationSettings();
-                setSettings(getNotificationSettings());
+                resetNotificationSettings(userId);
+                setSettings(getNotificationSettings(userId));
             }
         };
 
@@ -70,7 +70,7 @@ export const useNotificationSettings = () => {
         if (settings) {
             const updatedSettings = {...settings, [key]: !settings[key]};
             setSettings(updatedSettings);
-            saveNotificationSettings(updatedSettings);
+            saveNotificationSettings(userId, updatedSettings);
 
             if (key === 'enabled' && !updatedSettings.enabled) {
                 notifee.cancelAllNotifications();
