@@ -12,3 +12,8 @@
 ### Диаграмма слоев приложения
 
 ![Application Layers Diagram](./diagrams_excursion_app/application-layer-diagram.drawio.png)
+
+
+### Все экраны приложения
+
+![Screens Application](./screens_images/Screens.png)

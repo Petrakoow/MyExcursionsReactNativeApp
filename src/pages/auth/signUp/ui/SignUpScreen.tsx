@@ -14,7 +14,7 @@ export const RegistrationScreen = () => {
         <ScreenContent>
             <ScrollView>
                 <View style={styles.content}>
-                    <Logotype title="TourismApp" />
+                    <Logotype title="ExcursionApp" />
                     <SignUpForm />
                     <View style={styles.accountContainer}>
                         {getUnkownStatus() && (

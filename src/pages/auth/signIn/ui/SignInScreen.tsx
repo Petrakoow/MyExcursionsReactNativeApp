@@ -16,18 +16,23 @@ export const AuthScreen = () => {
             <ScrollView>
                 <View style={styles.content}>
                     <View style={styles.logoContainer}>
-                        <Logotype title="TourismApp" />
+                        <Logotype title="ExcursionApp" />
                     </View>
 
                     <View style={styles.inputContainer}>
                         <SignInForm />
                     </View>
-                    <View style={styles.separatorContainer}>
-                        <LineSeparator />
-                    </View>
-                    <View style={styles.continueAsGuestContainer}>
-                        <GuestLoginButton />
-                    </View>
+
+                    {getUnkownStatus() && (
+                        <>
+                            <View style={styles.separatorContainer}>
+                                <LineSeparator />
+                            </View>
+                            <View style={styles.continueAsGuestContainer}>
+                                <GuestLoginButton />
+                            </View>
+                        </>
+                    )}
                     <View style={styles.accountContainer}>
                         {getUnkownStatus() && (
                             <>
